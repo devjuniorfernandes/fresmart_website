@@ -26,5 +26,20 @@ class AppServiceProvider extends ServiceProvider
             $settings = new \App\Models\Setting();
         }
         view()->share('settings', $settings);
+
+        // Share products and services safely with all views
+        if (\Illuminate\Support\Facades\Schema::hasTable('products')) {
+            $headerProducts = \App\Models\Product::orderBy('created_at', 'asc')->get();
+            view()->share('headerProducts', $headerProducts);
+        } else {
+            view()->share('headerProducts', collect());
+        }
+
+        if (\Illuminate\Support\Facades\Schema::hasTable('services')) {
+            $headerServices = \App\Models\Service::orderBy('created_at', 'asc')->get();
+            view()->share('headerServices', $headerServices);
+        } else {
+            view()->share('headerServices', collect());
+        }
     }
 }

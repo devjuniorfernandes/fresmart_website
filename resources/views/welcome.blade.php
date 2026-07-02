@@ -64,27 +64,35 @@
             <div
                 class="slide absolute inset-0 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }} transition-opacity duration-1000 z-10">
                 <div class="absolute inset-0 z-0">
-                    <img src="{{ asset(str_starts_with($slide->image, 'uploads/') ? $slide->image : 'storage/' . $slide->image) }}" alt="{{ $slide->title }}"
-                        class="w-full h-full object-cover object-top">
-                    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+                    <img src="{{ asset(str_starts_with($slide->image, 'uploads/') ? $slide->image : 'storage/' . $slide->image) }}"
+                        alt="{{ $slide->title ?? 'Banner' }}" class="w-full h-full object-cover object-top">
+                    @if (trim($slide->title) || trim($slide->subtitle))
+                        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+                    @endif
                 </div>
-                <div class="hero-content h-full w-full flex flex-col justify-center relative z-10">
-                    <div class="max-w-[1528px] mx-auto px-6 lg:px-10 w-full">
-                        <div class="md:w-1/2 space-y-6">
-                            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
-                                {{ $slide->title }} <br> <span class="text-[#45B500]">{{ $slide->subtitle }}</span>
-                            </h1>
-                            @if ($slide->link)
-                                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 pt-2">
-                                    <a href="{{ $slide->link }}"
-                                        class="bg-[#45B500] hover:bg-white hover:text-[#1b5314] text-white transition-all duration-300 font-bold py-3 px-8 rounded-xl text-center shadow-lg hover:shadow-xl">
-                                        SAIBA MAIS
-                                    </a>
-                                </div>
-                            @endif
+                @if (trim($slide->title) || trim($slide->subtitle) || $slide->link)
+                    <div class="hero-content h-full w-full flex flex-col justify-center relative z-10">
+                        <div class="max-w-[1528px] mx-auto px-6 lg:px-10 w-full">
+                            <div class="md:w-1/2 space-y-6">
+                                @if (trim($slide->title) || trim($slide->subtitle))
+                                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+                                        {{ $slide->title }} @if (trim($slide->subtitle))
+                                            <br> <span class="text-[#45B500]">{{ $slide->subtitle }}</span>
+                                        @endif
+                                    </h1>
+                                @endif
+                                @if ($slide->link)
+                                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 pt-2">
+                                        <a href="{{ $slide->link }}"
+                                            class="bg-[#45B500] hover:bg-white hover:text-[#1b5314] text-white transition-all duration-300 font-bold py-3 px-8 rounded-xl text-center shadow-lg hover:shadow-xl">
+                                            SAIBA MAIS
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
         @empty
             <!-- Fallback if no campaigns exist -->
@@ -210,7 +218,7 @@
     </section>
 
     <!-- Encontre nas Lojas (Mapa Dinâmico) -->
-    <section id="lojas" class="pb-32 pt-10 bg-white w-full overflow-hidden">
+    <section id="lojas" class="pb-10 pt-10 bg-white w-full overflow-hidden">
         <div
             class="w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto flex flex-col lg:flex-row items-center gap-12 animate-on-scroll">
             <div class="lg:w-1/2 space-y-8">
@@ -221,8 +229,8 @@
                     frutas e legumes saudáveis que tornarão as suas receitas ainda mais completas.
                 </p>
                 <a href="{{ url('/lojas') }}"
-                    class="btn-primary bg-[#45B500] inline-block hover:bg-[#3a9900] text-white font-bold py-4 px-12 rounded-xl text-center shadow-lg hover:shadow-xl transition-all duration-300 text-lg">SAIBA
-                    MAIS</a>
+                    class="btn-primary bg-[#45B500] inline-block hover:bg-[#3a9900] text-white font-bold py-4 px-12 rounded-xl text-center transition-all duration-300 text-lg">EXPLORAR
+                    LOJAS</a>
             </div>
             <div class="lg:w-1/2 w-full flex justify-end">
                 <div class="w-full rounded-2xl overflow-hidden relative" style="height:425px;">

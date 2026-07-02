@@ -8,7 +8,7 @@
             <input type="text" name="slug" placeholder="Slug (opcional - gerado automaticamente)" class="w-full border-gray-300 rounded-xl text-lg px-4 py-3 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors shadow-sm mt-2" value="{{ old('slug', $service->slug) }}">
             <div class="bg-white border border-gray-100 shadow-md rounded-xl p-6">
                 <label class="block text-sm font-medium text-slate-700 mb-1.5">Descrição</label>
-                <textarea name="description" rows="4" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">{{ old('description', $service->description) }}</textarea>
+                <textarea name="description" id="editor" rows="6" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">{{ old('description', $service->description) }}</textarea>
             </div>
         </div>
         <div class="w-full lg:w-[280px] space-y-6">
@@ -32,6 +32,31 @@
                 <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-green-50 file:text-[#45B500] hover:file:bg-green-100 cursor-pointer">
             </div>
 
+            <!-- Box: Imagem Adicional (Após o texto) -->
+            <div class="bg-white border border-gray-100 shadow-md rounded-xl p-6">
+                <div class="font-semibold text-slate-800 text-sm mb-4 border-b border-gray-50 pb-2">Imagem Adicional</div>
+                @if($service->additional_image)
+                    <div class="mb-3 rounded-lg overflow-hidden border border-gray-100 h-32 relative bg-gray-50">
+                        <img src="{{ asset($service->additional_image) }}" class="w-full h-full object-cover" alt="Imagem adicional atual">
+                    </div>
+                @endif
+                <input type="file" name="additional_image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-green-50 file:text-[#45B500] hover:file:bg-green-100 cursor-pointer">
+                <p class="text-[10px] text-gray-400 mt-2">Imagem opcional que será exibida logo após o parágrafo de texto.</p>
+            </div>
+
+            <!-- Box: Botão de Ação -->
+            <div class="bg-white border border-gray-100 shadow-md rounded-xl p-6 space-y-4">
+                <div class="font-semibold text-slate-800 text-sm border-b border-gray-50 pb-2">Botão de Link (Opcional)</div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Texto do Botão</label>
+                    <input type="text" name="btn_text" value="{{ old('btn_text', $service->btn_text) }}" placeholder="Ex: Aceder ao Portal" class="w-full border-gray-300 rounded-lg text-xs px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Link do Botão (URL)</label>
+                    <input type="text" name="btn_link" value="{{ old('btn_link', $service->btn_link) }}" placeholder="Ex: https://portal.fresonline.ao ou /lojas" class="w-full border-gray-300 rounded-lg text-xs px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">
+                </div>
+            </div>
+
             <!-- Box: Publicar -->
             <div class="bg-white border border-gray-100 shadow-md rounded-xl overflow-hidden">
                 <div class="border-b border-gray-100 px-6 py-4 bg-gray-50/50 font-semibold text-slate-800 text-sm">Publicar</div>
@@ -41,4 +66,24 @@
             </div>
         </div>
     </form>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            ClassicEditor
+                .create(document.querySelector('#editor'), {
+                    toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo'],
+                    heading: {
+                        options: [
+                            { model: 'paragraph', title: 'Parágrafo', class: 'ck-heading_paragraph' },
+                            { model: 'heading2', view: 'h2', title: 'Subtítulo 1 (H2)', class: 'ck-heading_heading2' },
+                            { model: 'heading3', view: 'h3', title: 'Subtítulo 2 (H3)', class: 'ck-heading_heading3' }
+                        ]
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script>
 </x-admin-layout>

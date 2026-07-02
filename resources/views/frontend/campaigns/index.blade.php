@@ -1,5 +1,8 @@
 <x-frontend.layout>
-    <x-frontend.page-header title="Ofertas Especiais" subtitle="Os melhores preços e campanhas para você" image="assets/img/Ofertas Imperdíveis.jpg" />
+    <x-frontend.page-header 
+        title="{{ $settings->banner_campaigns_title ?: 'Ofertas Especiais' }}" 
+        subtitle="{{ $settings->banner_campaigns_subtitle ?: 'Os melhores preços e campanhas para você' }}"
+        image="{{ $settings->banner_campaigns_image ? asset($settings->banner_campaigns_image) : asset('assets/img/Ofertas Imperdíveis.jpg') }}" />
 
     <section class="py-20 w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto min-h-[50vh]">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

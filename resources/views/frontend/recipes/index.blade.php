@@ -1,5 +1,8 @@
 <x-frontend.layout>
-    <x-frontend.page-header title="Nossas Receitas" subtitle="Descubra pratos deliciosos para preparar em casa" image="assets/img/receita1.jpg" />
+    <x-frontend.page-header 
+        title="{{ $settings->banner_recipes_title ?: 'Nossas Receitas' }}" 
+        subtitle="{{ $settings->banner_recipes_subtitle ?: 'Descubra pratos deliciosos para preparar em casa' }}"
+        image="{{ $settings->banner_recipes_image ? asset($settings->banner_recipes_image) : asset('assets/img/receita1.jpg') }}" />
 
     <section class="py-20 w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto min-h-[50vh]">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">

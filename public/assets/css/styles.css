@@ -252,3 +252,73 @@ img {
   opacity: 0;
   visibility: hidden;
 }
+
+/* Rich Text Formatted Description Styling (CMS descriptions) */
+.rich-content h1, .rich-content h2, .rich-content h3, .rich-content h4 {
+  font-weight: 800;
+  color: #111827;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+.rich-content h1 { font-size: 2.25rem; }
+.rich-content h2 { font-size: 1.875rem; border-bottom: 1px solid rgba(0, 0, 0, 0.05); padding-bottom: 0.25em; }
+.rich-content h3 { font-size: 1.5rem; }
+.rich-content h4 { font-size: 1.25rem; }
+
+.rich-content p {
+  margin-bottom: 1.25em;
+  line-height: 1.75;
+  color: #4b5563;
+}
+
+.rich-content img {
+  border-radius: 16px;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5em 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.rich-content a {
+  color: #45B500;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+.rich-content a:hover {
+  color: #3b9b18;
+}
+
+/* Allow styled buttons inside description text */
+.rich-content a.btn-primary, .rich-content a.button-link {
+  display: inline-block;
+  background-color: #45B500;
+  color: white !important;
+  text-decoration: none !important;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(69, 181, 0, 0.2);
+  margin: 0.75em 0;
+}
+.rich-content a.btn-primary:hover, .rich-content a.button-link:hover {
+  background-color: #3b9b18;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(69, 181, 0, 0.3);
+}
+
+.rich-content ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+  margin-bottom: 1.25em;
+}
+.rich-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5em;
+  margin-bottom: 1.25em;
+}
+.rich-content li {
+  margin-bottom: 0.5em;
+  color: #4b5563;
+}

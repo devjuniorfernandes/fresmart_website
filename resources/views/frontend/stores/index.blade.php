@@ -49,7 +49,7 @@
     <div class="relative w-full min-h-[340px] bg-gray-900 flex items-center justify-center overflow-hidden py-16">
         <!-- Background Image -->
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset('assets/img/slider1.png') }}" alt="Nossas Lojas"
+            <img src="{{ $settings->banner_stores_image ? asset($settings->banner_stores_image) : asset('assets/img/slider1.png') }}" alt="{{ $settings->banner_stores_title ?: 'Nossas Lojas' }}"
                 class="w-full h-full object-cover object-center opacity-60">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
         </div>
@@ -57,9 +57,11 @@
         <!-- Header Content -->
         <div class="relative z-10 text-center px-4 max-w-5xl mx-auto w-full mt-10 flex flex-col items-center gap-8">
             <div>
-                <h1 class="text-4xl md:text-5xl font-bold text-white uppercase tracking-wider shadow-sm">Nossas Lojas
+                <h1 class="text-4xl md:text-5xl font-bold text-white uppercase tracking-wider shadow-sm">
+                    {{ $settings->banner_stores_title ?: 'Nossas Lojas' }}
                 </h1>
-                <p class="mt-2 text-base md:text-lg text-white/95 font-light">Encontre a Fresmart mais próxima de você
+                <p class="mt-2 text-base md:text-lg text-white/95 font-light">
+                    {{ $settings->banner_stores_subtitle ?: 'Encontre a Fresmart mais próxima de você' }}
                 </p>
             </div>
 

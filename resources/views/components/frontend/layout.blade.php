@@ -20,7 +20,7 @@
     <meta property="og:title" content="{{ $meta_title ?? ($title ?? 'Fresmart') }}">
     <meta property="og:description"
         content="{{ $meta_description ?? 'A Fresmart é o seu supermercado de confiança em Angola. Encontre produtos frescos, carnes, legumes e serviços de excelência.' }}">
-    <meta property="og:image" content="{{ isset($meta_image) ? asset($meta_image) : asset('assets/img/logo.png') }}">
+    <meta property="og:image" content="{{ isset($meta_image) ? asset($meta_image) : ($settings->logo ? asset($settings->logo) : asset('assets/img/logo.png')) }}">
     <meta property="og:url" content="{{ request()->url() }}">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
@@ -80,7 +80,7 @@
     <div id="preloader"
         class="fixed inset-0 bg-white z-[9999] flex flex-col items-center justify-center transition-all duration-500">
         <div class="flex flex-col items-center space-y-8">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="Fresmart" class="w-auto h-16 md:h-20 animate-pulse">
+            <img src="{{ $settings->logo ? asset($settings->logo) : asset('assets/img/logo.png') }}" alt="Fresmart" class="w-auto h-16 md:h-20 animate-pulse">
             <div class="loader"></div>
         </div>
     </div>

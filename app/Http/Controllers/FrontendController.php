@@ -60,6 +60,17 @@ class FrontendController extends Controller
         return view('frontend.services.show', compact('service'));
     }
 
+    public function products()
+    {
+        $products = \App\Models\Product::all();
+        return view('frontend.products.index', compact('products'));
+    }
+
+    public function productShow(\App\Models\Product $product)
+    {
+        return view('frontend.products.show', compact('product'));
+    }
+
     public function campaigns()
     {
         $campaigns = Campaign::where('is_active', true)->latest()->paginate(10);

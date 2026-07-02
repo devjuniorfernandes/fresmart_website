@@ -1,5 +1,8 @@
 <x-frontend.layout>
-    <x-frontend.page-header title="Fale Connosco" subtitle="Estamos aqui para ajudar" image="assets/img/hero.png" />
+    <x-frontend.page-header 
+        title="{{ $settings->banner_contacts_title ?: 'Fale Connosco' }}" 
+        subtitle="{{ $settings->banner_contacts_subtitle ?: 'Estamos aqui para ajudar' }}"
+        image="{{ $settings->banner_contacts_image ? asset($settings->banner_contacts_image) : asset('assets/img/hero.png') }}" />
 
     <section class="py-20 w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto min-h-[50vh]">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">

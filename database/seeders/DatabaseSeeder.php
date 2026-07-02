@@ -111,6 +111,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\Setting::updateOrCreate(
             ['id' => 1],
             [
+                'logo' => null,
+                'description' => 'Servindo Angola com coração. Qualidade, frescura e os melhores preços perto de si.',
                 'facebook' => 'https://facebook.com/fresmart',
                 'instagram' => 'https://instagram.com/fresmart',
                 'tiktok' => 'https://tiktok.com/@fresmart',
@@ -120,6 +122,41 @@ class DatabaseSeeder extends Seeder
                 'google_play' => 'https://play.google.com',
             ]
         );
+
+        // Seeding standard Product categories/departments
+        $defaultProducts = [
+            [
+                'name' => 'Frutas e Legumes',
+                'slug' => 'frutas-e-legumes',
+                'description' => 'Fruta fresca de época e legumes selecionados diariamente para garantir a máxima qualidade na sua mesa.',
+                'show_title' => true,
+            ],
+            [
+                'name' => 'Frescos',
+                'slug' => 'frescos',
+                'description' => 'Laticínios, iogurtes, queijos, charcutaria e refeições prontas. A frescura que a sua família merece.',
+                'show_title' => true,
+            ],
+            [
+                'name' => 'Talho',
+                'slug' => 'talho',
+                'description' => 'Cortes de carne bovina, suína, aves e enchidos frescos. Peça ao nosso mestre talhante o seu corte favorito.',
+                'show_title' => true,
+            ],
+            [
+                'name' => 'Padaria',
+                'slug' => 'padaria',
+                'description' => 'Pão quente a toda a hora, pastelaria fina e croissants acabados de cozer. O cheirinho a padaria tradicional.',
+                'show_title' => true,
+            ],
+        ];
+
+        foreach ($defaultProducts as $productData) {
+            \App\Models\Product::updateOrCreate(
+                ['slug' => $productData['slug']],
+                $productData
+            );
+        }
     }
 }
 

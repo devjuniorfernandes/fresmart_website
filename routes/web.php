@@ -14,6 +14,9 @@ Route::get('/receitas/{recipe}', [FrontendController::class, 'recipeShow'])->nam
 Route::get('/lojas', [FrontendController::class, 'stores'])->name('stores.index');
 Route::get('/lojas/{store}', [FrontendController::class, 'storeShow'])->name('stores.show');
 
+Route::get('/produtos', [FrontendController::class, 'products'])->name('products.index');
+Route::get('/produtos/{product}', [FrontendController::class, 'productShow'])->name('products.show');
+
 Route::get('/servicos', [FrontendController::class, 'services'])->name('services.index');
 Route::get('/servicos/{service}', [FrontendController::class, 'serviceShow'])->name('services.show');
 
@@ -39,6 +42,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('campaigns', \App\Http\Controllers\Admin\CampaignController::class);
         Route::resource('slides', \App\Http\Controllers\Admin\SlideController::class);
         Route::resource('services', \App\Http\Controllers\Admin\ServiceController::class);
+        Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
 
         // Configurações Globais
         Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'edit'])->name('settings.edit');
