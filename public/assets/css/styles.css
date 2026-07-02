@@ -1,0 +1,254 @@
+/* C:\Users\sh\.gemini\antigravity\scratch\fresmart\styles.css */
+
+/* Custom Variables */
+:root {
+  --color-primary: #45B500;
+  --color-secondary: #266e10;
+  --color-accent: #7dd82a;
+}
+
+/* Base Body Styles */
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+  background-color: #EBECEE;
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scrolling on iOS */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animations */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Delay modifiers */
+.delay-100 {
+  transition-delay: 100ms;
+}
+
+.delay-200 {
+  transition-delay: 200ms;
+}
+
+.delay-300 {
+  transition-delay: 300ms;
+}
+
+.delay-400 {
+  transition-delay: 400ms;
+}
+
+.delay-500 {
+  transition-delay: 500ms;
+}
+
+/* Hover Effects */
+.hover-scale-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-scale-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Button Animations */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.4s ease;
+  z-index: -1;
+}
+
+.btn-primary:hover::before {
+  left: 0;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 15px rgba(59, 155, 24, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Floating Animation */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Placeholder image hover */
+.img-placeholder {
+  transition: all 0.5s ease;
+}
+
+.img-placeholder:hover {
+  transform: scale(1.03);
+  filter: brightness(0.95);
+}
+
+/* Recipes circular image with hover */
+.recipe-circle {
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f4f4;
+  position: relative;
+}
+
+.recipe-circle img,
+.recipe-circle div {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.recipe-circle:hover {
+  box-shadow: 0 10px 25px rgba(59, 155, 24, 0.2);
+  transform: translateY(-5px);
+}
+
+.recipe-circle:hover div {
+  transform: scale(1.1);
+}
+
+.hero-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Custom Scrollbar for Store List */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #EBECEE;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #D1D5DB;
+}
+
+/* Store Card Animation */
+.store-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.store-card:hover {
+  border-color: rgba(59, 155, 24, 0.3);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+  transform: translateX(4px);
+}
+
+.store-card.active {
+  border-color: #45B500;
+  background-color: rgba(69, 181, 0, 0.02);
+  box-shadow: 0 10px 25px rgba(69, 181, 0, 0.08);
+}
+
+.loader {
+  display: block;
+  --height-of-loader: 4px;
+  --loader-color: #45B500;
+  width: 130px;
+  height: var(--height-of-loader);
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  background: var(--loader-color);
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  border-radius: 30px;
+  animation: moving 1s ease-in-out infinite;
+}
+
+@keyframes moving {
+  50% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0;
+    right: 0;
+    left: unset;
+  }
+}
+
+#preloader {
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
+}
+
+.preloader-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
