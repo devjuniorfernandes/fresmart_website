@@ -24,11 +24,13 @@ Route::get('/ofertas', [FrontendController::class, 'campaigns'])->name('campaign
 Route::get('/ofertas/{campaign}', [FrontendController::class, 'campaignShow'])->name('campaigns.show');
 
 Route::get('/contactos', [FrontendController::class, 'contacts'])->name('contacts.index');
-Route::post('/contactos', [FrontendController::class, 'contactSubmit'])->name('contacts.submit');
+Route::post('/contactos', [FrontendController::class, 'contactSubmit'])
+    ->middleware('throttle:3,1')
+    ->name('contacts.submit');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -43,6 +45,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('slides', \App\Http\Controllers\Admin\SlideController::class);
         Route::resource('services', \App\Http\Controllers\Admin\ServiceController::class);
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+        Route::resource('contacts', \App\Http\Controllers\Admin\ContactMessageController::class)->only(['index', 'show', 'destroy']);
 
         // Configurações Globais
         Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'edit'])->name('settings.edit');

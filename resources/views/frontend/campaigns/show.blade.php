@@ -10,7 +10,7 @@
             : 'storage/' . $campaign->image)
         : 'assets/img/Ofertas Imperdíveis.jpg'" />
 
-    <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+    <div class="bg-white overflow-hidden">
         <div class="aspect-video w-full">
             <img src="{{ $campaign->image ? asset(str_starts_with($campaign->image, 'uploads/') ? $campaign->image : 'storage/' . $campaign->image) : asset('assets/img/Untitled-2 copy.jpg') }}"
                 alt="{{ $campaign->title }}" class="w-full h-full object-cover">

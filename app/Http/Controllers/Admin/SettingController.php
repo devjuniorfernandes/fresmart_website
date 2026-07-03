@@ -26,6 +26,9 @@ class SettingController extends Controller
             'google_play' => 'nullable|url|max:255',
             'description' => 'nullable|string',
             'logo' => 'nullable|image|max:2048',
+            'contact_email' => 'nullable|email|max:255',
+            'contact_phone' => 'nullable|string|max:255',
+            'contact_address' => 'nullable|string|max:255',
 
             // Banner fields validation
             'banner_products_image' => 'nullable|image|max:3072',

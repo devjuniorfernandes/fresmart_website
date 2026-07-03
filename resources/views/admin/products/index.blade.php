@@ -1,33 +1,39 @@
 <x-admin-layout>
     <x-slot:header>Produtos (Categorias)</x-slot>
     <x-slot:actions>
-        <a href="{{ route('admin.products.create') }}" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow-sm transition-all duration-200 text-sm">Adicionar Novo</a>
+        <a href="{{ route('admin.products.create') }}" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 px-5 rounded-xl shadow-sm transition-all duration-200 text-sm">
+            <i class="fas fa-plus mr-1.5 text-xs"></i> Adicionar Novo
+        </a>
     </x-slot>
-    <div class="bg-white border border-gray-50 shadow-md rounded-xl overflow-hidden">
-        <table class="w-full text-left text-[13px]">
+    <div class="bg-white border border-gray-100 shadow-sm rounded-2xl overflow-hidden max-w-7xl">
+        <table class="w-full text-left text-[13px] border-collapse">
             <thead>
-                <tr class="border-b border-gray-50 bg-gray-50/50">
-                    <th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Nome</th>
-                    <th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-gray-500">Data</th>
-                    <th class="py-3 px-4 text-xs font-semibold uppercase tracking-wider text-gray-500 w-1/6">Ações</th>
+                <tr class="border-b border-gray-100 bg-gray-50/50">
+                    <th class="py-3.5 px-6 text-xs font-bold uppercase tracking-wider text-slate-500">Nome</th>
+                    <th class="py-3.5 px-6 text-xs font-bold uppercase tracking-wider text-slate-500">Data</th>
+                    <th class="py-3.5 px-6 text-xs font-bold uppercase tracking-wider text-slate-500 w-1/6 text-right">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($products ?? [] as $product)
-                    <tr class="border-b border-gray-50 hover:bg-[#f6f7f7]">
-                        <td class="py-3 px-3"><strong class="text-[#2271b1]">{{ $product->name }}</strong></td>
-                        <td class="py-3 px-3">{{ $product->created_at->format('d/m/Y') }}</td>
-                        <td class="py-4 px-4 align-top">
-                            <a href="{{ route('admin.products.edit', $product->id) }}" class="text-blue-600 hover:text-blue-800 font-medium transition-colors mr-2">Editar</a>
+                    <tr class="border-b border-gray-100 hover:bg-slate-50/80 transition-colors">
+                        <td class="py-4 px-6 align-middle"><strong class="text-slate-800 text-sm font-bold">{{ $product->name }}</strong></td>
+                        <td class="py-4 px-6 align-middle text-gray-500">{{ $product->created_at->format('d/m/Y') }}</td>
+                        <td class="py-4 px-6 align-middle text-right space-x-2">
+                            <a href="{{ route('admin.products.edit', $product->id) }}" class="inline-flex items-center px-3 py-1.5 bg-slate-100 hover:bg-[#45B500] hover:text-white rounded-lg text-slate-700 text-xs font-bold transition-all duration-200">
+                                Editar
+                            </a>
                             <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Tem a certeza?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-800 font-medium transition-colors">Apagar</button>
+                                <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-red-50 hover:bg-red-600 hover:text-white rounded-lg text-red-600 text-xs font-bold transition-all duration-200">
+                                    Apagar
+                                </button>
                             </form>
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="3" class="py-4 px-3 text-center text-gray-500">Nenhum produto cadastrado.</td></tr>
+                    <tr><td colspan="3" class="py-12 px-6 text-center text-gray-400">Nenhum produto cadastrado.</td></tr>
                 @endforelse
             </tbody>
         </table>

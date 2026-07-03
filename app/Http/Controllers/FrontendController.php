@@ -89,6 +89,19 @@ class FrontendController extends Controller
 
     public function contactSubmit(Request $request)
     {
+        // 1. Anti-bot: Honeypots
+        if ($request->filled('website_url') || $request->filled('honeypot_field')) {
+            // Trick the bot into thinking it succeeded
+            return redirect()->route('contacts.index')->with('success', 'A sua mensagem foi enviada com sucesso! Entraremos em contacto brevemente.');
+        }
+
+        // 2. Anti-bot: Fast submission check (minimum 3 seconds)
+        $submissionTime = $request->input('submission_time');
+        if (!$submissionTime || (time() - $submissionTime) < 3) {
+            return redirect()->route('contacts.index')->with('error', 'Detectamos uma atividade incomum de envio rápido (possível bot/automação). Por favor, aguarde uns segundos e tente novamente.');
+        }
+
+        // 3. Validation
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
@@ -96,9 +109,23 @@ class FrontendController extends Controller
             'message' => 'required|string'
         ]);
 
+        // 4. Sanitization (strip HTML tags, prevent XSS script executions)
+        $validated['name'] = strip_tags($validated['name']);
+        $validated['subject'] = strip_tags($validated['subject']);
+        $validated['message'] = htmlspecialchars(strip_tags($validated['message']), ENT_QUOTES, 'UTF-8');
+
+        // 5. Store message in Database
         $contact = \App\Models\ContactMessage::create($validated);
 
-        \Illuminate\Support\Facades\Mail::to('geral@fresmart.ao')->send(new \App\Mail\ContactFormMail($contact));
+        // 6. Safe Email Sending with try-catch fallback
+        try {
+            if (class_exists('\App\Mail\ContactFormMail')) {
+                \Illuminate\Support\Facades\Mail::to('geral@fresmart.ao')->send(new \App\Mail\ContactFormMail($contact));
+            }
+        } catch (\Exception $e) {
+            // Log the error but don't crash the form response
+            \Illuminate\Support\Facades\Log::error("Failed sending contact email: " . $e->getMessage());
+        }
 
         return redirect()->route('contacts.index')->with('success', 'A sua mensagem foi enviada com sucesso! Entraremos em contacto brevemente.');
     }

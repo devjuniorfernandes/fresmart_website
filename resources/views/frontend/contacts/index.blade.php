@@ -17,7 +17,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900 text-lg mb-1">E-mail</h4>
-                            <p class="text-gray-600">geral@fresmart.ao</p>
+                            <p class="text-gray-600">{{ $settings->contact_email ?: 'geral@fresmart.ao' }}</p>
                         </div>
                     </div>
                     
@@ -27,7 +27,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900 text-lg mb-1">Telefone</h4>
-                            <p class="text-gray-600">+244 923 000 000</p>
+                            <p class="text-gray-600">{{ $settings->contact_phone ?: '+244 923 000 000' }}</p>
                         </div>
                     </div>
                     
@@ -37,7 +37,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900 text-lg mb-1">Sede</h4>
-                            <p class="text-gray-600">Luanda, Angola</p>
+                            <p class="text-gray-600">{{ $settings->contact_address ?: 'Luanda, Angola' }}</p>
                         </div>
                     </div>
                 </div>
@@ -53,27 +53,44 @@
                         <p>{{ session('success') }}</p>
                     </div>
                 @endif
+
+                @if(session('error'))
+                    <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-r-lg">
+                        <p class="font-bold">Erro de Validação</p>
+                        <p>{{ session('error') }}</p>
+                    </div>
+                @endif
                 
                 <form action="{{ route('contacts.submit') }}" method="POST" class="space-y-6">
                     @csrf
+
+                    <!-- Anti-bot Honeypot fields -->
+                    <div class="hidden" aria-hidden="true">
+                        <input type="text" name="website_url" id="website_url" autocomplete="off" tabindex="-1">
+                        <input type="text" name="honeypot_field" id="honeypot_field" autocomplete="off" tabindex="-1">
+                    </div>
+
+                    <!-- Anti-bot Time check token -->
+                    <input type="hidden" name="submission_time" value="{{ time() }}">
+
                     <div>
                         <label for="name" class="block text-sm font-bold text-gray-700 mb-2">Nome Completo</label>
-                        <input type="text" id="name" name="name" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-[#45B500] focus:ring-[#45B500]" required>
+                        <input type="text" id="name" name="name" class="w-full px-4 py-3.5 rounded-xl border border-gray-300 shadow-sm focus:border-[#45B500] focus:ring-[#45B500] transition-colors focus:outline-none" required>
                     </div>
                     
                     <div>
                         <label for="email" class="block text-sm font-bold text-gray-700 mb-2">E-mail</label>
-                        <input type="email" id="email" name="email" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-[#45B500] focus:ring-[#45B500]" required>
+                        <input type="email" id="email" name="email" class="w-full px-4 py-3.5 rounded-xl border border-gray-300 shadow-sm focus:border-[#45B500] focus:ring-[#45B500] transition-colors focus:outline-none" required>
                     </div>
                     
                     <div>
                         <label for="subject" class="block text-sm font-bold text-gray-700 mb-2">Assunto</label>
-                        <input type="text" id="subject" name="subject" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-[#45B500] focus:ring-[#45B500]" required>
+                        <input type="text" id="subject" name="subject" class="w-full px-4 py-3.5 rounded-xl border border-gray-300 shadow-sm focus:border-[#45B500] focus:ring-[#45B500] transition-colors focus:outline-none" required>
                     </div>
                     
                     <div>
                         <label for="message" class="block text-sm font-bold text-gray-700 mb-2">Mensagem</label>
-                        <textarea id="message" name="message" rows="5" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-[#45B500] focus:ring-[#45B500]" required></textarea>
+                        <textarea id="message" name="message" rows="5" class="w-full px-4 py-3.5 rounded-xl border border-gray-300 shadow-sm focus:border-[#45B500] focus:ring-[#45B500] transition-colors focus:outline-none" required></textarea>
                     </div>
                     
                     <button type="submit" class="w-full btn-primary bg-[#45B500] hover:bg-[#3a9900] text-white font-bold py-4 rounded-xl shadow-lg transition-all duration-300">
