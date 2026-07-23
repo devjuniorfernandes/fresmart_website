@@ -248,7 +248,7 @@
                 map = L.map('stores-map', {
                     zoomControl: false,
                     scrollWheelZoom: false
-                }).setView([-8.9, 13.2], 10);
+                }).setView([-8.9, 13.2], 12);
 
                 // Add zoom control in top-right
                 L.control.zoom({
@@ -297,8 +297,8 @@
                     }
                 });
 
-                // Fit map bounds to show all markers initially
-                fitMapBounds();
+                // Keep initial zoom focused on Luanda instead of fitting all bounds
+                // fitMapBounds();
 
                 // Setup Search and Filters
                 document.getElementById('search-input').addEventListener('input', applyFilters);
