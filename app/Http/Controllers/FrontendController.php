@@ -15,7 +15,9 @@ class FrontendController extends Controller
     {
         $slides = Slide::where('is_active', true)->orderBy('id', 'asc')->get();
         $stores = Store::all();
-        $recipes = Recipe::latest()->take(6)->get();
+        
+        $recipes = Recipe::orderByRaw('is_featured DESC, created_at DESC')->take(6)->get();
+        
         $campaigns = Campaign::where('is_active', true)->latest()->get();
         $services = Service::latest()->take(3)->get();
 
@@ -74,12 +76,30 @@ class FrontendController extends Controller
     public function campaigns()
     {
         $campaigns = Campaign::where('is_active', true)->latest()->paginate(10);
-        return view('frontend.campaigns.index', compact('campaigns'));
+        $leaflets = \App\Models\Leaflet::where('is_active', true)
+            ->whereDate('start_date', '<=', now())
+            ->whereDate('end_date', '>=', now())
+            ->latest()
+            ->get();
+        return view('frontend.campaigns.index', compact('campaigns', 'leaflets'));
     }
 
     public function campaignShow(Campaign $campaign)
     {
         return view('frontend.campaigns.show', compact('campaign'));
+    }
+
+    public function posts()
+    {
+        $posts = \App\Models\BlogPost::where('is_active', true)->latest()->paginate(9);
+        return view('frontend.posts.index', compact('posts'));
+    }
+
+    public function postShow($slug)
+    {
+        $post = \App\Models\BlogPost::where('slug', $slug)->where('is_active', true)->firstOrFail();
+        $recentPosts = \App\Models\BlogPost::where('id', '!=', $post->id)->where('is_active', true)->latest()->take(3)->get();
+        return view('frontend.posts.show', compact('post', 'recentPosts'));
     }
 
     public function contacts()
@@ -128,5 +148,127 @@ class FrontendController extends Controller
         }
 
         return redirect()->route('contacts.index')->with('success', 'A sua mensagem foi enviada com sucesso! Entraremos em contacto brevemente.');
+    }
+
+    public function search(Request $request)
+    {
+        $q = $request->input('q');
+        
+        if (empty($q)) {
+            $recipes = collect();
+            $products = collect();
+            $stores = collect();
+            $posts = collect();
+            return view('frontend.search', compact('recipes', 'products', 'stores', 'posts', 'q'));
+        }
+
+        $recipes = Recipe::where('title', 'like', "%{$q}%")
+            ->orWhere('ingredients', 'like', "%{$q}%")
+            ->orWhere('category', 'like', "%{$q}%")
+            ->get();
+
+        $products = \App\Models\Product::where('name', 'like', "%{$q}%")
+            ->orWhere('description', 'like', "%{$q}%")
+            ->get();
+
+        $stores = Store::where('name', 'like', "%{$q}%")
+            ->orWhere('address', 'like', "%{$q}%")
+            ->orWhere('city', 'like', "%{$q}%")
+            ->get();
+
+        $posts = \App\Models\BlogPost::where('is_active', true)
+            ->where(function($query) use ($q) {
+                $query->where('title', 'like', "%{$q}%")
+                      ->orWhere('content', 'like', "%{$q}%");
+            })->get();
+
+        return view('frontend.search', compact('recipes', 'products', 'stores', 'posts', 'q'));
+    }
+
+    public function submitApplication(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'cv' => 'required|file|mimes:pdf,doc,docx|max:5120',
+            'cover_letter' => 'nullable|string',
+        ]);
+
+        if ($request->hasFile('cv')) {
+            $file = $request->file('cv');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            // Ensure public/uploads/cvs directory exists
+            $destinationPath = public_path('uploads/cvs');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $file->move($destinationPath, $filename);
+            $validated['cv_path'] = 'uploads/cvs/' . $filename;
+        }
+
+        \App\Models\JobApplication::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Candidatura submetida com sucesso!'
+        ]);
+    }
+
+    public function sitemapXml()
+    {
+        $urls = [
+            route('home'),
+            route('about.index'),
+            route('recipes.index'),
+            route('stores.index'),
+            route('services.index'),
+            route('campaigns.index'),
+            route('posts.index'),
+            route('contacts.index'),
+        ];
+
+        foreach (\App\Models\Recipe::all() as $item) {
+            $urls[] = route('recipes.show', $item->slug);
+        }
+        foreach (Store::all() as $item) {
+            $urls[] = route('stores.show', $item->slug);
+        }
+        foreach (Service::all() as $item) {
+            $urls[] = route('services.show', $item->slug);
+        }
+        foreach (Campaign::where('is_active', true)->get() as $item) {
+            $urls[] = route('campaigns.show', $item->slug);
+        }
+        foreach (\App\Models\BlogPost::where('is_active', true)->get() as $item) {
+            $urls[] = route('posts.show', $item->slug);
+        }
+
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>';
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+        foreach ($urls as $url) {
+            $xml .= '<url>';
+            $xml .= '<loc>' . htmlspecialchars($url) . '</loc>';
+            $xml .= '<changefreq>weekly</changefreq>';
+            $xml .= '<priority>0.8</priority>';
+            $xml .= '</url>';
+        }
+        $xml .= '</urlset>';
+
+        return response($xml, 200, [
+            'Content-Type' => 'application/xml'
+        ]);
+    }
+
+    public function sitemapHtml()
+    {
+        $recipes = Recipe::latest()->get();
+        $stores = Store::all();
+        $services = Service::all();
+        $campaigns = Campaign::where('is_active', true)->get();
+        $posts = \App\Models\BlogPost::where('is_active', true)->get();
+
+        return view('frontend.sitemap', compact('recipes', 'stores', 'services', 'campaigns', 'posts'));
     }
 }

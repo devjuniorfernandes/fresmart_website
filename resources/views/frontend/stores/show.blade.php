@@ -61,7 +61,7 @@
                         </div>
 
                         <!-- Contactos -->
-                        @if($store->phone || $store->email)
+                        @if($store->phone || $store->whatsapp)
                             <div class="flex items-start gap-4">
                                 <div class="w-8 h-8 rounded-full bg-green-50 text-[#45B500] flex items-center justify-center flex-shrink-0 mt-0.5">
                                     <i class="fas fa-phone-alt"></i>
@@ -74,12 +74,51 @@
                                             <a href="tel:{{ $store->phone }}" class="text-[#45B500] hover:underline font-semibold">{{ $store->phone }}</a>
                                         </p>
                                     @endif
-                                    @if($store->email)
+                                    @if($store->whatsapp)
                                         <p class="text-gray-600 mt-1 flex items-center gap-1.5">
-                                            <span>E-mail:</span>
-                                            <a href="mailto:{{ $store->email }}" class="text-[#45B500] hover:underline font-semibold">{{ $store->email }}</a>
+                                            <span>WhatsApp:</span>
+                                            @php
+                                                $waClean = preg_replace('/[^0-9]/', '', $store->whatsapp);
+                                                $waUrl = str_starts_with($store->whatsapp, 'http') ? $store->whatsapp : 'https://wa.me/' . $waClean;
+                                            @endphp
+                                            <a href="{{ $waUrl }}" target="_blank" class="text-green-600 hover:underline font-bold flex items-center gap-1">
+                                                <i class="fab fa-whatsapp"></i> Conversar
+                                            </a>
                                         </p>
                                     @endif
+                                </div>
+                            </div>
+                        @endif
+
+                        <!-- Serviços e Comodidades -->
+                        @if($store->services_json && count($store->services_json) > 0)
+                            <div class="flex items-start gap-4 border-t border-gray-50 pt-4">
+                                <div class="w-8 h-8 rounded-full bg-green-50 text-[#45B500] flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fas fa-concierge-bell"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-gray-900 mb-2">Serviços Disponíveis</p>
+                                    <div class="grid grid-cols-2 gap-2 mt-1">
+                                        @foreach($store->services_json as $srv)
+                                            @php
+                                                $icon = 'fa-check-circle';
+                                                switch(strtolower($srv)) {
+                                                    case 'talho': $icon = 'fa-drumstick-bite'; break;
+                                                    case 'café': $icon = 'fa-coffee'; break;
+                                                    case 'estacionamento': $icon = 'fa-parking'; break;
+                                                    case 'take-away': $icon = 'fa-shopping-bag'; break;
+                                                    case 'padaria': $icon = 'fa-bread-slice'; break;
+                                                    case 'charcutaria': $icon = 'fa-cheese'; break;
+                                                    case 'peixaria': $icon = 'fa-fish'; break;
+                                                    case 'garrafeira': $icon = 'fa-wine-bottle'; break;
+                                                }
+                                            @endphp
+                                            <span class="inline-flex items-center gap-1.5 text-xs text-gray-600 bg-gray-50 border border-gray-100 py-1.5 px-3 rounded-xl font-medium">
+                                                <i class="fas {{ $icon }} text-[#45B500] text-xs"></i>
+                                                {{ $srv }}
+                                            </span>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         @endif

@@ -24,11 +24,18 @@ class RecipeController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'prep_time_minutes' => 'required|integer',
+            'portions' => 'required|integer',
             'category' => 'required|string',
             'ingredients' => 'nullable|string',
             'instructions' => 'nullable|string',
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048',
+            'is_featured' => 'boolean'
         ]);
+
+        $validated['is_featured'] = $request->has('is_featured');
+        if ($validated['is_featured']) {
+            Recipe::query()->update(['is_featured' => false]);
+        }
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -58,11 +65,18 @@ class RecipeController extends Controller
             'title' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:recipes,slug,' . $recipe->id,
             'prep_time_minutes' => 'required|integer',
+            'portions' => 'required|integer',
             'category' => 'required|string',
             'ingredients' => 'nullable|string',
             'instructions' => 'nullable|string',
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048',
+            'is_featured' => 'boolean'
         ]);
+
+        $validated['is_featured'] = $request->has('is_featured');
+        if ($validated['is_featured']) {
+            Recipe::query()->where('id', '!=', $recipe->id)->update(['is_featured' => false]);
+        }
 
         if ($request->hasFile('image')) {
             if ($recipe->image) {

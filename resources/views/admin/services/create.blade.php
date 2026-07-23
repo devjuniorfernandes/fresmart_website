@@ -44,6 +44,11 @@
                     <label class="block text-xs font-medium text-slate-600 mb-1">Link do Botão (URL)</label>
                     <input type="text" name="btn_link" placeholder="Ex: https://portal.fresonline.ao ou /lojas" class="w-full border-gray-300 rounded-lg text-xs px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">
                 </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Ou Carregar Ficheiro PDF (Download)</label>
+                    <input type="file" name="pdf_file" accept="application/pdf" class="w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-green-50 file:text-[#45B500] hover:file:bg-green-100 cursor-pointer">
+                    <p class="text-[10px] text-gray-400 mt-1">Carregar um PDF irá substituir o link da URL acima pelo caminho do arquivo.</p>
+                </div>
             </div>
 
             <!-- Box: Publicar -->

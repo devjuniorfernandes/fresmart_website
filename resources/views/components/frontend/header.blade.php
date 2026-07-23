@@ -100,6 +100,7 @@
     </div>
 
     <!-- Row 2: Quick Nav (Smooth scroll anchors / Contextual pages) -->
+    @if(!request()->routeIs('campaigns.*') && !request()->routeIs('stores.*') && !request()->routeIs('contacts.*'))
     <div class="bg-[#3a9900] w-full border-t border-white/10">
         <div class="max-w-[1528px] mx-auto px-6 lg:px-10 h-[50px] hidden md:flex items-center gap-1">
             <div class="flex items-center gap-1 text-white text-[12px] font-bold tracking-wide">
@@ -144,4 +145,5 @@
             </div>
         </div>
     </div>
+    @endif
 </header>

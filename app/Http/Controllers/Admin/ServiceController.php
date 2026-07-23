@@ -30,10 +30,18 @@ class ServiceController extends Controller
             'gallery.*' => 'image|max:5000',
             'additional_image' => 'nullable|image|max:2048',
             'btn_text' => 'nullable|string|max:255',
-            'btn_link' => 'nullable|string|max:255'
+            'btn_link' => 'nullable|string|max:255',
+            'pdf_file' => 'nullable|file|mimes:pdf|max:15000'
         ]);
 
         $validated['show_title'] = $request->has('show_title');
+
+        if ($request->hasFile('pdf_file')) {
+            $file = $request->file('pdf_file');
+            $filename = 'catalog_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/services'), $filename);
+            $validated['btn_link'] = 'uploads/services/' . $filename;
+        }
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -86,10 +94,21 @@ class ServiceController extends Controller
             'gallery.*' => 'image|max:5000',
             'additional_image' => 'nullable|image|max:2048',
             'btn_text' => 'nullable|string|max:255',
-            'btn_link' => 'nullable|string|max:255'
+            'btn_link' => 'nullable|string|max:255',
+            'pdf_file' => 'nullable|file|mimes:pdf|max:15000'
         ]);
 
         $validated['show_title'] = $request->has('show_title');
+
+        if ($request->hasFile('pdf_file')) {
+            if ($service->btn_link && file_exists(public_path($service->btn_link))) {
+                @unlink(public_path($service->btn_link));
+            }
+            $file = $request->file('pdf_file');
+            $filename = 'catalog_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/services'), $filename);
+            $validated['btn_link'] = 'uploads/services/' . $filename;
+        }
 
         if ($request->hasFile('image')) {
             if ($service->image) {

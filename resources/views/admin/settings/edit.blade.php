@@ -69,7 +69,7 @@
                     <div class="space-y-4">
                         <h3 class="font-bold text-slate-800 text-xs uppercase tracking-wide">Informações de Contacto Públicas</h3>
                         
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5 flex items-center gap-2">
                                     <i class="fas fa-envelope text-slate-600 text-sm w-4"></i> E-mail de Contacto
@@ -88,6 +88,16 @@
                                        placeholder="+244 923 000 000"
                                        class="w-full border-gray-300 rounded-xl text-sm px-4 py-2.5 focus:border-green-500 focus:ring focus:ring-green-100 focus:ring-opacity-50 transition-colors">
                                 @error('contact_phone') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5 flex items-center gap-2">
+                                    <i class="fas fa-headset text-slate-600 text-sm w-4"></i> Linha de Apoio
+                                </label>
+                                <input type="text" name="support_phone" value="{{ old('support_phone', $setting->support_phone) }}" 
+                                       placeholder="+244 923 000 000"
+                                       class="w-full border-gray-300 rounded-xl text-sm px-4 py-2.5 focus:border-green-500 focus:ring focus:ring-green-100 focus:ring-opacity-50 transition-colors">
+                                @error('support_phone') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                             </div>
                         </div>
 
@@ -168,6 +178,17 @@
                                placeholder="https://youtube.com/@fresmart"
                                class="w-full border-gray-300 rounded-xl text-sm px-4 py-2.5 focus:border-green-500 focus:ring focus:ring-green-100 focus:ring-opacity-50 transition-colors">
                         @error('youtube') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5 flex items-center gap-2">
+                            <i class="fab fa-whatsapp text-green-600 text-sm w-4"></i> WhatsApp Apoio Link ou Número
+                        </label>
+                        <input type="text" name="whatsapp" value="{{ old('whatsapp', $setting->whatsapp) }}" 
+                               placeholder="Ex: +244923000000 ou https://wa.me/244923000000"
+                               class="w-full border-gray-300 rounded-xl text-sm px-4 py-2.5 focus:border-green-500 focus:ring focus:ring-green-100 focus:ring-opacity-50 transition-colors">
+                        @error('whatsapp') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
                     <hr class="border-gray-100 my-6">

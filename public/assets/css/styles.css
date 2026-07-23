@@ -322,3 +322,10 @@ img {
   margin-bottom: 0.5em;
   color: #4b5563;
 }
+
+/* Remove all elevation and shadows globally from all elements */
+*, ::before, ::after {
+  box-shadow: none !important;
+  --tw-shadow: 0 0 #0000 !important;
+  --tw-shadow-colored: 0 0 #0000 !important;
+}

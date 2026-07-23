@@ -65,9 +65,21 @@
                     class="flex items-center px-4 py-2.5 mx-3 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.contacts.*') ? 'bg-[#45B500] text-white shadow-md' : 'text-gray-200 hover:bg-white/10 hover:text-white' }}">
                     <i class="fas fa-envelope w-6 text-center"></i> Mensagens
                 </a>
+                <a href="{{ route('admin.posts.index') }}"
+                    class="flex items-center px-4 py-2.5 mx-3 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.posts.*') ? 'bg-[#45B500] text-white shadow-md' : 'text-gray-200 hover:bg-white/10 hover:text-white' }}">
+                    <i class="fas fa-newspaper w-6 text-center"></i> Notícias
+                </a>
+                <a href="{{ route('admin.leaflets.index') }}"
+                    class="flex items-center px-4 py-2.5 mx-3 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.leaflets.*') ? 'bg-[#45B500] text-white shadow-md' : 'text-gray-200 hover:bg-white/10 hover:text-white' }}">
+                    <i class="fas fa-book-open w-6 text-center"></i> Folhetos
+                </a>
+                <a href="{{ route('admin.applications.index') }}"
+                    class="flex items-center px-4 py-2.5 mx-3 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.applications.*') ? 'bg-[#45B500] text-white shadow-md' : 'text-gray-200 hover:bg-white/10 hover:text-white' }}">
+                    <i class="fas fa-user-tie w-6 text-center"></i> Candidaturas
+                </a>
                 <a href="{{ route('admin.settings.edit') }}"
                     class="flex items-center px-4 py-2.5 mx-3 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.settings.*') ? 'bg-[#45B500] text-white shadow-md' : 'text-gray-200 hover:bg-white/10 hover:text-white' }}">
-                    <i class="fa fa-cog w-6 text-center"></i> Redes Sociais
+                    <i class="fa fa-cog w-6 text-center"></i> Configurações
                 </a>
             </nav>
         </aside>

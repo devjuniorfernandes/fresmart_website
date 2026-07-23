@@ -13,13 +13,15 @@
     <div class="pt-4 px-2 pb-2 flex flex-col flex-grow text-left">
         <h3 class="text-[#1A1A1A] text-[17px] font-bold leading-snug group-hover:text-[#45B500] transition-colors line-clamp-2">{{ $recipe->title }}</h3>
         
-        <p class="text-[13px] text-gray-500 font-medium leading-tight mt-2 mb-4">
-            {{ $recipe->prep_time_minutes ?? '30' }} min <span class="mx-1">|</span> {{ $recipe->portions ?? '4' }} porções
+        <p class="text-[13px] text-gray-500 font-medium leading-tight mt-2 mb-4 flex items-center gap-1.5 flex-wrap">
+            <span class="inline-flex items-center gap-1"><i class="far fa-clock text-[#45B500]"></i> {{ $recipe->prep_time_minutes ?? '30' }} min</span>
+            <span class="text-gray-300">|</span>
+            <span class="inline-flex items-center gap-1"><i class="fas fa-utensils text-[#45B500]"></i> {{ $recipe->portions ?? '4' }} porções</span>
         </p>
 
         <div class="mt-auto">
             <span class="inline-block border border-gray-200 bg-white text-[#1A1A1A] text-[12px] font-bold px-4 py-1.5 rounded-full group-hover:border-[#45B500] group-hover:text-[#45B500] transition-colors shadow-sm">
-                Shop Recipe
+                {{ __('Shop Recipe') }}
             </span>
         </div>
     </div>

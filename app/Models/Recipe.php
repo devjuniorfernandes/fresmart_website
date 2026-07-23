@@ -9,6 +9,11 @@ class Recipe extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'is_featured' => 'boolean',
+        'portions' => 'integer',
+    ];
+
     protected static function boot()
     {
         parent::boot();

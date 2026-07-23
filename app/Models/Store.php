@@ -10,6 +10,10 @@ class Store extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'services_json' => 'array'
+    ];
+
     protected $appends = ['status_label', 'schedule'];
 
     protected static function boot()

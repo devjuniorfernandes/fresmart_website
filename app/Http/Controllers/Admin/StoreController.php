@@ -41,10 +41,14 @@ class StoreController extends Controller
             'opening_time' => 'nullable|string',
             'closing_time' => 'nullable|string',
             'phone' => 'nullable|string|max:255',
+            'whatsapp' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'status' => 'required|string',
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048',
+            'services' => 'nullable|array'
         ]);
+
+        $validated['services_json'] = $request->input('services', []);
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -82,10 +86,14 @@ class StoreController extends Controller
             'opening_time' => 'nullable|string',
             'closing_time' => 'nullable|string',
             'phone' => 'nullable|string|max:255',
+            'whatsapp' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'status' => 'required|string',
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048',
+            'services' => 'nullable|array'
         ]);
+
+        $validated['services_json'] = $request->input('services', []);
 
         if ($request->hasFile('image')) {
             if ($store->image) {

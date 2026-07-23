@@ -22,12 +22,14 @@ class SettingController extends Controller
             'tiktok' => 'nullable|url|max:255',
             'linkedin' => 'nullable|url|max:255',
             'youtube' => 'nullable|url|max:255',
+            'whatsapp' => 'nullable|string|max:255',
             'app_store' => 'nullable|url|max:255',
             'google_play' => 'nullable|url|max:255',
             'description' => 'nullable|string',
             'logo' => 'nullable|image|max:2048',
             'contact_email' => 'nullable|email|max:255',
             'contact_phone' => 'nullable|string|max:255',
+            'support_phone' => 'nullable|string|max:255',
             'contact_address' => 'nullable|string|max:255',
 
             // Banner fields validation

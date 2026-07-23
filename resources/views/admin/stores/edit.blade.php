@@ -67,15 +67,42 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Telefone</label>
                             <input type="text" name="phone" placeholder="+244..." class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('phone', $store->phone) }}">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1.5">E-mail</label>
+                            <label class="block text-sm font-medium text-slate-700 mb-1.5">WhatsApp Link/Número</label>
+                            <input type="text" name="whatsapp" placeholder="+244..." class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('whatsapp', $store->whatsapp) }}">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1.5">E-mail (opcional)</label>
                             <input type="email" name="email" placeholder="loja@fresmart.ao" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('email', $store->email) }}">
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Serviços e Comodidades -->
+            <div class="bg-white border border-gray-100 shadow-md rounded-xl overflow-hidden">
+                <div class="border-b border-gray-100 px-6 py-4 bg-gray-50/50 font-semibold text-slate-800 text-sm">
+                    Serviços e Comodidades Disponíveis
+                </div>
+                <div class="p-6">
+                    @php
+                        $availableServices = ['Talho', 'Café', 'Estacionamento', 'Take-away', 'Padaria', 'Charcutaria', 'Garrafeira', 'Peixaria'];
+                        $storeServices = $store->services_json ?: [];
+                    @endphp
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        @foreach($availableServices as $serviceName)
+                            <label class="flex items-center space-x-2.5 text-sm text-gray-700 cursor-pointer select-none">
+                                <input type="checkbox" name="services[]" value="{{ $serviceName }}" 
+                                       {{ in_array($serviceName, $storeServices) ? 'checked' : '' }}
+                                       class="rounded border-gray-300 text-green-600 focus:ring-green-500">
+                                <span>{{ $serviceName }}</span>
+                            </label>
+                        @endforeach
                     </div>
                 </div>
             </div>

@@ -16,9 +16,15 @@
                         <label class="block text-sm font-medium text-slate-700 mb-1.5">Categoria</label>
                         <input type="text" name="category" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" required>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Tempo de Preparo (minutos)</label>
-                        <input type="number" name="prep_time_minutes" value="0" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1.5">Tempo de Preparo (minutos)</label>
+                            <input type="number" name="prep_time_minutes" value="0" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1.5">Porções</label>
+                            <input type="number" name="portions" value="4" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">
+                        </div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1.5">Ingredientes</label>
@@ -34,8 +40,14 @@
         <div class="w-full lg:w-[280px]">
             <div class="bg-white border border-gray-100 shadow-md rounded-xl overflow-hidden">
                 <div class="border-b border-gray-100 px-6 py-4 bg-gray-50/50 font-semibold text-slate-800 text-sm">Publicar</div>
-                <div class="bg-gray-50/50 p-4 flex justify-end">
-                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-lg shadow-sm transition-all duration-200">Publicar</button>
+                <div class="p-4 space-y-3">
+                    <label class="flex items-center space-x-2 text-sm text-slate-700 cursor-pointer">
+                        <input type="checkbox" name="is_featured" value="1" class="rounded border-gray-300 text-green-600 focus:ring-green-500">
+                        <span>Receita em Destaque</span>
+                    </label>
+                </div>
+                <div class="bg-gray-50/50 border-t border-gray-100 p-4 flex justify-end">
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-lg shadow-sm transition-all duration-200 w-full text-center">Criar Receita</button>
                 </div>
             </div>
         </div>
