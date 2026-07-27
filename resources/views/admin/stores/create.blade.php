@@ -69,7 +69,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Longitude</label>
-                            <input type="text" name="lat" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('lng') }}">
+                            <input type="text" name="lng" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('lng') }}">
                             @error('lng')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
