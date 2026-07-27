@@ -7,7 +7,7 @@
     <div class="py-16 md:py-24 bg-gray-50/50 w-full min-h-[60vh] space-y-20">
         
         <!-- SECTION 1: INTERACTIVE LEAFLETS -->
-        <section class="w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto">
+        <section class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <div class="border-b border-gray-100 pb-4 mb-10 flex flex-col sm:flex-row justify-between sm:items-end gap-4">
                 <div>
                     <h2 class="text-3xl font-extrabold text-gray-900 uppercase tracking-tight">Folhetos Promocionais</h2>
@@ -62,7 +62,7 @@
         </section>
 
         <!-- SECTION 2: STANDALONE CAMPAIGNS -->
-        <section class="w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto border-t border-gray-100 pt-20">
+        <section class="max-w-[1528px] mx-auto px-6 lg:px-10 border-t border-gray-100 pt-20">
             <div class="border-b border-gray-100 pb-4 mb-10">
                 <h2 class="text-3xl font-extrabold text-gray-900 uppercase tracking-tight">Campanhas em Destaque</h2>
                 <p class="text-sm text-gray-500 mt-1">Conheça as nossas ofertas sazonais e campanhas imperdíveis.</p>

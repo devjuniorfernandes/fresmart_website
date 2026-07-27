@@ -3,6 +3,17 @@
         Adicionar Nova Loja
     </x-slot>
 
+    @if ($errors->any())
+        <div class="mb-6 bg-red-50 border border-red-200 text-red-800 p-4 rounded-xl text-sm space-y-1">
+            <div class="font-bold">Atenção! Verifique os erros no formulário:</div>
+            <ul class="list-disc pl-5 space-y-0.5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('admin.stores.store') }}" method="POST" enctype="multipart/form-data" class="flex flex-col lg:flex-row gap-6">
         @csrf
         
@@ -12,6 +23,9 @@
                 <input type="text" name="name" id="name" required placeholder="Nome da Loja" 
                        class="w-full border-gray-300 rounded-xl text-lg px-4 py-3 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors shadow-sm" value="{{ old('name') }}">
                 <input type="text" name="slug" placeholder="Slug (opcional - gerado automaticamente)" class="w-full border-gray-300 rounded-xl text-lg px-4 py-3 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors shadow-sm mt-2" value="{{ old('slug') }}">
+                @error('slug')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Detalhes da Localização -->
@@ -24,26 +38,41 @@
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Cidade *</label>
                             <input type="text" name="city" required class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('city') }}">
+                            @error('city')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Bairro *</label>
                             <input type="text" name="bairro" required class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('bairro') }}">
+                            @error('bairro')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1.5">Endereço Completo *</label>
                         <textarea name="address" rows="2" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" required>{{ old('address') }}</textarea>
+                        @error('address')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Latitude</label>
                             <input type="text" name="lat" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('lat') }}">
+                            @error('lat')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Longitude</label>
-                            <input type="text" name="lng" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('lng') }}">
+                            <input type="text" name="lat" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('lng') }}">
+                            @error('lng')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -122,7 +151,7 @@
                     </div>
                 </div>
                 <div class="bg-gray-50/50 border-t border-gray-100 p-4 flex justify-end">
-                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-lg shadow-sm transition-all duration-200 shadow-sm">
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-lg shadow-sm transition-all duration-200">
                         Publicar
                     </button>
                 </div>

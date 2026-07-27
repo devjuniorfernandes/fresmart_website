@@ -4,8 +4,9 @@
         subtitle="{{ $settings->banner_products_subtitle ?: 'Conheça a frescura e qualidade dos nossos departamentos' }}"
         image="{{ $settings->banner_products_image ? asset($settings->banner_products_image) : asset('assets/img/hero.png') }}" />
 
-    <section class="py-20 w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto min-h-[50vh]">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section class="py-12 max-w-[1528px] mx-auto px-6 lg:px-10 min-h-[50vh]">
+        <x-frontend.breadcrumbs :items="[['label' => 'Produtos']]" />
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($products as $product)
                 <a href="{{ route('products.show', $product) }}" class="block rounded-[16px] overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 group relative">
                     <div class="w-full aspect-[16/10] md:aspect-[4/3]">

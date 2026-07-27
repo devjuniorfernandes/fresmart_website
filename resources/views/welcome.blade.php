@@ -184,7 +184,7 @@
 
     <!-- Campanhas (Banners Promocionais) -->
     <section id="ofertas" class="py-16 bg-[#f8f9fa] w-full">
-        <div class="w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto">
+        <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <h2 class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-10">Campanhas em Destaque</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-12 gap-5 md:auto-rows-[240px]">
@@ -243,7 +243,7 @@
 
     <!-- Receitas Section (Dinâmico) -->
     <section id="receitas" class="py-24 bg-white w-full border-t border-b border-gray-50">
-        <div class="w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto">
+        <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <h2 id="receitas" class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-12 animate-on-scroll">Receitas</h2>
 
             <div class="overflow-x-auto overflow-y-visible no-scrollbar -mx-4 px-4 md:mx-0 md:px-0 pb-4">
@@ -266,7 +266,7 @@
     </section>
 
     <!-- Serviços (Dinâmico) -->
-    <section id="servicos" class="py-16 w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto">
+    <section id="servicos" class="py-16 max-w-[1528px] mx-auto px-6 lg:px-10">
         <h2 id="servicos" class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-8 animate-on-scroll">
             Nossos serviços</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -280,7 +280,7 @@
 
     <!-- Encontre nas Lojas (Mapa Dinâmico Completo) -->
     <section id="lojas" class="py-24 bg-white w-full border-t border-gray-50">
-        <div class="w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto">
+        <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 
                 <!-- Left Column (50%): Title & Text -->

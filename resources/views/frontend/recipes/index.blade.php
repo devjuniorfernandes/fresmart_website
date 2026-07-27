@@ -4,7 +4,7 @@
         subtitle="{{ $settings->banner_recipes_subtitle ?: 'Descubra pratos deliciosos para preparar em casa' }}"
         image="{{ $settings->banner_recipes_image ? asset($settings->banner_recipes_image) : asset('assets/img/receita1.jpg') }}" />
 
-    <section class="py-20 w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto min-h-[50vh]">
+    <section class="py-16 max-w-[1528px] mx-auto px-6 lg:px-10 min-h-[50vh]">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             @forelse($recipes as $recipe)
                 <x-frontend.card-recipe :recipe="$recipe" />

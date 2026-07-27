@@ -1,7 +1,7 @@
 <footer id="#footer" class="bg-[#45B500] pt-7 text-white">
     <!-- Main footer columns -->
     <div
-        class="w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 mb-16">
+        class="max-w-[1528px] mx-auto px-6 lg:px-10 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 mb-16">
 
         <!-- Coluna 1: Fale Connosco -->
         <div class="col-span-2 lg:col-span-1 space-y-5">
@@ -96,7 +96,7 @@
     <!-- Bottom Footer -->
     <div class="bg-black/40 py-6 border-t border-white/10">
         <div
-            class="w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto flex flex-col md:flex-row justify-between items-center text-xs text-white/60 gap-3">
+            class="max-w-[1528px] mx-auto px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center text-xs text-white/60 gap-3">
             <div>&copy; {{ date('Y') }} Fresmart. Todos os direitos reservados.</div>
             <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
                 <a href="#" class="hover:text-white transition-colors">Acessibilidade</a>

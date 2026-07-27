@@ -29,6 +29,21 @@ class FrontendController extends Controller
         return view('frontend.about.index');
     }
 
+    public function sustainability()
+    {
+        return view('frontend.sustainability');
+    }
+
+    public function socialResponsibility()
+    {
+        return view('frontend.social_responsibility');
+    }
+
+    public function careers()
+    {
+        return view('frontend.careers');
+    }
+
     public function recipes()
     {
         $recipes = Recipe::latest()->paginate(12);

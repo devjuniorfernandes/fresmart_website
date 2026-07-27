@@ -38,9 +38,13 @@ class Store extends Model
     public function getScheduleAttribute()
     {
         if ($this->opening_time && $this->closing_time) {
-            $opening = Carbon::createFromFormat('H:i:s', $this->opening_time)->format('H:i');
-            $closing = Carbon::createFromFormat('H:i:s', $this->closing_time)->format('H:i');
-            return "Seg - Dom: {$opening} - {$closing}";
+            try {
+                $opening = Carbon::parse($this->opening_time)->format('H:i');
+                $closing = Carbon::parse($this->closing_time)->format('H:i');
+                return "Seg - Dom: {$opening} - {$closing}";
+            } catch (\Throwable $e) {
+                return "Seg - Dom: 07:00 - 22:00";
+            }
         }
         return "Seg - Dom: 07:00 - 22:00";
     }
@@ -68,9 +72,6 @@ class Store extends Model
             ];
         }
 
-        $now = Carbon::now('Africa/Luanda');
-        $currentTime = $now->format('H:i:s');
-        
         $opening = $this->opening_time;
         $closing = $this->closing_time;
 
@@ -82,46 +83,59 @@ class Store extends Model
             ];
         }
 
-        // Determine if current time falls within opening and closing times
-        $isOpen = false;
-        if ($closing > $opening) {
-            $isOpen = $currentTime >= $opening && $currentTime <= $closing;
-        } else {
-            // Over midnight (e.g. 22:00 to 06:00)
-            $isOpen = $currentTime >= $opening || $currentTime <= $closing;
-        }
+        try {
+            $now = Carbon::now('Africa/Luanda');
+            $openingCarbon = Carbon::parse($opening, 'Africa/Luanda');
+            $closingCarbon = Carbon::parse($closing, 'Africa/Luanda');
 
-        if (!$isOpen) {
+            $currentTime = $now->format('H:i:s');
+            $openStr = $openingCarbon->format('H:i:s');
+            $closeStr = $closingCarbon->format('H:i:s');
+
+            // Determine if current time falls within opening and closing times
+            $isOpen = false;
+            if ($closeStr > $openStr) {
+                $isOpen = $currentTime >= $openStr && $currentTime <= $closeStr;
+            } else {
+                // Over midnight (e.g. 22:00 to 06:00)
+                $isOpen = $currentTime >= $openStr || $currentTime <= $closeStr;
+            }
+
+            if (!$isOpen) {
+                return [
+                    'type' => 'closed',
+                    'label' => 'Fechada',
+                    'color' => 'red'
+                ];
+            }
+
+            // Calculate if it is closing soon (within 60 minutes)
+            if ($closeStr < $openStr && $currentTime >= $openStr) {
+                $closingCarbon->addDay();
+            }
+
+            $diffInMinutes = $now->diffInMinutes($closingCarbon, false);
+
+            if ($diffInMinutes > 0 && $diffInMinutes <= 60) {
+                $formattedClosing = $closingCarbon->format('H:i');
+                return [
+                    'type' => 'closing_soon',
+                    'label' => "Fecha às {$formattedClosing}",
+                    'color' => 'yellow'
+                ];
+            }
+
+            return [
+                'type' => 'open',
+                'label' => 'Aberta agora',
+                'color' => 'green'
+            ];
+        } catch (\Throwable $e) {
             return [
                 'type' => 'closed',
                 'label' => 'Fechada',
                 'color' => 'red'
             ];
         }
-
-        // Calculate if it is closing soon (within 60 minutes)
-        $closingCarbon = Carbon::createFromFormat('H:i:s', $closing, 'Africa/Luanda');
-        // Handle overflow if closing is past midnight and we are currently before midnight
-        if ($closing < $opening && $now->format('H:i:s') >= $opening) {
-            $closingCarbon->addDay();
-        }
-        
-        $diffInMinutes = $now->diffInMinutes($closingCarbon, false);
-
-        if ($diffInMinutes > 0 && $diffInMinutes <= 60) {
-            $formattedClosing = Carbon::createFromFormat('H:i:s', $closing)->format('H:i');
-            return [
-                'type' => 'closing_soon',
-                'label' => "Fecha às {$formattedClosing}",
-                'color' => 'yellow'
-            ];
-        }
-
-        return [
-            'type' => 'open',
-            'label' => 'Aberta agora',
-            'color' => 'green'
-        ];
     }
 }
-

@@ -3,6 +3,17 @@
         Editar Loja
     </x-slot>
 
+    @if ($errors->any())
+        <div class="mb-6 bg-red-50 border border-red-200 text-red-800 p-4 rounded-xl text-sm space-y-1">
+            <div class="font-bold">Atenção! Verifique os erros no formulário:</div>
+            <ul class="list-disc pl-5 space-y-0.5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('admin.stores.update', $store->id) }}" method="POST" enctype="multipart/form-data" class="flex flex-col lg:flex-row gap-6">
         @csrf
         @method('PUT')
@@ -13,6 +24,9 @@
                 <input type="text" name="name" id="name" required placeholder="Nome da Loja" 
                        class="w-full border-gray-300 rounded-xl text-lg px-4 py-3 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors shadow-sm" value="{{ old('name', $store->name) }}">
                 <input type="text" name="slug" placeholder="Slug (opcional - gerado automaticamente)" class="w-full border-gray-300 rounded-xl text-lg px-4 py-3 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors shadow-sm mt-2" value="{{ old('slug', $store->slug) }}">
+                @error('slug')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Detalhes da Localização -->
@@ -25,26 +39,41 @@
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Cidade *</label>
                             <input type="text" name="city" required class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('city', $store->city) }}">
+                            @error('city')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Bairro *</label>
                             <input type="text" name="bairro" required class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('bairro', $store->bairro) }}">
+                            @error('bairro')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1.5">Endereço Completo *</label>
                         <textarea name="address" rows="2" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" required>{{ old('address', $store->address) }}</textarea>
+                        @error('address')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Latitude</label>
                             <input type="text" name="lat" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('lat', $store->lat) }}">
+                            @error('lat')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Longitude</label>
                             <input type="text" name="lng" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('lng', $store->lng) }}">
+                            @error('lng')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -59,11 +88,11 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Horário de Abertura</label>
-                            <input type="time" name="opening_time" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('opening_time', $store->opening_time ? \Illuminate\Support\Carbon::createFromFormat('H:i:s', $store->opening_time)->format('H:i') : '') }}">
+                            <input type="time" name="opening_time" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('opening_time', $store->opening_time) }}">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Horário de Encerramento</label>
-                            <input type="time" name="closing_time" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('closing_time', $store->closing_time ? \Illuminate\Support\Carbon::createFromFormat('H:i:s', $store->closing_time)->format('H:i') : '') }}">
+                            <input type="time" name="closing_time" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" value="{{ old('closing_time', $store->closing_time) }}">
                         </div>
                     </div>
 
@@ -92,13 +121,13 @@
                 <div class="p-6">
                     @php
                         $availableServices = ['Talho', 'Café', 'Estacionamento', 'Take-away', 'Padaria', 'Charcutaria', 'Garrafeira', 'Peixaria'];
-                        $storeServices = $store->services_json ?: [];
+                        $currentServices = is_array($store->services_json) ? $store->services_json : [];
                     @endphp
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                         @foreach($availableServices as $serviceName)
                             <label class="flex items-center space-x-2.5 text-sm text-gray-700 cursor-pointer select-none">
                                 <input type="checkbox" name="services[]" value="{{ $serviceName }}" 
-                                       {{ in_array($serviceName, $storeServices) ? 'checked' : '' }}
+                                       {{ in_array($serviceName, old('services', $currentServices)) ? 'checked' : '' }}
                                        class="rounded border-gray-300 text-green-600 focus:ring-green-500">
                                 <span>{{ $serviceName }}</span>
                             </label>
@@ -118,15 +147,15 @@
                     <div class="flex items-center justify-between">
                         <span><i class="fas fa-map-pin mr-1"></i> Status:</span>
                         <select name="status" class="border-[#8c8f94] rounded-[3px] py-0.5 px-2 text-[13px]">
-                            <option value="Aberta" {{ old('status', $store->status) === 'Aberta' ? 'selected' : '' }}>Aberta</option>
-                            <option value="Fechada" {{ old('status', $store->status) === 'Fechada' ? 'selected' : '' }}>Fechada</option>
-                            <option value="Em Breve" {{ old('status', $store->status) === 'Em Breve' ? 'selected' : '' }}>Em Breve</option>
+                            <option value="Aberta" {{ old('status', $store->status) == 'Aberta' ? 'selected' : '' }}>Aberta</option>
+                            <option value="Fechada" {{ old('status', $store->status) == 'Fechada' ? 'selected' : '' }}>Fechada</option>
+                            <option value="Em Breve" {{ old('status', $store->status) == 'Em Breve' ? 'selected' : '' }}>Em Breve</option>
                         </select>
                     </div>
                 </div>
                 <div class="bg-gray-50/50 border-t border-gray-100 p-4 flex justify-end">
-                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-lg shadow-sm transition-all duration-200 shadow-sm">
-                        Publicar
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-lg shadow-sm transition-all duration-200">
+                        Atualizar
                     </button>
                 </div>
             </div>
@@ -139,11 +168,11 @@
                 <div class="p-4 space-y-3">
                     @if($store->image)
                         <div class="mb-2">
-                            <img src="{{ asset(str_starts_with($store->image, 'uploads/') ? $store->image : 'storage/' . $store->image) }}" class="w-full h-auto rounded-lg border border-gray-100 max-h-[140px] object-cover" />
+                            <img src="{{ asset($store->image) }}" class="w-full h-32 object-cover rounded-md border" alt="Capa da Loja">
                         </div>
                     @endif
                     <input type="file" name="image" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100" />
-                    <p class="text-[11px] text-gray-500">Tamanho máximo de 2MB. Selecione um novo arquivo para substituir.</p>
+                    <p class="text-[11px] text-gray-500">Tamanho máximo de 2MB. Apenas imagens.</p>
                 </div>
             </div>
         </div>

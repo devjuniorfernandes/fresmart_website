@@ -62,8 +62,49 @@
                     class="uppercase flex items-center px-4 border-b-[3px] {{ request()->routeIs('campaigns.*') ? 'border-white' : 'border-transparent' }} hover:border-white/60 hover:bg-white/10 transition whitespace-nowrap">OFERTAS</a>
                 <a href="{{ route('stores.index') }}"
                     class="uppercase flex items-center px-4 border-b-[3px] {{ request()->routeIs('stores.*') ? 'border-white' : 'border-transparent' }} hover:border-white/60 hover:bg-white/10 transition whitespace-nowrap">LOJAS</a>
-                <a href="{{ route('contacts.index') }}"
-                    class="uppercase flex items-center px-4 border-b-[3px] {{ request()->routeIs('contacts.*') ? 'border-white' : 'border-transparent' }} hover:border-white/60 hover:bg-white/10 transition whitespace-nowrap">CONTACTOS</a>
+                <!-- Quem Somos Hover Dropdown -->
+                <div class="relative group flex items-stretch">
+                    <a href="{{ route('about.index') }}"
+                        class="uppercase flex items-center px-4 border-b-[3px] {{ request()->routeIs('about.*') || request()->routeIs('sustainability.*') || request()->routeIs('social.responsibility.*') || request()->routeIs('careers.*') || request()->routeIs('posts.*') || request()->routeIs('contacts.*') ? 'border-white' : 'border-transparent' }} hover:border-white/60 hover:bg-white/10 transition gap-1.5 whitespace-nowrap">
+                        QUEM SOMOS <i class="fas fa-chevron-down text-[9px]"></i>
+                    </a>
+                    <div
+                        class="absolute top-full left-0 pt-1 w-60 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div
+                            class="bg-white shadow-2xl rounded-b-2xl rounded-t-none border border-gray-100 overflow-hidden flex flex-col">
+                            <a href="{{ route('about.index') }}"
+                                class="px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-[#45B500] transition-colors border-b border-gray-100 font-semibold flex items-center justify-between">
+                                <span>Quem Somos</span>
+                                <i class="fas fa-chevron-right text-[10px] text-gray-300"></i>
+                            </a>
+                            <a href="{{ route('sustainability.index') }}"
+                                class="px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-[#45B500] transition-colors border-b border-gray-100 font-semibold flex items-center justify-between">
+                                <span>Sustentabilidade</span>
+                                <i class="fas fa-chevron-right text-[10px] text-gray-300"></i>
+                            </a>
+                            <a href="{{ route('social.responsibility.index') }}"
+                                class="px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-[#45B500] transition-colors border-b border-gray-100 font-semibold flex items-center justify-between">
+                                <span>Responsabilidade Social</span>
+                                <i class="fas fa-chevron-right text-[10px] text-gray-300"></i>
+                            </a>
+                            <a href="{{ route('posts.index') }}"
+                                class="px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-[#45B500] transition-colors border-b border-gray-100 font-semibold flex items-center justify-between">
+                                <span>Notícias</span>
+                                <i class="fas fa-chevron-right text-[10px] text-gray-300"></i>
+                            </a>
+                            <a href="{{ route('careers.index') }}"
+                                class="px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-[#45B500] transition-colors border-b border-gray-100 font-semibold flex items-center justify-between">
+                                <span>Trabalhe Connosco</span>
+                                <i class="fas fa-chevron-right text-[10px] text-gray-300"></i>
+                            </a>
+                            <a href="{{ route('contacts.index') }}"
+                                class="px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-[#45B500] transition-colors font-semibold flex items-center justify-between">
+                                <span>Contactos</span>
+                                <i class="fas fa-chevron-right text-[10px] text-gray-300"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="flex-1"></div>
@@ -120,7 +161,7 @@
     </div>
 
     <!-- Row 2: Quick Nav (Smooth scroll anchors / Contextual pages) -->
-    @if (!request()->routeIs('campaigns.*') && !request()->routeIs('stores.*') && !request()->routeIs('contacts.*'))
+    @if (!request()->routeIs('campaigns.*') && !request()->routeIs('stores.*'))
         <div class="bg-[#3a9900] w-full border-t border-white/10">
             <div class="max-w-[1528px] mx-auto px-6 lg:px-10 h-[50px] hidden md:flex items-center gap-1">
                 <div class="flex items-center gap-1 text-white text-[12px] font-bold tracking-wide">
@@ -152,6 +193,31 @@
                                 {{ $serv->name }}
                             </a>
                         @endforeach
+                    @elseif(request()->routeIs('about.*') || request()->routeIs('sustainability.*') || request()->routeIs('social.responsibility.*') || request()->routeIs('careers.*') || request()->routeIs('posts.*') || request()->routeIs('contacts.*'))
+                        <a href="{{ route('about.index') }}"
+                            class="{{ request()->routeIs('about.*') ? 'bg-white text-[#3a9900] font-extrabold' : 'hover:bg-white/20' }} px-4 py-1.5 rounded-lg transition uppercase">
+                            QUEM SOMOS
+                        </a>
+                        <a href="{{ route('sustainability.index') }}"
+                            class="{{ request()->routeIs('sustainability.*') ? 'bg-white text-[#3a9900] font-extrabold' : 'hover:bg-white/20' }} px-4 py-1.5 rounded-lg transition uppercase">
+                            SUSTENTABILIDADE
+                        </a>
+                        <a href="{{ route('social.responsibility.index') }}"
+                            class="{{ request()->routeIs('social.responsibility.*') ? 'bg-white text-[#3a9900] font-extrabold' : 'hover:bg-white/20' }} px-4 py-1.5 rounded-lg transition uppercase">
+                            RESPONSABILIDADE SOCIAL
+                        </a>
+                        <a href="{{ route('posts.index') }}"
+                            class="{{ request()->routeIs('posts.*') ? 'bg-white text-[#3a9900] font-extrabold' : 'hover:bg-white/20' }} px-4 py-1.5 rounded-lg transition uppercase">
+                            NOTÍCIAS
+                        </a>
+                        <a href="{{ route('careers.index') }}"
+                            class="{{ request()->routeIs('careers.*') ? 'bg-white text-[#3a9900] font-extrabold' : 'hover:bg-white/20' }} px-4 py-1.5 rounded-lg transition uppercase">
+                            TRABALHE CONNOSCO
+                        </a>
+                        <a href="{{ route('contacts.index') }}"
+                            class="{{ request()->routeIs('contacts.*') ? 'bg-white text-[#3a9900] font-extrabold' : 'hover:bg-white/20' }} px-4 py-1.5 rounded-lg transition uppercase">
+                            CONTACTOS
+                        </a>
                     @else
                         @php
                             $isHome = request()->routeIs('home');

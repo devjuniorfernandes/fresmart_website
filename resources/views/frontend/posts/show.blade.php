@@ -5,19 +5,22 @@
         <x-slot:meta_image>{{ str_starts_with($post->image, 'uploads/') ? $post->image : 'storage/' . $post->image }}</x-slot>
     @endif
 
-    <x-frontend.page-header 
-        :title="$post->title" 
-        :subtitle="'Publicado em ' . \Carbon\Carbon::parse($post->published_at ?? $post->created_at)->format('d \d\e F, Y')"
-        image="assets/img/slider1.png" />
+    <div class="bg-white border-b border-gray-100 py-6">
+        <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
+            <x-frontend.breadcrumbs :items="[['label' => 'Quem Somos', 'url' => route('about.index')], ['label' => 'Notícias', 'url' => route('posts.index')], ['label' => $post->title]]" />
+            <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 uppercase mt-1">{{ $post->title }}</h1>
+            <p class="text-xs font-semibold text-gray-400 mt-1">Publicado em {{ \Carbon\Carbon::parse($post->published_at ?? $post->created_at)->format('d \d\e F, Y') }}</p>
+        </div>
+    </div>
 
     <section class="py-16 md:py-24 bg-white w-full">
-        <div class="w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1200px] mx-auto">
+        <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
                 
                 <!-- Left Column (Post details) -->
                 <div class="lg:col-span-8 space-y-8">
                     @if($post->image)
-                        <div class="w-full aspect-[21/9] rounded-3xl overflow-hidden shadow-sm border border-gray-100 bg-gray-50">
+                        <div class="w-full aspect-[21/9] overflow-hidden border border-gray-100 bg-gray-50">
                             <img src="{{ asset(str_starts_with($post->image, 'uploads/') ? $post->image : 'storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-full h-full object-cover">
                         </div>
                     @endif
@@ -35,13 +38,13 @@
 
                 <!-- Right Column (Sidebar with recent articles) -->
                 <div class="lg:col-span-4 space-y-8">
-                    <div class="bg-gray-50/50 p-6 rounded-3xl border border-gray-100 space-y-6">
-                        <h3 class="font-extrabold text-gray-900 text-sm border-b border-gray-200 pb-3">Artigos Recentes</h3>
+                    <div class="bg-gray-50/50 p-6 border border-gray-100 space-y-6">
+                        <h3 class="font-extrabold text-gray-900 text-sm border-b border-gray-200 pb-3 uppercase">Artigos Recentes</h3>
                         
                         <div class="space-y-4">
                             @forelse($recentPosts as $recent)
                                 <a href="{{ route('posts.show', $recent->slug) }}" class="flex items-center gap-3 group">
-                                    <div class="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                    <div class="w-14 h-14 overflow-hidden bg-gray-100 flex-shrink-0 border border-gray-100">
                                         @if($recent->image)
                                             <img src="{{ asset(str_starts_with($recent->image, 'uploads/') ? $recent->image : 'storage/' . $recent->image) }}" class="w-full h-full object-cover" alt="{{ $recent->title }}">
                                         @else

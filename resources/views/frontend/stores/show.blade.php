@@ -6,7 +6,7 @@
     @endif
     <x-frontend.page-header :title="$store->name" :subtitle="$store->city . ($store->bairro ? ' • ' . $store->bairro : '')" image="assets/img/slider1.png" />
 
-    <section class="py-16 w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto min-h-[60vh]">
+    <section class="py-16 max-w-[1528px] mx-auto px-6 lg:px-10 min-h-[60vh]">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             
             <!-- Left Column: Details -->

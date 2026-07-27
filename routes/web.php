@@ -14,6 +14,9 @@ Route::get('/locale/{lang}', function ($lang) {
 })->name('locale.set');
 
 Route::get('/quem-somos', [FrontendController::class, 'about'])->name('about.index');
+Route::get('/sustentabilidade', [FrontendController::class, 'sustainability'])->name('sustainability.index');
+Route::get('/responsabilidade-social', [FrontendController::class, 'socialResponsibility'])->name('social.responsibility.index');
+Route::get('/trabalhe-connosco', [FrontendController::class, 'careers'])->name('careers.index');
 
 Route::get('/receitas', [FrontendController::class, 'recipes'])->name('recipes.index');
 Route::get('/receitas/{recipe}', [FrontendController::class, 'recipeShow'])->name('recipes.show');

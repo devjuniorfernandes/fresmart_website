@@ -14,7 +14,33 @@
         <a href="{{ url('/servicos') }}" class="w-full text-xl font-bold text-gray-800 hover:text-[#45B500] py-3 border-b border-gray-100 mobile-link">Serviços</a>
         <a href="{{ url('/ofertas') }}" class="w-full text-xl font-bold text-gray-800 hover:text-[#45B500] py-3 border-b border-gray-100 mobile-link">Ofertas</a>
         <a href="{{ url('/lojas') }}" class="w-full text-xl font-bold text-gray-800 hover:text-[#45B500] py-3 border-b border-gray-100 mobile-link">Lojas</a>
-        <a href="{{ url('/contactos') }}" class="w-full text-xl font-bold text-gray-800 hover:text-[#45B500] py-3 border-b border-gray-100 mobile-link">Contactos</a>
+        <!-- Quem Somos Submenu Section -->
+        <div class="w-full py-3 border-b border-gray-100">
+            <a href="{{ url('/quem-somos') }}" class="text-xl font-bold text-gray-800 hover:text-[#45B500] mobile-link flex items-center justify-between">
+                <span>Quem Somos</span>
+                <i class="fas fa-chevron-down text-sm text-[#45B500]"></i>
+            </a>
+            <div class="pl-4 mt-3 flex flex-col space-y-2.5 text-sm font-semibold text-gray-600">
+                <a href="{{ url('/quem-somos') }}" class="hover:text-[#45B500] mobile-link flex items-center gap-2">
+                    <i class="fas fa-chevron-right text-[10px] text-[#45B500]"></i> Quem Somos
+                </a>
+                <a href="{{ url('/sustentabilidade') }}" class="hover:text-[#45B500] mobile-link flex items-center gap-2">
+                    <i class="fas fa-chevron-right text-[10px] text-[#45B500]"></i> Sustentabilidade
+                </a>
+                <a href="{{ url('/responsabilidade-social') }}" class="hover:text-[#45B500] mobile-link flex items-center gap-2">
+                    <i class="fas fa-chevron-right text-[10px] text-[#45B500]"></i> Responsabilidade Social
+                </a>
+                <a href="{{ url('/noticias') }}" class="hover:text-[#45B500] mobile-link flex items-center gap-2">
+                    <i class="fas fa-chevron-right text-[10px] text-[#45B500]"></i> Notícias
+                </a>
+                <a href="{{ url('/trabalhe-connosco') }}" class="hover:text-[#45B500] mobile-link flex items-center gap-2">
+                    <i class="fas fa-chevron-right text-[10px] text-[#45B500]"></i> Trabalhe Connosco
+                </a>
+                <a href="{{ url('/contactos') }}" class="hover:text-[#45B500] mobile-link flex items-center gap-2">
+                    <i class="fas fa-chevron-right text-[10px] text-[#45B500]"></i> Contactos
+                </a>
+            </div>
+        </div>
         
         @if($settings->app_store || $settings->google_play)
         <div class="pt-6 w-full flex flex-col gap-3">

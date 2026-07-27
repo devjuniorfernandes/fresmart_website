@@ -11,7 +11,7 @@
         : 'assets/img/receita1.jpg'" />
 
     <section class="py-16 md:py-24 bg-white w-full">
-        <div class="w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto">
+        <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
                 
                 <!-- Left Column (Images, Meta) -->

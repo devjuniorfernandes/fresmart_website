@@ -49,7 +49,8 @@
     <div class="relative w-full min-h-[340px] bg-gray-900 flex items-center justify-center overflow-hidden py-16">
         <!-- Background Image -->
         <div class="absolute inset-0 z-0">
-            <img src="{{ $settings->banner_stores_image ? asset($settings->banner_stores_image) : asset('assets/img/slider1.png') }}" alt="{{ $settings->banner_stores_title ?: 'Nossas Lojas' }}"
+            <img src="{{ $settings->banner_stores_image ? asset($settings->banner_stores_image) : asset('assets/img/slider1.png') }}"
+                alt="{{ $settings->banner_stores_title ?: 'Nossas Lojas' }}"
                 class="w-full h-full object-cover object-center opacity-60">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
         </div>
@@ -137,7 +138,8 @@
                                 <div
                                     class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden flex-shrink-0 border border-gray-100 relative bg-gray-50">
                                     @if ($store->image)
-                                        <img src="{{ asset(str_starts_with($store->image, 'uploads/') ? $store->image : 'storage/' . $store->image) }}" alt="{{ $store->name }}"
+                                        <img src="{{ asset(str_starts_with($store->image, 'uploads/') ? $store->image : 'storage/' . $store->image) }}"
+                                            alt="{{ $store->name }}"
                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                     @else
                                         <img src="{{ asset('assets/img/loja.png') }}" alt="{{ $store->name }}"
@@ -225,7 +227,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="text-center py-10 bg-white border border-gray-100 rounded-2xl shadow-sm">
+                        <div class="text-center py-10 bg-white border border-gray-100">
                             <i class="fas fa-store-slash text-4xl text-gray-300 mb-3 block"></i>
                             <p class="text-gray-500 font-medium">Nenhuma loja cadastrada.</p>
                         </div>

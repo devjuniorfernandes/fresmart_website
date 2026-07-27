@@ -4,7 +4,7 @@
         subtitle="{{ __('Resultados para') }}: &ldquo;{{ $q }}&rdquo;"
         image="assets/img/hero.png" />
 
-    <section class="py-16 w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1528px] mx-auto min-h-[60vh]">
+    <section class="py-16 max-w-[1528px] mx-auto px-6 lg:px-10 min-h-[60vh]">
         @if($recipes->isEmpty() && $products->isEmpty() && $stores->isEmpty() && $posts->isEmpty())
             <div class="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm">
                 <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-400">

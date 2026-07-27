@@ -145,8 +145,9 @@
         </script>
     @endif
 
-    <div class="bg-white  p-8 md:p-12">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">{{ $product->name }}</h2>
+    <div class="bg-white p-8 md:p-12">
+        <x-frontend.breadcrumbs :items="[['label' => 'Produtos', 'url' => route('products.index')], ['label' => $product->name]]" />
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8 mt-2">{{ $product->name }}</h2>
 
         <div class="rich-content text-gray-700 text-lg leading-relaxed">
             {!! $product->description ??

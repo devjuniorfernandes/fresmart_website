@@ -5,7 +5,7 @@
         image="assets/img/slider1.png" />
 
     <section class="py-16 md:py-24 bg-gray-50/50 w-full min-h-[60vh]">
-        <div class="w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[1200px] mx-auto">
+        <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 

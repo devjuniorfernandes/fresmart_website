@@ -29,7 +29,7 @@
 
     <!-- Content Area inside standard page container -->
     <section class="py-16 md:py-24 bg-white w-full">
-        <div class="w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] max-w-[900px] mx-auto">
+        <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <div class="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100 space-y-8">
                 <!-- Rich formatted description content -->
                 <div class="rich-content text-gray-700 text-sm md:text-base leading-relaxed">
