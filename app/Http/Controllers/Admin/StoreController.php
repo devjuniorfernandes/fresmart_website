@@ -49,6 +49,7 @@ class StoreController extends Controller
         ]);
 
         $validated['services_json'] = $request->input('services', []);
+        unset($validated['services']);
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -94,6 +95,7 @@ class StoreController extends Controller
         ]);
 
         $validated['services_json'] = $request->input('services', []);
+        unset($validated['services']);
 
         if ($request->hasFile('image')) {
             if ($store->image) {
