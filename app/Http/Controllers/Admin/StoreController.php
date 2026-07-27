@@ -30,6 +30,13 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->has('lat') && $request->input('lat') !== null) {
+            $request->merge(['lat' => str_replace(',', '.', trim($request->input('lat')))]);
+        }
+        if ($request->has('lng') && $request->input('lng') !== null) {
+            $request->merge(['lng' => str_replace(',', '.', trim($request->input('lng')))]);
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:stores,slug',
@@ -47,6 +54,13 @@ class StoreController extends Controller
             'image' => 'nullable|image|max:2048',
             'services' => 'nullable|array'
         ]);
+
+        if (isset($validated['lat']) && $validated['lat'] !== null && $validated['lat'] !== '') {
+            $validated['lat'] = round((float) $validated['lat'], 7);
+        }
+        if (isset($validated['lng']) && $validated['lng'] !== null && $validated['lng'] !== '') {
+            $validated['lng'] = round((float) $validated['lng'], 7);
+        }
 
         $validated['services_json'] = $request->input('services', []);
         unset($validated['services']);
@@ -76,6 +90,14 @@ class StoreController extends Controller
     public function update(Request $request, string $id)
     {
         $store = Store::findOrFail($id);
+
+        if ($request->has('lat') && $request->input('lat') !== null) {
+            $request->merge(['lat' => str_replace(',', '.', trim($request->input('lat')))]);
+        }
+        if ($request->has('lng') && $request->input('lng') !== null) {
+            $request->merge(['lng' => str_replace(',', '.', trim($request->input('lng')))]);
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:stores,slug,' . $store->id,
@@ -93,6 +115,13 @@ class StoreController extends Controller
             'image' => 'nullable|image|max:2048',
             'services' => 'nullable|array'
         ]);
+
+        if (isset($validated['lat']) && $validated['lat'] !== null && $validated['lat'] !== '') {
+            $validated['lat'] = round((float) $validated['lat'], 7);
+        }
+        if (isset($validated['lng']) && $validated['lng'] !== null && $validated['lng'] !== '') {
+            $validated['lng'] = round((float) $validated['lng'], 7);
+        }
 
         $validated['services_json'] = $request->input('services', []);
         unset($validated['services']);
