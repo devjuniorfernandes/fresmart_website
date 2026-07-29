@@ -1,5 +1,5 @@
 <x-admin-layout>
-    <x-slot:header>Gerenciador de Páginas do Website</x-slot>
+    <x-slot:header>Gestão de Páginas</x-slot>
 
     @if (session('success'))
         <div class="mb-6 max-w-6xl p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded-r-xl shadow-sm text-sm">
@@ -11,8 +11,8 @@
     <div class="bg-white border border-gray-100 shadow-sm rounded-2xl overflow-hidden max-w-6xl">
         <div class="border-b border-gray-100 px-6 py-4 bg-gray-50/50 flex items-center justify-between">
             <div>
-                <h3 class="font-bold text-slate-800 text-sm uppercase tracking-wide">Páginas Institucionais e Conteúdo</h3>
-                <p class="text-xs text-gray-500 mt-0.5">Selecione uma página para editar os seus títulos, textos e imagens em tempo real.</p>
+                <h3 class="font-bold text-slate-800 text-sm uppercase tracking-wide">Páginas do Website e Conteúdos Estáticos</h3>
+                <p class="text-xs text-gray-500 mt-0.5">Selecione uma página pública para gerir os seus títulos, subtítulos, banners de cabeçalho e textos em tempo real.</p>
             </div>
         </div>
 
@@ -27,11 +27,11 @@
                             <div class="flex items-center gap-2">
                                 <h4 class="font-bold text-slate-900 text-base">{{ $page->name }}</h4>
                                 <span class="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[11px] font-bold rounded-full font-mono">
-                                    /{{ $page->slug === 'about' ? 'quem-somos' : ($page->slug === 'sustainability' ? 'sustentabilidade' : ($page->slug === 'social_responsibility' ? 'responsabilidade-social' : ($page->slug === 'posts' ? 'noticias' : ($page->slug === 'careers' ? 'trabalhe-connosco' : 'contactos')))) }}
+                                    /{{ $page->slug === 'about' ? 'quem-somos' : ($page->slug === 'sustainability' ? 'sustentabilidade' : ($page->slug === 'social_responsibility' ? 'responsabilidade-social' : ($page->slug === 'posts' ? 'noticias' : ($page->slug === 'careers' ? 'trabalhe-connosco' : ($page->slug === 'contacts' ? 'contactos' : ($page->slug === 'home' ? '' : $page->slug)))))) }}
                                 </span>
                             </div>
                             <p class="text-xs text-gray-500 line-clamp-1">
-                                {{ $page->subtitle ?: 'Sem subtítulo definido.' }}
+                                {{ $page->subtitle ?: ($page->title ?: 'Sem subtítulo definido.') }}
                             </p>
                         </div>
                     </div>

@@ -49,8 +49,8 @@
     <div class="relative w-full min-h-[340px] bg-gray-900 flex items-center justify-center overflow-hidden py-16">
         <!-- Background Image -->
         <div class="absolute inset-0 z-0">
-            <img src="{{ $settings->banner_stores_image ? asset($settings->banner_stores_image) : asset('assets/img/slider1.png') }}"
-                alt="{{ $settings->banner_stores_title ?: 'Nossas Lojas' }}"
+            <img src="{{ ($page && $page->banner_image) ? asset($page->banner_image) : ($settings->banner_stores_image ? asset($settings->banner_stores_image) : asset('assets/img/slider1.png')) }}"
+                alt="{{ $page->title ?? ($settings->banner_stores_title ?: 'Nossas Lojas') }}"
                 class="w-full h-full object-cover object-center opacity-60">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
         </div>
@@ -58,11 +58,11 @@
         <!-- Header Content -->
         <div class="relative z-10 text-center px-4 max-w-5xl mx-auto w-full mt-10 flex flex-col items-center gap-8">
             <div>
-                <h1 class="text-4xl md:text-5xl font-bold text-white uppercase tracking-wider shadow-sm">
-                    {{ $settings->banner_stores_title ?: 'Nossas Lojas' }}
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase tracking-tight drop-shadow-md">
+                    {{ $page->title ?? ($settings->banner_stores_title ?: 'Nossas Lojas') }}
                 </h1>
-                <p class="mt-2 text-base md:text-lg text-white/95 font-light">
-                    {{ $settings->banner_stores_subtitle ?: 'Encontre a Fresmart mais próxima de você' }}
+                <p class="text-sm sm:text-base text-gray-200 mt-2 max-w-2xl mx-auto drop-shadow font-normal">
+                    {{ $page->subtitle ?? ($settings->banner_stores_subtitle ?: 'Encontre a loja Fresmart mais próxima de si em Angola.') }}
                 </p>
             </div>
 

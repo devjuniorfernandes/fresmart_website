@@ -11,10 +11,6 @@
             class="tab-btn flex-1 py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider text-center transition-all duration-200 bg-gray-50 text-slate-600 hover:bg-gray-100">
             <i class="fas fa-share-nodes mr-2"></i> Redes Sociais e Apps
         </button>
-        <button type="button" onclick="switchTab('tab-banners')" id="btn-tab-banners"
-            class="tab-btn flex-1 py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider text-center transition-all duration-200 bg-gray-50 text-slate-600 hover:bg-gray-100">
-            <i class="fas fa-images mr-2"></i> Banners das Páginas
-        </button>
     </div>
 
     @if (session('success'))
@@ -279,79 +275,11 @@
             </div>
         </div>
 
-        <!-- TAB 3: BANNERS DAS PÁGINAS -->
-        <div id="tab-banners" class="tab-content space-y-6 hidden">
-            <div class="bg-white border border-gray-100 shadow-sm rounded-2xl overflow-hidden">
-                <div
-                    class="border-b border-gray-100 px-6 py-4 bg-gray-50/50 font-bold text-slate-800 text-sm flex items-center gap-2">
-                    <i class="fas fa-image text-[#45B500]"></i> Banners das Páginas Públicas (Cabeçalhos)
-                </div>
-
-                <div class="p-6 space-y-6">
-                    <p class="text-xs text-gray-500 pb-2">Gerencie as imagens de fundo, títulos e subtítulos de
-                        cabeçalho exibidos nas páginas públicas do site.</p>
-
-                    @php
-                        $bannerSections = [
-                            'products' => 'Produtos (Departamentos)',
-                            'services' => 'Serviços',
-                            'campaigns' => 'Ofertas Especiais',
-                            'stores' => 'Nossas Lojas',
-                            'contacts' => 'Fale Connosco (Contactos)',
-                            'recipes' => 'Receitas',
-                        ];
-                    @endphp
-
-                    @foreach ($bannerSections as $key => $label)
-                        <div class="border border-gray-100 rounded-xl p-4 space-y-4 bg-gray-50/20">
-                            <div
-                                class="font-bold text-slate-800 text-xs uppercase tracking-wide border-b border-gray-100/50 pb-2 flex justify-between items-center">
-                                <span>Banner - Secção {{ $label }}</span>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Título do
-                                        Banner</label>
-                                    <input type="text" name="banner_{{ $key }}_title"
-                                        value="{{ old('banner_' . $key . '_title', $setting->{'banner_' . $key . '_title'}) }}"
-                                        placeholder="Ex: Nossos {{ $label }}"
-                                        class="w-full border-gray-300 rounded-xl text-xs px-3 py-2.5 focus:border-green-500 focus:ring focus:ring-green-100 focus:ring-opacity-50 transition-colors">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Subtítulo
-                                        do Banner</label>
-                                    <input type="text" name="banner_{{ $key }}_subtitle"
-                                        value="{{ old('banner_' . $key . '_subtitle', $setting->{'banner_' . $key . '_subtitle'}) }}"
-                                        placeholder="Ex: Conheça as nossas novidades"
-                                        class="w-full border-gray-300 rounded-xl text-xs px-3 py-2.5 focus:border-green-500 focus:ring focus:ring-green-100 focus:ring-opacity-50 transition-colors">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1.5">Imagem de
-                                    Fundo do Banner</label>
-                                @if ($setting->{"banner_{$key}_image"})
-                                    <div
-                                        class="mb-3 rounded-xl overflow-hidden border border-gray-100 h-24 max-w-md relative bg-gray-50">
-                                        <img src="{{ asset($setting->{"banner_{$key}_image"}) }}"
-                                            class="w-full h-full object-cover" alt="Banner atual">
-                                    </div>
-                                @endif
-                                <input type="file" name="banner_{{ $key }}_image" accept="image/*"
-                                    class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-green-50 file:text-[#45B500] hover:file:bg-green-100 cursor-pointer">
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-
         <!-- Global Save Button (visible across all tabs) -->
         <div class="bg-white border border-gray-100 shadow-sm rounded-2xl p-4 flex justify-end">
             <button type="submit"
                 class="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-8 rounded-xl shadow-sm transition-all duration-200 text-sm flex items-center gap-2">
-                <i class="fas fa-save text-base"></i> Salvar Todas as Alterações
+                <i class="fas fa-save text-base"></i> Salvar Alterações
             </button>
         </div>
     </form>
@@ -374,8 +302,10 @@
 
             // Set active button styles
             var activeBtn = document.getElementById('btn-' + tabId);
-            activeBtn.classList.remove('bg-gray-50', 'text-slate-600', 'hover:bg-gray-100');
-            activeBtn.classList.add('bg-[#45B500]', 'text-white', 'shadow-sm');
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-gray-50', 'text-slate-600', 'hover:bg-gray-100');
+                activeBtn.classList.add('bg-[#45B500]', 'text-white', 'shadow-sm');
+            }
         }
     </script>
 </x-admin-layout>

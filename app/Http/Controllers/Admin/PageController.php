@@ -37,6 +37,10 @@ class PageController extends Controller
             'content' => 'nullable|string',
             'extra_content_1' => 'nullable|string',
             'extra_content_2' => 'nullable|string',
+            'extra_content_3' => 'nullable|string',
+            'extra_content_4' => 'nullable|string',
+            'extra_content_5' => 'nullable|string',
+            'timeline' => 'nullable|array',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'banner_image' => 'nullable|file|mimes:jpeg,jpg,png,webp,svg,gif|max:10240',
@@ -48,6 +52,23 @@ class PageController extends Controller
             'section_image_6' => 'nullable|file|mimes:jpeg,jpg,png,webp,svg,gif|max:10240',
             'section_image_7' => 'nullable|file|mimes:jpeg,jpg,png,webp,svg,gif|max:10240',
         ]);
+
+        // Process timeline data
+        if ($request->has('timeline') && is_array($request->input('timeline'))) {
+            $filteredTimeline = [];
+            foreach ($request->input('timeline') as $item) {
+                if (!empty($item['year']) || !empty($item['title']) || !empty($item['description'])) {
+                    $filteredTimeline[] = [
+                        'year' => $item['year'] ?? '',
+                        'title' => $item['title'] ?? '',
+                        'description' => $item['description'] ?? '',
+                    ];
+                }
+            }
+            $validated['timeline'] = array_values($filteredTimeline);
+        } else {
+            $validated['timeline'] = [];
+        }
 
         $uploadDirectory = public_path('uploads/pages');
         if (!file_exists($uploadDirectory)) {
@@ -65,10 +86,17 @@ class PageController extends Controller
             $validated['banner_image'] = 'uploads/pages/' . $filename;
         }
 
-        // Upload Section Images (1 through 7)
+        // Upload or Remove Section Images (1 through 7)
         foreach ([1, 2, 3, 4, 5, 6, 7] as $num) {
             $fieldName = "section_image_{$num}";
-            if ($request->hasFile($fieldName)) {
+            $removeFlag = "remove_section_image_{$num}";
+
+            if ($request->boolean($removeFlag)) {
+                if ($page->$fieldName && file_exists(public_path($page->$fieldName))) {
+                    @unlink(public_path($page->$fieldName));
+                }
+                $validated[$fieldName] = null;
+            } elseif ($request->hasFile($fieldName)) {
                 if ($page->$fieldName && file_exists(public_path($page->$fieldName))) {
                     @unlink(public_path($page->$fieldName));
                 }

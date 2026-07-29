@@ -11,6 +11,10 @@ class Page extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'timeline' => 'array',
+    ];
+
     /**
      * Get route key name for implicit binding by slug
      */

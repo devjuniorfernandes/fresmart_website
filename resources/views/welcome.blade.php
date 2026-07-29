@@ -46,207 +46,336 @@
     </x-slot>
 
     <!-- Hero Slider Section - DESKTOP (Dinâmico) -->
-    <div class="hidden sm:block w-full bg-white pb-4 border-b border-gray-100">
+    <div class="hidden sm:block w-full bg-white border-b border-gray-100">
         <header id="hero-slider-desktop"
-            class="relative h-[350px] md:h-[400px] text-white flex items-center overflow-hidden w-full bg-gray-900 shadow-inner">
-
+            class="relative w-full min-h-[380px] lg:min-h-[460px] flex items-center justify-center overflow-hidden transition-all duration-300">
             @forelse($slides as $index => $slide)
+                @php
+                    $imgPath = $slide->image ?: $slide->image_path;
+                    $slideSrc = $imgPath ? (str_starts_with($imgPath, 'http') ? $imgPath : (str_starts_with($imgPath, 'uploads/') ? asset($imgPath) : asset('storage/' . $imgPath))) : asset('assets/img/slider1.png');
+                    $slideLink = $slide->link ?: $slide->link_url;
+                @endphp
                 <div
-                    class="desktop-slide slide absolute inset-0 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }} transition-opacity duration-1000 z-10 cursor-pointer">
-                    <a href="{{ $slide->link ?: route('campaigns.index') }}" class="absolute inset-0 z-20"
-                        title="{{ $slide->title ?? 'Banner' }}"></a>
-                    <div class="absolute inset-0 z-0">
-                        <img src="{{ asset(str_starts_with($slide->image, 'uploads/') ? $slide->image : 'storage/' . $slide->image) }}"
-                            alt="{{ $slide->title ?? 'Banner' }}" class="w-full h-full object-cover object-center">
-                        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent"></div>
-                    </div>
-                    <div
-                        class="hero-content h-full w-full flex flex-col justify-center relative z-10 pointer-events-none">
-                        <div class="max-w-[1528px] mx-auto px-6 lg:px-10 w-full">
-                            <div class="md:w-1/2 space-y-4">
-                                @if (trim($slide->title) || trim($slide->subtitle))
-                                    <h2
-                                        class="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight uppercase drop-shadow-md">
-                                        {{ $slide->title }}
-                                        @if (trim($slide->subtitle))
-                                            <br> <span class="text-[#7dd82a]">{{ $slide->subtitle }}</span>
-                                        @endif
-                                    </h2>
-                                @endif
-                                @if ($slide->link)
-                                    <div class="flex flex-wrap gap-3 pt-2 pointer-events-auto">
-                                        <a href="{{ $slide->link }}"
-                                            class="bg-[#45B500] hover:bg-white hover:text-[#1b5314] text-white transition-all duration-300 font-bold py-2 px-6 rounded-xl text-center shadow-md text-xs sm:text-sm uppercase tracking-wider">
-                                            SAIBA MAIS
-                                        </a>
-                                    </div>
-                                @endif
-                            </div>
+                    class="desktop-slide absolute inset-0 w-full h-full transition-opacity duration-700 ease-in-out {{ $index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0' }}">
+                    @if ($slideLink)
+                        <a href="{{ $slideLink }}" class="block w-full h-full">
+                    @endif
+                    <img src="{{ $slideSrc }}"
+                        alt="{{ $slide->title ?: 'Fresmart Banner' }}" class="w-full h-full object-cover">
+                    @if ($slide->title || $slide->subtitle)
+                        <div class="absolute inset-0 bg-black/20 flex flex-col justify-end p-8 md:p-12 text-white">
+                            @if ($slide->title)
+                                <h2 class="text-2xl md:text-4xl font-black uppercase tracking-tight drop-shadow-md">
+                                    {{ $slide->title }}</h2>
+                            @endif
+                            @if ($slide->subtitle)
+                                <p class="text-sm md:text-base mt-2 drop-shadow font-medium max-w-2xl">
+                                    {{ $slide->subtitle }}</p>
+                            @endif
                         </div>
-                    </div>
+                    @endif
+                    @if ($slideLink)
+                        </a>
+                    @endif
                 </div>
             @empty
-                <!-- Fallback if no campaigns exist -->
-                <div
-                    class="desktop-slide slide absolute inset-0 opacity-100 transition-opacity duration-1000 z-10 cursor-pointer">
-                    <a href="{{ route('campaigns.index') }}" class="absolute inset-0 z-20"></a>
-                    <div class="absolute inset-0 z-0">
-                        <img src="{{ asset('assets/img/hero.png') }}" alt="FRESMART Banner 1"
-                            class="w-full h-full object-cover object-center">
-                        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent"></div>
-                    </div>
-                    <div
-                        class="hero-content h-full w-full flex flex-col justify-center relative z-10 pointer-events-none">
-                        <div class="max-w-[1528px] mx-auto px-6 lg:px-10 w-full">
-                            <div class="md:w-1/2 space-y-4">
-                                <h2
-                                    class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight uppercase drop-shadow-md">
-                                    SERVINDO ANGOLA<br><span class="text-[#7dd82a]">COM CORAÇÃO</span>
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Fallback se não houver slides cadastrados -->
+                <div class="w-full h-full relative">
+                    <img src="{{ asset('assets/img/slider1.png') }}" class="w-full h-full object-cover">
                 </div>
             @endforelse
         </header>
 
-        <!-- Indicador por baixo do slide (modo desktop - pill verde + pontos cinzas) -->
-        <div class="flex justify-center items-center space-x-1.5 mt-4" id="desktop-dots-container">
-            @foreach ($slides as $index => $slide)
-                <button
-                    class="desktop-slider-dot h-2.5 rounded-full {{ $index === 0 ? 'bg-[#45B500] w-6' : 'bg-gray-300 w-2.5' }} transition-all duration-300 cursor-pointer"
-                    data-index="{{ $index }}"></button>
-            @endforeach
-        </div>
+        <!-- Indicators/Dots (Por Baixo do Banner Principal) -->
+        @if ($slides->count() > 1)
+            <div class="flex justify-center gap-2 py-3 bg-white">
+                @foreach ($slides as $index => $slide)
+                    <button
+                        class="desktop-slider-dot h-2.5 rounded-full transition-all duration-300 cursor-pointer {{ $index === 0 ? 'bg-[#45B500] w-6' : 'bg-gray-300 w-2.5' }}"
+                        aria-label="Slide {{ $index + 1 }}"></button>
+                @endforeach
+            </div>
+        @endif
     </div>
 
-    <!-- Hero Slider Section - MOBILE CARD CAROUSEL (Dinâmico) -->
-    <section id="hero-slider-mobile"
-        class="block sm:hidden bg-white py-6 w-full overflow-hidden relative border-b border-gray-100">
-        <div class="w-full overflow-hidden">
-            <!-- Slider Track -->
+    <!-- Hero Slider Section - MOBILE (Layout ajustado para manter banner idêntico) -->
+    <div class="block sm:hidden w-full bg-white py-4 border-b border-gray-100">
+        <header id="hero-slider-mobile" class="relative w-full overflow-hidden">
             <div id="mobile-slider-track" class="flex transition-transform duration-500 ease-out"
-                style="transform: translateX(6.5vw); width: max-content;">
-                @forelse($slides as $index => $slide)
-                    <div
-                        class="w-[82vw] mx-[2.5vw] flex-shrink-0 relative overflow-hidden rounded-3xl aspect-[16/10] bg-gray-900 shadow-md cursor-pointer">
-                        <a href="{{ $slide->link ?: route('campaigns.index') }}" class="absolute inset-0 z-20"
-                            title="{{ $slide->title ?? 'Banner' }}"></a>
-                        <img src="{{ asset(str_starts_with($slide->image, 'uploads/') ? $slide->image : 'storage/' . $slide->image) }}"
-                            alt="{{ $slide->title ?? 'Banner' }}" class="w-full h-full object-cover">
-                        <!-- Dark Overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent"></div>
-                        <!-- Content -->
+                style="transform: translateX(6.5vw);">
+                @forelse($slides as $slide)
+                    @php
+                        $imgPath = $slide->image ?: $slide->image_path;
+                        $slideSrc = $imgPath ? (str_starts_with($imgPath, 'http') ? $imgPath : (str_starts_with($imgPath, 'uploads/') ? asset($imgPath) : asset('storage/' . $imgPath))) : asset('assets/img/slider1.png');
+                        $slideLink = $slide->link ?: $slide->link_url;
+                    @endphp
+                    <div class="mobile-slide flex-shrink-0 w-[82vw] mr-[5vw] last:mr-0">
                         <div
-                            class="absolute inset-0 p-6 flex flex-col justify-end text-white space-y-2 pointer-events-none">
-                            @if (trim($slide->title) || trim($slide->subtitle))
-                                <h3 class="text-sm font-extrabold tracking-tight uppercase leading-tight line-clamp-2">
-                                    {{ $slide->title }}
-                                    @if (trim($slide->subtitle))
-                                        <span
-                                            class="text-[#7dd82a] block text-[11px] mt-0.5 font-bold">{{ $slide->subtitle }}</span>
-                                    @endif
-                                </h3>
+                            class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm aspect-[16/10] relative">
+                            @if ($slideLink)
+                                <a href="{{ $slideLink }}" class="block w-full h-full">
                             @endif
-                            @if ($slide->link)
-                                <div class="flex gap-2 pt-1 pointer-events-auto">
-                                    <a href="{{ $slide->link }}"
-                                        class="bg-[#45B500] text-white font-bold py-1.5 px-4 rounded-lg text-center text-[10px] uppercase tracking-wider">
-                                        SAIBA MAIS
-                                    </a>
+                            <img src="{{ $slideSrc }}"
+                                alt="{{ $slide->title ?: 'Fresmart Mobile Banner' }}"
+                                class="w-full h-full object-cover">
+                            @if ($slide->title || $slide->subtitle)
+                                <div class="absolute inset-0 bg-black/20 flex flex-col justify-end p-4 text-white">
+                                    @if ($slide->title)
+                                        <h2 class="text-base font-black uppercase tracking-tight drop-shadow-md">
+                                            {{ $slide->title }}</h2>
+                                    @endif
+                                    @if ($slide->subtitle)
+                                        <p class="text-xs mt-1 drop-shadow font-medium line-clamp-2">
+                                            {{ $slide->subtitle }}</p>
+                                    @endif
                                 </div>
+                            @endif
+                            @if ($slideLink)
+                                </a>
                             @endif
                         </div>
                     </div>
                 @empty
-                    <!-- Fallback -->
-                    <div
-                        class="w-[82vw] mx-[2.5vw] flex-shrink-0 relative overflow-hidden rounded-3xl aspect-[16/10] bg-gray-900 shadow-md cursor-pointer">
-                        <a href="{{ route('campaigns.index') }}" class="absolute inset-0 z-20"></a>
-                        <img src="{{ asset('assets/img/hero.png') }}" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent"></div>
+                    <div class="mobile-slide flex-shrink-0 w-[82vw]">
                         <div
-                            class="absolute inset-0 p-6 flex flex-col justify-end text-white space-y-2 pointer-events-none">
-                            <h3 class="text-sm font-extrabold tracking-tight uppercase leading-tight">
-                                SERVINDO ANGOLA<br><span class="text-[#7dd82a]">COM CORAÇÃO</span>
-                            </h3>
+                            class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm aspect-[16/10]">
+                            <img src="{{ asset('assets/img/slider1.png') }}" class="w-full h-full object-cover">
                         </div>
                     </div>
                 @endforelse
             </div>
-        </div>
 
-        <!-- Mobile Dots Navigation -->
-        <div class="flex justify-center space-x-1.5 mt-4" id="mobile-dots-container">
-            @foreach ($slides as $index => $slide)
-                <button
-                    class="mobile-slider-dot w-2 h-2 rounded-full {{ $index === 0 ? 'bg-[#45B500] w-4' : 'bg-gray-300' }} transition-all duration-300"
-                    data-index="{{ $index }}"></button>
-            @endforeach
-        </div>
-    </section>
+            <!-- Mobile Dots -->
+            @if ($slides->count() > 1)
+                <div class="flex justify-center gap-2 mt-4">
+                    @foreach ($slides as $index => $slide)
+                        <button
+                            class="mobile-slider-dot h-2.5 rounded-full transition-all duration-300 {{ $index === 0 ? 'bg-[#45B500] w-6' : 'bg-gray-300 w-2.5' }}"
+                            aria-label="Slide Mobile {{ $index + 1 }}"></button>
+                    @endforeach
+                </div>
+            @endif
+        </header>
+    </div>
 
-    <!-- Campanhas (Banners Promocionais) -->
-    <section id="ofertas" class="py-16 bg-[#f8f9fa] w-full">
+    <!-- Campanhas (Banners Promocionais em Grid de 12 Colunas) -->
+    <section id="ofertas" class="py-16 bg-[#f8f9fa] w-full border-t border-gray-100">
         <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <h2 class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-10">Campanhas em Destaque</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-5 md:auto-rows-[240px]">
-                @foreach ($campaigns->take(5) as $index => $campaign)
-                    @php
-                        $gridClasses = 'col-span-1 row-span-1 h-[240px] md:h-auto'; // Default mobile
+            @if($campaigns->count() > 0)
+                @php $cList = $campaigns->values(); @endphp
+                @if($cList->count() >= 5)
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 md:auto-rows-[240px]">
+                        <!-- Item 0: col-span-5 row-span-2 -->
+                        <a href="{{ $cList[0]->link ?: route('campaigns.show', $cList[0]) }}"
+                            class="md:col-start-1 md:col-span-5 md:row-start-1 md:row-span-2 rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 min-h-[300px] md:min-h-0">
+                            <img src="{{ $cList[0]->image ? asset(str_starts_with($cList[0]->image, 'uploads/') ? $cList[0]->image : 'storage/'.$cList[0]->image) : asset('assets/img/hero.png') }}"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                alt="{{ $cList[0]->title }}">
 
-                        if ($index === 0) {
-                            $gridClasses = 'md:col-start-1 md:col-span-5 md:row-start-1 md:row-span-2';
-                        } elseif ($index === 1) {
-                            $gridClasses = 'md:col-start-6 md:col-span-4 md:row-start-1 md:row-span-1';
-                        } elseif ($index === 2) {
-                            $gridClasses = 'md:col-start-6 md:col-span-2 md:row-start-2 md:row-span-1';
-                        } elseif ($index === 3) {
-                            $gridClasses = 'md:col-start-8 md:col-span-2 md:row-start-2 md:row-span-1';
-                        } elseif ($index === 4) {
-                            $gridClasses = 'md:col-start-10 md:col-span-3 md:row-start-1 md:row-span-2';
-                        }
-                    @endphp
+                            @if(($cList[0]->show_title ?? true) || ($cList[0]->show_button ?? true))
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
 
-                    <a href="{{ $campaign->link ?: route('campaigns.show', $campaign->slug ?? $campaign->id) }}"
-                        class="{{ $gridClasses }} rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300">
-                        <img src="{{ $campaign->image ? asset(str_starts_with($campaign->image, 'uploads/') ? $campaign->image : 'storage/' . $campaign->image) : asset('assets/img/hero.png') }}"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            alt="{{ $campaign->title }}">
+                                <div class="absolute bottom-6 left-6 right-6">
+                                    @if($cList[0]->show_title ?? true)
+                                        <h3 class="text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
+                                            {{ $cList[0]->title }}
+                                        </h3>
+                                    @endif
 
-                        @if ($campaign->show_text)
-                            <!-- Gradiente subtil para garantir leitura do texto -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity">
-                            </div>
-
-                            <div class="absolute bottom-6 left-6 right-6">
-                                <h3 class="text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
-                                    {{ $campaign->title }}</h3>
-                                <div class="mt-3 overflow-hidden">
-                                    <span
-                                        class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
-                                        Ver Oferta
-                                    </span>
+                                    @if($cList[0]->show_button ?? true)
+                                        <div class="mt-3 overflow-hidden">
+                                            <span class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
+                                                Ver Oferta
+                                            </span>
+                                        </div>
+                                    @endif
                                 </div>
-                            </div>
-                        @endif
-                    </a>
-                @endforeach
-            </div>
+                            @endif
+                        </a>
 
-            @if ($campaigns->count() > 5)
-                <div class="mt-10 text-center">
-                    <a href="{{ route('campaigns.index') }}"
-                        class="inline-block text-[#45B500] font-bold hover:underline">Ver todas as Campanhas →</a>
-                </div>
+                        <!-- Item 1: col-span-4 row-span-1 -->
+                        <a href="{{ $cList[1]->link ?: route('campaigns.show', $cList[1]) }}"
+                            class="md:col-start-6 md:col-span-4 md:row-start-1 md:row-span-1 rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 min-h-[220px] md:min-h-0">
+                            <img src="{{ $cList[1]->image ? asset(str_starts_with($cList[1]->image, 'uploads/') ? $cList[1]->image : 'storage/'.$cList[1]->image) : asset('assets/img/hero.png') }}"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                alt="{{ $cList[1]->title }}">
+
+                            @if(($cList[1]->show_title ?? true) || ($cList[1]->show_button ?? true))
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+
+                                <div class="absolute bottom-6 left-6 right-6">
+                                    @if($cList[1]->show_title ?? true)
+                                        <h3 class="text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
+                                            {{ $cList[1]->title }}
+                                        </h3>
+                                    @endif
+
+                                    @if($cList[1]->show_button ?? true)
+                                        <div class="mt-3 overflow-hidden">
+                                            <span class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
+                                                Ver Oferta
+                                            </span>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
+                        </a>
+
+                        <!-- Item 2: col-span-2 row-span-1 -->
+                        <a href="{{ $cList[2]->link ?: route('campaigns.show', $cList[2]) }}"
+                            class="md:col-start-6 md:col-span-2 md:row-start-2 md:row-span-1 rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 min-h-[220px] md:min-h-0">
+                            <img src="{{ $cList[2]->image ? asset(str_starts_with($cList[2]->image, 'uploads/') ? $cList[2]->image : 'storage/'.$cList[2]->image) : asset('assets/img/hero.png') }}"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                alt="{{ $cList[2]->title }}">
+
+                            @if(($cList[2]->show_title ?? true) || ($cList[2]->show_button ?? true))
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+
+                                <div class="absolute bottom-6 left-6 right-6">
+                                    @if($cList[2]->show_title ?? true)
+                                        <h3 class="text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
+                                            {{ $cList[2]->title }}
+                                        </h3>
+                                    @endif
+
+                                    @if($cList[2]->show_button ?? true)
+                                        <div class="mt-3 overflow-hidden">
+                                            <span class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
+                                                Ver Oferta
+                                            </span>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
+                        </a>
+
+                        <!-- Item 3: col-span-2 row-span-1 -->
+                        <a href="{{ $cList[3]->link ?: route('campaigns.show', $cList[3]) }}"
+                            class="md:col-start-8 md:col-span-2 md:row-start-2 md:row-span-1 rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 min-h-[220px] md:min-h-0">
+                            <img src="{{ $cList[3]->image ? asset(str_starts_with($cList[3]->image, 'uploads/') ? $cList[3]->image : 'storage/'.$cList[3]->image) : asset('assets/img/hero.png') }}"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                alt="{{ $cList[3]->title }}">
+
+                            @if(($cList[3]->show_title ?? true) || ($cList[3]->show_button ?? true))
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+
+                                <div class="absolute bottom-6 left-6 right-6">
+                                    @if($cList[3]->show_title ?? true)
+                                        <h3 class="text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
+                                            {{ $cList[3]->title }}
+                                        </h3>
+                                    @endif
+
+                                    @if($cList[3]->show_button ?? true)
+                                        <div class="mt-3 overflow-hidden">
+                                            <span class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
+                                                Ver Oferta
+                                            </span>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
+                        </a>
+
+                        <!-- Item 4: col-span-3 row-span-2 -->
+                        <a href="{{ $cList[4]->link ?: route('campaigns.show', $cList[4]) }}"
+                            class="md:col-start-10 md:col-span-3 md:row-start-1 md:row-span-2 rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 min-h-[300px] md:min-h-0">
+                            <img src="{{ $cList[4]->image ? asset(str_starts_with($cList[4]->image, 'uploads/') ? $cList[4]->image : 'storage/'.$cList[4]->image) : asset('assets/img/hero.png') }}"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                alt="{{ $cList[4]->title }}">
+
+                            @if(($cList[4]->show_title ?? true) || ($cList[4]->show_button ?? true))
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+
+                                <div class="absolute bottom-6 left-6 right-6">
+                                    @if($cList[4]->show_title ?? true)
+                                        <h3 class="text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
+                                            {{ $cList[4]->title }}
+                                        </h3>
+                                    @endif
+
+                                    @if($cList[4]->show_button ?? true)
+                                        <div class="mt-3 overflow-hidden">
+                                            <span class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
+                                                Ver Oferta
+                                            </span>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
+                        </a>
+                    </div>
+
+                    <!-- Se houver mais de 5 campanhas, exibe as restantes num grid de 3 colunas abaixo -->
+                    @if($cList->count() > 5)
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+                            @foreach($cList->slice(5) as $extraCampaign)
+                                <a href="{{ $extraCampaign->link ?: route('campaigns.show', $extraCampaign) }}"
+                                    class="rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 h-[240px]">
+                                    <img src="{{ $extraCampaign->image ? asset(str_starts_with($extraCampaign->image, 'uploads/') ? $extraCampaign->image : 'storage/'.$extraCampaign->image) : asset('assets/img/hero.png') }}"
+                                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        alt="{{ $extraCampaign->title }}">
+                                    @if(($extraCampaign->show_title ?? true) || ($extraCampaign->show_button ?? true))
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                                        <div class="absolute bottom-6 left-6 right-6">
+                                            @if($extraCampaign->show_title ?? true)
+                                                <h3 class="text-xl font-bold text-white drop-shadow-md leading-tight">
+                                                    {{ $extraCampaign->title }}
+                                                </h3>
+                                            @endif
+                                            @if($extraCampaign->show_button ?? true)
+                                                <div class="mt-3 overflow-hidden">
+                                                    <span class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
+                                                        Ver Oferta
+                                                    </span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endif
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
+                @else
+                    <!-- Fallback para menos de 5 campanhas -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        @foreach($cList as $campaign)
+                            <a href="{{ $campaign->link ?: route('campaigns.show', $campaign) }}"
+                                class="rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 h-[260px]">
+                                <img src="{{ $campaign->image ? asset(str_starts_with($campaign->image, 'uploads/') ? $campaign->image : 'storage/'.$campaign->image) : asset('assets/img/hero.png') }}"
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    alt="{{ $campaign->title }}">
+                                @if(($campaign->show_title ?? true) || ($campaign->show_button ?? true))
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                                    <div class="absolute bottom-6 left-6 right-6">
+                                        @if($campaign->show_title ?? true)
+                                            <h3 class="text-xl font-bold text-white drop-shadow-md leading-tight">
+                                                {{ $campaign->title }}
+                                            </h3>
+                                        @endif
+                                        @if($campaign->show_button ?? true)
+                                            <div class="mt-3 overflow-hidden">
+                                                <span class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
+                                                    Ver Oferta
+                                                </span>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+            @else
+                <p class="text-gray-500">Nenhuma campanha ativa de momento.</p>
             @endif
         </div>
     </section>
 
-    <!-- Receitas Section (Dinâmico) -->
-    <section id="receitas" class="py-12 bg-white w-full border-t border-b border-gray-50">
+    <!-- Receitas (Dinâmico com Animação) -->
+    <section class="py-16 bg-white w-full border-t border-gray-50">
         <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <h2 id="receitas"
                 class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-12 animate-on-scroll">Receitas</h2>
@@ -275,8 +404,7 @@
     <!-- Serviços (Dinâmico) -->
     <section id="servicos" class="py-16 w-full bg-[#f8f9fa] border-t border-gray-100">
         <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
-            <h2 id="servicos"
-                class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-8 animate-on-scroll">
+            <h2 id="servicos" class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-8 animate-on-scroll">
                 Nossos serviços</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($services as $service)
@@ -325,6 +453,24 @@
             </div>
         </div>
     </section>
+
+    <!-- Nova Secção Promocional (bg-[#f8f9fa] full width - Exibida Apenas Se Houver Imagem Carregada) -->
+    @if ($page && $page->section_image_1)
+        <section class="py-10 bg-[#f8f9fa] w-full border-t border-gray-100">
+            <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
+                @php
+                    $bannerImage = asset($page->section_image_1);
+                    $bannerUrl = $page->extra_content_1 ? $page->extra_content_1 : route('contacts.index');
+                @endphp
+
+                <a href="{{ $bannerUrl }}"
+                    class="block w-full aspect-[16/3] rounded-2xl md:rounded-[32px] overflow-hidden transition-transform duration-300 hover:scale-[1.005]">
+                    <img src="{{ $bannerImage }}" alt="Promoção Fresmart"
+                        class="w-full h-full object-cover border border-gray-100 shadow-sm rounded-2xl md:rounded-[32px]">
+                </a>
+            </div>
+        </section>
+    @endif
 
     <x-slot:scripts>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -498,9 +644,6 @@
                     }
                 });
 
-                // Start map centered on Luanda with zoom level 12 by default instead of fitting all bounds
-                // fitMapBounds();
-
                 // Setup Search and Filters
                 document.getElementById('search-input').addEventListener('input', applyFilters);
                 document.getElementById('city-filter').addEventListener('change', applyFilters);
@@ -598,110 +741,74 @@
             // Check if store matches all active filters
             function isStoreMatch(store, query, selectedCity, openOnly) {
                 if (query) {
-                    var nameMatch = store.name.toLowerCase().includes(query);
-                    var cityMatch = store.city.toLowerCase().includes(query);
-                    var bairroMatch = (store.bairro || '').toLowerCase().includes(query);
-                    var addressMatch = store.address.toLowerCase().includes(query);
-                    if (!nameMatch && !cityMatch && !bairroMatch && !addressMatch) {
-                        return false;
-                    }
+                    var q = query.toLowerCase();
+                    var matchName = store.name ? store.name.toLowerCase().includes(q) : false;
+                    var matchAddr = store.address ? store.address.toLowerCase().includes(q) : false;
+                    var matchBairro = store.bairro ? store.bairro.toLowerCase().includes(q) : false;
+                    var matchCity = store.city ? store.city.toLowerCase().includes(q) : false;
+                    if (!matchName && !matchAddr && !matchBairro && !matchCity) return false;
                 }
-                if (selectedCity && store.city !== selectedCity) {
-                    return false;
-                }
-                if (openOnly) {
-                    var type = store.status_label.type;
-                    if (type !== 'open' && type !== 'closing_soon') {
-                        return false;
-                    }
-                }
+                if (selectedCity && store.city !== selectedCity) return false;
+                if (openOnly && !store.is_open) return false;
                 return true;
             }
 
-            // Apply active filters to list and map
+            // Apply all filters and update view
             function applyFilters() {
-                var query = document.getElementById('search-input').value.toLowerCase().trim();
+                var query = document.getElementById('search-input').value.trim();
                 var selectedCity = document.getElementById('city-filter').value;
                 var openOnly = document.getElementById('open-now-filter').checked;
 
                 var visibleCount = 0;
-                var activeMarkers = [];
-
                 storesData.forEach(function(store) {
-                    var matches = isStoreMatch(store, query, selectedCity, openOnly);
                     var card = document.getElementById(`store-card-${store.id}`);
                     var marker = mapMarkers[store.id];
+                    var match = isStoreMatch(store, query, selectedCity, openOnly);
 
-                    if (matches) {
+                    if (match) {
+                        if (card) card.style.display = 'block';
+                        if (marker) map.addLayer(marker);
                         visibleCount++;
-                        if (card) card.style.display = 'flex';
-                        if (marker) {
-                            if (!map.hasLayer(marker)) {
-                                marker.addTo(map);
-                            }
-                            activeMarkers.push(marker);
-                        }
                     } else {
                         if (card) card.style.display = 'none';
-                        if (marker) {
-                            if (map.hasLayer(marker)) {
-                                map.removeLayer(marker);
-                            }
-                        }
+                        if (marker) map.removeLayer(marker);
                     }
                 });
 
-                document.getElementById('store-count').innerText = `${visibleCount} lojas encontradas`;
-
-                if (activeMarkers.length > 0) {
-                    var group = new L.featureGroup(activeMarkers);
-                    map.fitBounds(group.getBounds().pad(0.15));
+                var noResults = document.getElementById('no-results-msg');
+                if (noResults) {
+                    noResults.style.display = (visibleCount === 0) ? 'block' : 'none';
                 }
             }
 
-            // Adjust map view to encompass all markers
-            function fitMapBounds() {
-                var markersArray = Object.values(mapMarkers);
-                if (markersArray.length > 0) {
-                    var group = new L.featureGroup(markersArray);
-                    map.fitBounds(group.getBounds().pad(0.15));
-                }
-            }
-
-            // Geolocation and sorting
+            // Optional: User Geolocation to sort stores by distance
             function initGeolocation() {
-                if (navigator.geolocation) {
+                if ('geolocation' in navigator) {
                     navigator.geolocation.getCurrentPosition(function(position) {
                         var userLat = position.coords.latitude;
                         var userLng = position.coords.longitude;
 
+                        // Calculate distance to each store using Haversine formula
                         storesData.forEach(function(store) {
                             if (store.lat && store.lng) {
-                                var dist = calculateHaversine(userLat, userLng, parseFloat(store.lat),
-                                    parseFloat(store.lng));
-                                store.distance = dist;
-
-                                var distBadge = document.getElementById(`distance-badge-${store.id}`);
-                                if (distBadge) {
-                                    distBadge.innerText = `${dist.toFixed(1)} km`;
-                                    distBadge.classList.remove('hidden');
+                                store.distance = calculateDistance(userLat, userLng, parseFloat(store
+                                    .lat), parseFloat(store.lng));
+                                var distEl = document.getElementById(`store-distance-${store.id}`);
+                                if (distEl) {
+                                    distEl.textContent = `${store.distance.toFixed(1)} km de si`;
+                                    distEl.classList.remove('hidden');
                                 }
                             }
                         });
-
-                        document.getElementById('location-status').classList.remove('hidden');
-                        document.getElementById('location-status').classList.add('flex');
-
-                        sortCardsByDistance();
-
-                    }, function(err) {
-                        console.warn("Geolocation permission denied or error: ", err.message);
+                    }, function(error) {
+                        // Silent fallback if permission denied or error
                     });
                 }
             }
 
-            function calculateHaversine(lat1, lon1, lat2, lon2) {
-                var R = 6371; // km
+            // Haversine distance formula in kilometers
+            function calculateDistance(lat1, lon1, lat2, lon2) {
+                var R = 6371; // Radius of earth in km
                 var dLat = (lat2 - lat1) * Math.PI / 180;
                 var dLon = (lon2 - lon1) * Math.PI / 180;
                 var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -710,29 +817,6 @@
                 var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
                 return R * c;
             }
-
-            function sortCardsByDistance() {
-                var listContainer = document.getElementById('store-list-container');
-                if (!listContainer) return;
-
-                var cards = Array.from(listContainer.querySelectorAll('.store-card'));
-                cards.sort(function(a, b) {
-                    var idA = parseInt(a.dataset.id);
-                    var idB = parseInt(b.dataset.id);
-
-                    var storeA = storesData.find(s => s.id === idA);
-                    var storeB = storesData.find(s => s.id === idB);
-
-                    var distA = storeA.distance !== undefined ? storeA.distance : Infinity;
-                    var distB = storeB.distance !== undefined ? storeB.distance : Infinity;
-
-                    return distA - distB;
-                });
-
-                cards.forEach(function(card) {
-                    listContainer.appendChild(card);
-                });
-            }
         </script>
-    </x-slot>
+    </x-slot:scripts>
 </x-frontend.layout>

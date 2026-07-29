@@ -11,28 +11,37 @@
                     <input type="file" name="image" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors bg-white">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Link de Redirecionamento</label>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Link de Redirecionamento (Opcional)</label>
                     <input type="text" name="link" class="w-full border-gray-300 rounded-lg text-sm px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors" placeholder="https://...">
                 </div>
             </div>
         </div>
         <div class="w-full lg:w-[280px]">
             <div class="bg-white border border-gray-100 shadow-md rounded-xl overflow-hidden">
-                <div class="border-b border-gray-100 px-6 py-4 bg-gray-50/50 font-semibold text-slate-800 text-sm">Publicar</div>
-                <div class="p-3">
-                    <select name="is_active" class="w-full border-[#8c8f94] rounded-[3px] text-[13px]">
-                        <option value="1">Ativa</option>
-                        <option value="0">Inativa</option>
-                    </select>
-                </div>
-                <div class="p-4 border-t border-gray-100">
-                    <label class="flex items-center space-x-2 text-sm text-slate-700 cursor-pointer">
-                        <input type="checkbox" name="show_text" value="1" checked class="rounded border-gray-300 text-green-600 focus:ring-green-500">
-                        <span>Mostrar Texto por Cima</span>
-                    </label>
+                <div class="border-b border-gray-100 px-6 py-4 bg-gray-50/50 font-semibold text-slate-800 text-sm">Opções de Publicação</div>
+                <div class="p-4 space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Estado</label>
+                        <select name="is_active" class="w-full border-gray-300 rounded-xl text-xs px-3 py-2">
+                            <option value="1">Ativa</option>
+                            <option value="0">Inativa</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-3 pt-2 border-t border-gray-100">
+                        <label class="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
+                            <input type="checkbox" name="show_title" value="1" checked class="rounded border-gray-300 text-green-600 focus:ring-green-500">
+                            <span>Exibir Título / Texto do Bloco</span>
+                        </label>
+
+                        <label class="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
+                            <input type="checkbox" name="show_button" value="1" checked class="rounded border-gray-300 text-green-600 focus:ring-green-500">
+                            <span>Exibir Botão ("Ver Oferta" / "Saber Mais")</span>
+                        </label>
+                    </div>
                 </div>
                 <div class="bg-gray-50/50 p-4 flex justify-end">
-                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-lg shadow-sm transition-all duration-200">Publicar</button>
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-5 rounded-lg shadow-sm transition-all duration-200 text-xs font-bold uppercase">Publicar</button>
                 </div>
             </div>
         </div>

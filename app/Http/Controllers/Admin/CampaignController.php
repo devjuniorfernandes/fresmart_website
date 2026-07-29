@@ -25,8 +25,9 @@ class CampaignController extends Controller
             'title' => 'required|string|max:255',
             'link' => 'nullable|string',
             'is_active' => 'required|boolean',
-            'show_text' => 'nullable|boolean',
-            'image' => 'nullable|image|max:2048'
+            'show_title' => 'nullable|boolean',
+            'show_button' => 'nullable|boolean',
+            'image' => 'nullable|image|max:10240'
         ]);
 
         if ($request->hasFile('image')) {
@@ -36,10 +37,12 @@ class CampaignController extends Controller
             $validated['image'] = 'uploads/campaigns/' . $filename;
         }
 
-        $validated['show_text'] = $request->has('show_text');
+        $validated['show_title'] = $request->has('show_title');
+        $validated['show_button'] = $request->has('show_button');
+        $validated['show_text'] = $validated['show_title'];
 
         Campaign::create($validated);
-        return redirect()->route('admin.campaigns.index')->with('success', 'Campanha criada.');
+        return redirect()->route('admin.campaigns.index')->with('success', 'Campanha criada com sucesso.');
     }
 
     public function show(string $id)
@@ -60,8 +63,9 @@ class CampaignController extends Controller
             'slug' => 'nullable|string|max:255|unique:campaigns,slug,' . $campaign->id,
             'link' => 'nullable|string',
             'is_active' => 'required|boolean',
-            'show_text' => 'nullable|boolean',
-            'image' => 'nullable|image|max:2048'
+            'show_title' => 'nullable|boolean',
+            'show_button' => 'nullable|boolean',
+            'image' => 'nullable|image|max:10240'
         ]);
 
         if ($request->hasFile('image')) {
@@ -82,10 +86,12 @@ class CampaignController extends Controller
             $validated['image'] = 'uploads/campaigns/' . $filename;
         }
 
-        $validated['show_text'] = $request->has('show_text');
+        $validated['show_title'] = $request->has('show_title');
+        $validated['show_button'] = $request->has('show_button');
+        $validated['show_text'] = $validated['show_title'];
 
         $campaign->update($validated);
-        return redirect()->route('admin.campaigns.index')->with('success', 'Campanha atualizada.');
+        return redirect()->route('admin.campaigns.index')->with('success', 'Campanha atualizada com sucesso.');
     }
 
     public function destroy(string $id)

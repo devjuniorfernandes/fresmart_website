@@ -1,16 +1,16 @@
 <x-frontend.layout>
     <x-frontend.page-header 
-        title="{{ $settings->banner_products_title ?: 'Nossos Produtos' }}" 
-        subtitle="{{ $settings->banner_products_subtitle ?: 'Conheça a frescura e qualidade dos nossos departamentos' }}"
-        image="{{ $settings->banner_products_image ? asset($settings->banner_products_image) : asset('assets/img/hero.png') }}" />
+        title="{{ $page->title ?? ($settings->banner_products_title ?: 'Nossos Produtos') }}" 
+        subtitle="{{ $page->subtitle ?? ($settings->banner_products_subtitle ?: 'Conheça a frescura e qualidade dos nossos departamentos') }}"
+        image="{{ ($page && $page->banner_image) ? asset($page->banner_image) : ($settings->banner_products_image ? asset($settings->banner_products_image) : asset('assets/img/hero.png')) }}" />
 
     <section class="py-12 max-w-[1528px] mx-auto px-6 lg:px-10 min-h-[50vh]">
         <x-frontend.breadcrumbs :items="[['label' => 'Produtos']]" />
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($products as $product)
-                <a href="{{ route('products.show', $product) }}" class="block rounded-[16px] overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 group relative">
+                <a href="{{ route('products.show', $product) }}" class="block rounded-[24px] overflow-hidden transition-all duration-300 group relative border border-gray-100 shadow-sm hover:shadow-xl hover:scale-[1.01]">
                     <div class="w-full aspect-[16/10] md:aspect-[4/3]">
-                        <img src="{{ $product->image ? asset(str_starts_with($product->image, 'uploads/') ? $product->image : 'storage/'.$product->image) : asset('assets/img/slider1.png') }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="{{ $product->image ? asset(str_starts_with($product->image, 'uploads/') ? $product->image : 'storage/'.$product->image) : asset('placeholder.png') }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
                     
                     @if($product->show_title)

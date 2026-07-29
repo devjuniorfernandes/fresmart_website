@@ -1,8 +1,8 @@
 <x-frontend.layout>
     <x-frontend.page-header 
-        title="{{ $settings->banner_services_title ?: 'Nossos Serviços' }}" 
-        subtitle="{{ $settings->banner_services_subtitle ?: 'Conheça tudo o que a Fresmart oferece para você' }}"
-        image="{{ $settings->banner_services_image ? asset($settings->banner_services_image) : asset('assets/img/hero.png') }}" />
+        title="{{ $page->title ?? ($settings->banner_services_title ?: 'Nossos Serviços') }}" 
+        subtitle="{{ $page->subtitle ?? ($settings->banner_services_subtitle ?: 'Conheça tudo o que a Fresmart oferece para você') }}"
+        image="{{ ($page && $page->banner_image) ? asset($page->banner_image) : ($settings->banner_services_image ? asset($settings->banner_services_image) : asset('assets/img/hero.png')) }}" />
 
     <section class="py-12 max-w-[1528px] mx-auto px-6 lg:px-10 min-h-[50vh]">
         <x-frontend.breadcrumbs :items="[['label' => 'Serviços']]" />

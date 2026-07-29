@@ -1,8 +1,8 @@
 <x-frontend.layout>
     <x-frontend.page-header 
-        title="{{ $settings->banner_campaigns_title ?: 'Promoções & Campanhas' }}" 
-        subtitle="{{ $settings->banner_campaigns_subtitle ?: 'Os melhores preços e folhetos para si' }}"
-        image="{{ $settings->banner_campaigns_image ? asset($settings->banner_campaigns_image) : asset('assets/img/Ofertas Imperdíveis.jpg') }}" />
+        title="{{ $page->title ?? ($settings->banner_campaigns_title ?: 'Promoções & Campanhas') }}" 
+        subtitle="{{ $page->subtitle ?? ($settings->banner_campaigns_subtitle ?: 'Os melhores preços e folhetos para si') }}"
+        image="{{ ($page && $page->banner_image) ? asset($page->banner_image) : ($settings->banner_campaigns_image ? asset($settings->banner_campaigns_image) : asset('assets/img/Ofertas Imperdíveis.jpg')) }}" />
 
     <div class="py-16 md:py-24 bg-gray-50/50 w-full min-h-[60vh] space-y-20">
         

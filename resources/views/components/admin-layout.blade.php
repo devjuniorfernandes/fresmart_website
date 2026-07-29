@@ -79,7 +79,7 @@
                 </a>
                 <a href="{{ route('admin.pages.index') }}"
                     class="flex items-center px-4 py-2.5 mx-3 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.pages.*') ? 'bg-[#45B500] text-white shadow-md' : 'text-gray-200 hover:bg-white/10 hover:text-white' }}">
-                    <i class="fas fa-file-alt w-6 text-center"></i> Páginas (CMS)
+                    <i class="fas fa-file-alt w-6 text-center"></i> Gestão de Páginas
                 </a>
                 <a href="{{ route('admin.settings.edit') }}"
                     class="flex items-center px-4 py-2.5 mx-3 rounded-lg text-sm font-medium transition-all duration-200 {{ request()->routeIs('admin.settings.*') ? 'bg-[#45B500] text-white shadow-md' : 'text-gray-200 hover:bg-white/10 hover:text-white' }}">
