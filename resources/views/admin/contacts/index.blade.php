@@ -57,7 +57,7 @@
                                 <div class="text-xs text-gray-400 font-normal line-clamp-1">{{ Str::limit(strip_tags($msg->message), 80) }}</div>
                             </td>
                             <td class="py-4 px-6 align-middle text-gray-500 text-xs">
-                                {{ $msg->created_at->format('d/m/Y H:i') }}
+                                {{ $msg->created_at?->format('d/m/Y H:i') ?? '-' }}
                             </td>
                             <td class="py-4 px-6 align-middle text-right space-x-2">
                                 <a href="{{ route('admin.contacts.show', $msg->id) }}" class="inline-flex items-center px-3 py-1.5 bg-slate-100 hover:bg-[#45B500] hover:text-white rounded-lg text-slate-700 text-xs font-bold transition-all duration-200">

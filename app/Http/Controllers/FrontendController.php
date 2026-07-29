@@ -26,22 +26,31 @@ class FrontendController extends Controller
 
     public function about()
     {
-        return view('frontend.about.index');
+        $page = \App\Models\Page::where('slug', 'about')->first();
+        return view('frontend.about.index', compact('page'));
     }
 
     public function sustainability()
     {
-        return view('frontend.sustainability');
+        $page = \App\Models\Page::where('slug', 'sustainability')->first();
+        return view('frontend.sustainability', compact('page'));
     }
 
     public function socialResponsibility()
     {
-        return view('frontend.social_responsibility');
+        $page = \App\Models\Page::where('slug', 'social_responsibility')->first();
+        return view('frontend.social_responsibility', compact('page'));
     }
 
     public function careers()
     {
-        return view('frontend.careers');
+        $page = \App\Models\Page::where('slug', 'careers')->first();
+        return view('frontend.careers', compact('page'));
+    }
+
+    public function candidaturaForm()
+    {
+        return view('frontend.candidatura');
     }
 
     public function recipes()
@@ -106,8 +115,9 @@ class FrontendController extends Controller
 
     public function posts()
     {
+        $page = \App\Models\Page::where('slug', 'posts')->first();
         $posts = \App\Models\BlogPost::where('is_active', true)->latest()->paginate(9);
-        return view('frontend.posts.index', compact('posts'));
+        return view('frontend.posts.index', compact('posts', 'page'));
     }
 
     public function postShow($slug)
@@ -119,7 +129,8 @@ class FrontendController extends Controller
 
     public function contacts()
     {
-        return view('frontend.contacts.index');
+        $page = \App\Models\Page::where('slug', 'contacts')->first();
+        return view('frontend.contacts.index', compact('page'));
     }
 
     public function contactSubmit(Request $request)
@@ -222,6 +233,8 @@ class FrontendController extends Controller
             $file->move($destinationPath, $filename);
             $validated['cv_path'] = 'uploads/cvs/' . $filename;
         }
+
+        unset($validated['cv']);
 
         \App\Models\JobApplication::create($validated);
 

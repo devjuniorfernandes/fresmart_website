@@ -74,7 +74,7 @@
     </style>
 </head>
 
-<body class="text-gray-800 antialiased bg-[#EBECEE]">
+<body class="text-gray-800 antialiased {{ $bodyClass ?? 'bg-white' }}">
 
     <!-- Preloader -->
     <div id="preloader"

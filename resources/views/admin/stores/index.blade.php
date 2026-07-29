@@ -30,7 +30,7 @@
                                     {{ $store->status ?: 'Ativo' }}
                                 </span>
                             </td>
-                            <td class="py-4 px-6 align-middle text-gray-500">{{ $store->created_at->format('d/m/Y') }}</td>
+                            <td class="py-4 px-6 align-middle text-gray-500">{{ $store->created_at?->format('d/m/Y') ?? '-' }}</td>
                             <td class="py-4 px-6 align-middle text-right space-x-2 whitespace-nowrap">
                                 <a href="{{ route('admin.stores.edit', $store->id) }}" class="inline-flex items-center px-3 py-1.5 bg-slate-100 hover:bg-[#45B500] hover:text-white rounded-lg text-slate-700 text-xs font-bold transition-all duration-200">
                                     Editar

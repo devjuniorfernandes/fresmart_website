@@ -17,7 +17,7 @@
                 </div>
                 <div class="text-right">
                     <p class="text-xs text-gray-400">Enviada em</p>
-                    <p class="text-xs font-bold text-slate-600">{{ $message->created_at->format('d/m/Y H:i:s') }}</p>
+                    <p class="text-xs font-bold text-slate-600">{{ $message->created_at?->format('d/m/Y H:i:s') ?? '-' }}</p>
                 </div>
             </div>
 

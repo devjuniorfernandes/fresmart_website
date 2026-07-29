@@ -12,6 +12,7 @@ class BlogPost extends Model
     protected $casts = [
         'published_at' => 'datetime',
         'is_active' => 'boolean',
+        'gallery' => 'array',
     ];
 
     protected static function boot()

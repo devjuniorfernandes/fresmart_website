@@ -138,6 +138,20 @@
                                 <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
                             @enderror
                         </div>
+
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-slate-600 uppercase mb-1.5 flex items-center gap-2">
+                                <i class="fas fa-map-location-dot text-slate-600 text-sm w-4"></i> Código Iframe do Mapa (Google Maps Embed)
+                            </label>
+                            <textarea name="contact_map_iframe" rows="4"
+                                placeholder='<iframe src="https://www.google.com/maps/embed?..." width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>'
+                                class="w-full border-gray-300 rounded-xl text-xs font-mono px-4 py-2.5 focus:border-green-500 focus:ring focus:ring-green-100 focus:ring-opacity-50 transition-colors">{{ old('contact_map_iframe', $setting->contact_map_iframe) }}</textarea>
+                            <p class="text-[11px] text-gray-400 mt-1">Cole aqui o código HTML &lt;iframe&gt; fornecido pelo Google Maps para exibir o mapa dinâmico na página de contactos.</p>
+                            @error('contact_map_iframe')
+                                <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
                 </div>
             </div>

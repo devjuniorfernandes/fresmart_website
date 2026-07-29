@@ -5,41 +5,34 @@
                 ['label' => 'Quem Somos', 'url' => route('about.index')],
                 ['label' => 'Responsabilidade Social'],
             ]" />
-            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 uppercase mt-1">Responsabilidade Social</h1>
-            <p class="text-sm text-gray-500 mt-1">Comprometidos com as pessoas, as comunidades e o futuro de Angola.</p>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 uppercase mt-1">
+                {{ $page->title ?? 'Responsabilidade Social' }}</h1>
+            <p class="text-sm text-gray-500 mt-1">
+                {{ $page->subtitle ?? 'Comprometidos com as pessoas, as comunidades e o futuro de Angola.' }}
+            </p>
         </div>
     </div>
 
-    <section class="py-12 md:py-16 bg-gray-50/50 w-full min-h-[60vh]">
+    <section class="bg-white w-full min-h-[60vh] py-8 md:py-12">
         <div class="max-w-[1528px] mx-auto px-6 lg:px-10 space-y-12">
 
-            <div class="bg-white border border-gray-100 shadow-sm p-8 md:p-12 space-y-10">
+            <div class="bg-white space-y-10">
 
                 <!-- Section 1: O Nosso Impacto -->
                 <div class="space-y-6">
                     <div class="border-b border-gray-100 pb-4">
-                        <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 uppercase">O Nosso Impacto</h2>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 uppercase">
+                            {{ $page->content_title ?? 'O Nosso Impacto' }}
+                        </h2>
                     </div>
 
-                    <div class="overflow-hidden border border-gray-100">
-                        <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1400&q=80"
-                            alt="Responsabilidade Social Frasmart" class="w-full h-64 md:h-80 object-cover">
+                    <div class="overflow-hidden border border-gray-100 h-64 md:h-80">
+                        <img src="{{ asset(str_starts_with($page->section_image_1 ?? '', 'http') ? $page->section_image_1 : ($page->section_image_1 ?: 'placeholder.png')) }}"
+                            alt="Responsabilidade Social Fresmart" class="w-full h-full object-cover">
                     </div>
 
                     <div class="space-y-4 text-sm md:text-base text-gray-600 leading-relaxed">
-                        <p>
-                            Na <strong>Frasmart</strong>, acreditamos que o crescimento de uma empresa deve caminhar
-                            lado a lado com o desenvolvimento das comunidades onde está presente. A nossa
-                            responsabilidade vai além da oferta de produtos e serviços de qualidade; procuramos gerar um
-                            impacto positivo na vida das pessoas, promovendo iniciativas que contribuam para o bem-estar
-                            social, o desenvolvimento económico e a preservação do ambiente.
-                        </p>
-                        <p>
-                            Assumimos o compromisso de atuar de forma ética, transparente e responsável, construindo
-                            relações de confiança com clientes, colaboradores, fornecedores e parceiros. Através das
-                            nossas ações, procuramos criar valor sustentável, apoiando projetos que fortalecem as
-                            comunidades e incentivam uma cultura de solidariedade e cidadania.
-                        </p>
+                        {!! nl2br(e($page->content)) !!}
                     </div>
                 </div>
 
@@ -52,49 +45,45 @@
                             Atuação</h2>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <!-- Área 1 -->
-                        <div class="bg-gray-50/80 border border-gray-100 p-6 space-y-3">
-                            <h3 class="text-base font-bold text-gray-900 uppercase border-b border-gray-200 pb-2">Apoio
-                                a Instituições Sociais</h3>
-                            <p class="text-xs text-gray-600 leading-relaxed">
+                        <div class="space-y-2">
+                            <h3 class="text-base font-bold text-gray-900 uppercase">Apoio a Instituições Sociais</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">
                                 Colaboração com organizações e projetos que apoiam pessoas e famílias em situação de
                                 vulnerabilidade.
                             </p>
                         </div>
 
                         <!-- Área 2 -->
-                        <div class="bg-gray-50/80 border border-gray-100 p-6 space-y-3">
-                            <h3 class="text-base font-bold text-gray-900 uppercase border-b border-gray-200 pb-2">
-                                Redução do Desperdício Alimentar</h3>
-                            <p class="text-xs text-gray-600 leading-relaxed">
+                        <div class="space-y-2">
+                            <h3 class="text-base font-bold text-gray-900 uppercase">Redução do Desperdício Alimentar
+                            </h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">
                                 Promoção de práticas que favorecem o aproveitamento responsável dos alimentos.
                             </p>
                         </div>
 
                         <!-- Área 3 -->
-                        <div class="bg-gray-50/80 border border-gray-100 p-6 space-y-3">
-                            <h3 class="text-base font-bold text-gray-900 uppercase border-b border-gray-200 pb-2">
-                                Sustentabilidade Ambiental</h3>
-                            <p class="text-xs text-gray-600 leading-relaxed">
+                        <div class="space-y-2">
+                            <h3 class="text-base font-bold text-gray-900 uppercase">Sustentabilidade Ambiental</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">
                                 Adoção de medidas para reduzir o impacto ambiental das nossas operações.
                             </p>
                         </div>
 
                         <!-- Área 4 -->
-                        <div class="bg-gray-50/80 border border-gray-100 p-6 space-y-3">
-                            <h3 class="text-base font-bold text-gray-900 uppercase border-b border-gray-200 pb-2">
-                                Desenvolvimento das Comunidades</h3>
-                            <p class="text-xs text-gray-600 leading-relaxed">
+                        <div class="space-y-2">
+                            <h3 class="text-base font-bold text-gray-900 uppercase">Desenvolvimento das Comunidades</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">
                                 Apoio a iniciativas locais nas áreas da educação, saúde, cultura e inclusão social.
                             </p>
                         </div>
 
                         <!-- Área 5 -->
-                        <div class="bg-gray-50/80 border border-gray-100 p-6 space-y-3">
-                            <h3 class="text-base font-bold text-gray-900 uppercase border-b border-gray-200 pb-2">
-                                Valorização dos Colaboradores</h3>
-                            <p class="text-xs text-gray-600 leading-relaxed">
+                        <div class="space-y-2">
+                            <h3 class="text-base font-bold text-gray-900 uppercase">Valorização dos Colaboradores</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">
                                 Investimento na formação, segurança, bem-estar e crescimento profissional das nossas
                                 equipas.
                             </p>

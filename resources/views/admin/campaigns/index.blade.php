@@ -26,7 +26,7 @@
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-2xs font-bold bg-gray-100 text-gray-500 uppercase tracking-wider">Inativa</span>
                             @endif
                         </td>
-                        <td class="py-4 px-6 align-middle text-gray-500">{{ $campaign->created_at->format('d/m/Y') }}</td>
+                        <td class="py-4 px-6 align-middle text-gray-500">{{ $campaign->created_at?->format('d/m/Y') ?? '-' }}</td>
                         <td class="py-4 px-6 align-middle text-right space-x-2">
                             <a href="{{ route('admin.campaigns.edit', $campaign->id) }}" class="inline-flex items-center px-3 py-1.5 bg-slate-100 hover:bg-[#45B500] hover:text-white rounded-lg text-slate-700 text-xs font-bold transition-all duration-200">
                                 Editar

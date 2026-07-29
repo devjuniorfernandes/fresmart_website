@@ -35,14 +35,16 @@ class ContactMessageController extends Controller
         return view('admin.contacts.index', compact('messages'));
     }
 
-    public function show(ContactMessage $message)
+    public function show($message)
     {
+        $message = $message instanceof ContactMessage ? $message : ContactMessage::findOrFail($message);
         $message->update(['is_read' => true]);
         return view('admin.contacts.show', compact('message'));
     }
 
-    public function destroy(ContactMessage $message)
+    public function destroy($message)
     {
+        $message = $message instanceof ContactMessage ? $message : ContactMessage::findOrFail($message);
         $message->delete();
         return redirect()->route('admin.contacts.index')->with('success', 'Mensagem de contacto excluída com sucesso.');
     }

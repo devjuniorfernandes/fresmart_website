@@ -3,7 +3,7 @@
 <div class="relative w-full h-[250px] md:h-[300px] bg-gray-900 flex items-center justify-center overflow-hidden">
     <!-- Background Image -->
     <div class="absolute inset-0 z-0">
-        <img src="{{ $image ? asset($image) : asset('assets/img/slider1.png') }}" alt="{{ $title }}" class="w-full h-full object-cover object-center opacity-60">
+        <img src="{{ $image ? asset($image) : asset('placeholder.png') }}" alt="{{ $title }}" class="w-full h-full object-cover object-center opacity-60">
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
     </div>
 

@@ -18,7 +18,7 @@
                 @forelse($services ?? [] as $service)
                     <tr class="border-b border-gray-100 hover:bg-slate-50/80 transition-colors">
                         <td class="py-4 px-6 align-middle"><strong class="text-slate-800 text-sm font-bold">{{ $service->name }}</strong></td>
-                        <td class="py-4 px-6 align-middle text-gray-500">{{ $service->created_at->format('d/m/Y') }}</td>
+                        <td class="py-4 px-6 align-middle text-gray-500">{{ $service->created_at?->format('d/m/Y') ?? '-' }}</td>
                         <td class="py-4 px-6 align-middle text-right space-x-2">
                             <a href="{{ route('admin.services.edit', $service->id) }}" class="inline-flex items-center px-3 py-1.5 bg-slate-100 hover:bg-[#45B500] hover:text-white rounded-lg text-slate-700 text-xs font-bold transition-all duration-200">
                                 Editar

@@ -99,7 +99,7 @@
         </div>
     </div>
 
-    <section class="w-[100%] md:w-[100%] max-w-[1528px] mx-auto">
+    <section class="w-full max-w-[1528px] mx-auto">
         <!-- Wrapper container: behaves relative/full-height on desktop, stacks on mobile -->
         <div class="flex flex-col lg:relative lg:w-full lg:h-[700px] overflow-hidden gap-6 lg:gap-0 bg-transparent">
 

@@ -31,6 +31,7 @@ class SettingController extends Controller
             'contact_phone' => 'nullable|string|max:255',
             'support_phone' => 'nullable|string|max:255',
             'contact_address' => 'nullable|string|max:255',
+            'contact_map_iframe' => 'nullable|string',
 
             // Banner fields validation
             'banner_products_image' => 'nullable|image|max:3072',

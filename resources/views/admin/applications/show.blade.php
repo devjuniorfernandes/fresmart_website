@@ -6,7 +6,7 @@
             <div class="border-b border-gray-100 pb-4 flex justify-between items-center">
                 <div>
                     <h2 class="text-xl font-bold text-gray-900">{{ $application->name }}</h2>
-                    <p class="text-xs text-gray-500 mt-1">Candidatura enviada em {{ $application->created_at->format('d/m/Y H:i') }}</p>
+                    <p class="text-xs text-gray-500 mt-1">Candidatura enviada em {{ $application->created_at?->format('d/m/Y H:i') ?? '-' }}</p>
                 </div>
                 <a href="{{ route('admin.applications.index') }}" class="text-[#45B500] font-bold text-xs hover:underline">&larr; Voltar à lista</a>
             </div>

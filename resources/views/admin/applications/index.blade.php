@@ -30,7 +30,7 @@
                                 {{ $app->position }}
                             </td>
                             <td class="py-4 px-4 align-top text-gray-600">
-                                {{ $app->created_at->format('d/m/Y H:i') }}
+                                {{ $app->created_at?->format('d/m/Y H:i') ?? '-' }}
                             </td>
                             <td class="py-4 px-4 align-top text-xs">
                                 @if($app->cv_path)

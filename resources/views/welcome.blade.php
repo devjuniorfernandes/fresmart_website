@@ -46,126 +46,130 @@
     </x-slot>
 
     <!-- Hero Slider Section - DESKTOP (Dinâmico) -->
-    <header id="hero-slider-desktop"
-        class="hidden sm:relative sm:h-[350px] md:h-[400px] text-white sm:flex items-center overflow-hidden w-full bg-gray-900 shadow-inner">
+    <div class="hidden sm:block w-full bg-white pb-4 border-b border-gray-100">
+        <header id="hero-slider-desktop"
+            class="relative h-[350px] md:h-[400px] text-white flex items-center overflow-hidden w-full bg-gray-900 shadow-inner">
 
-        @forelse($slides as $index => $slide)
-            <div
-                class="desktop-slide slide absolute inset-0 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }} transition-opacity duration-1000 z-10">
-                <div class="absolute inset-0 z-0">
-                    <img src="{{ asset(str_starts_with($slide->image, 'uploads/') ? $slide->image : 'storage/' . $slide->image) }}"
-                        alt="{{ $slide->title ?? 'Banner' }}" class="w-full h-full object-cover object-center">
-                    <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent"></div>
-                </div>
-                <div class="hero-content h-full w-full flex flex-col justify-center relative z-10">
-                    <div class="max-w-[1528px] mx-auto px-6 lg:px-10 w-full">
-                        <div class="md:w-1/2 space-y-4">
-                            @if (trim($slide->title) || trim($slide->subtitle))
-                                <h2 class="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight uppercase drop-shadow-md">
-                                    {{ $slide->title }}
-                                    @if (trim($slide->subtitle))
-                                        <br> <span class="text-[#7dd82a]">{{ $slide->subtitle }}</span>
-                                    @endif
-                                </h2>
-                            @endif
-                            <div class="flex flex-wrap gap-3 pt-2">
-                                @if ($slide->link)
-                                    <a href="{{ $slide->link }}"
-                                        class="bg-[#45B500] hover:bg-white hover:text-[#1b5314] text-white transition-all duration-300 font-bold py-2 px-6 rounded-xl text-center shadow-md text-xs sm:text-sm uppercase tracking-wider">
-                                        SAIBA MAIS
-                                    </a>
+            @forelse($slides as $index => $slide)
+                <div
+                    class="desktop-slide slide absolute inset-0 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }} transition-opacity duration-1000 z-10 cursor-pointer">
+                    <a href="{{ $slide->link ?: route('campaigns.index') }}" class="absolute inset-0 z-20"
+                        title="{{ $slide->title ?? 'Banner' }}"></a>
+                    <div class="absolute inset-0 z-0">
+                        <img src="{{ asset(str_starts_with($slide->image, 'uploads/') ? $slide->image : 'storage/' . $slide->image) }}"
+                            alt="{{ $slide->title ?? 'Banner' }}" class="w-full h-full object-cover object-center">
+                        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent"></div>
+                    </div>
+                    <div
+                        class="hero-content h-full w-full flex flex-col justify-center relative z-10 pointer-events-none">
+                        <div class="max-w-[1528px] mx-auto px-6 lg:px-10 w-full">
+                            <div class="md:w-1/2 space-y-4">
+                                @if (trim($slide->title) || trim($slide->subtitle))
+                                    <h2
+                                        class="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight uppercase drop-shadow-md">
+                                        {{ $slide->title }}
+                                        @if (trim($slide->subtitle))
+                                            <br> <span class="text-[#7dd82a]">{{ $slide->subtitle }}</span>
+                                        @endif
+                                    </h2>
                                 @endif
-                                <a href="#lojas"
-                                    class="bg-white/10 hover:bg-[#45B500] hover:text-white text-white border border-white/20 hover:border-transparent transition-all duration-300 font-bold py-2 px-6 rounded-xl text-center shadow-md text-xs sm:text-sm uppercase tracking-wider">
-                                    NOSSAS LOJAS
-                                </a>
+                                @if ($slide->link)
+                                    <div class="flex flex-wrap gap-3 pt-2 pointer-events-auto">
+                                        <a href="{{ $slide->link }}"
+                                            class="bg-[#45B500] hover:bg-white hover:text-[#1b5314] text-white transition-all duration-300 font-bold py-2 px-6 rounded-xl text-center shadow-md text-xs sm:text-sm uppercase tracking-wider">
+                                            SAIBA MAIS
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @empty
-            <!-- Fallback if no campaigns exist -->
-            <div class="desktop-slide slide absolute inset-0 opacity-100 transition-opacity duration-1000 z-10">
-                <div class="absolute inset-0 z-0">
-                    <img src="{{ asset('assets/img/hero.png') }}" alt="FRESMART Banner 1"
-                        class="w-full h-full object-cover object-center">
-                    <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent"></div>
-                </div>
-                <div class="hero-content h-full w-full flex flex-col justify-center relative z-10">
-                    <div class="max-w-[1528px] mx-auto px-6 lg:px-10 w-full">
-                        <div class="md:w-1/2 space-y-4">
-                            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight uppercase drop-shadow-md">
-                                SERVINDO ANGOLA<br>COM <span class="text-[#7dd82a]">CORAÇÃO</span>
-                            </h2>
-                            <div class="flex gap-3 pt-2">
-                                <a href="#lojas"
-                                    class="bg-[#45B500] hover:bg-white hover:text-[#1b5314] text-white transition-all duration-300 font-bold py-2 px-6 rounded-xl text-center shadow-md text-xs sm:text-sm uppercase tracking-wider">
-                                    NOSSAS LOJAS
-                                </a>
+            @empty
+                <!-- Fallback if no campaigns exist -->
+                <div
+                    class="desktop-slide slide absolute inset-0 opacity-100 transition-opacity duration-1000 z-10 cursor-pointer">
+                    <a href="{{ route('campaigns.index') }}" class="absolute inset-0 z-20"></a>
+                    <div class="absolute inset-0 z-0">
+                        <img src="{{ asset('assets/img/hero.png') }}" alt="FRESMART Banner 1"
+                            class="w-full h-full object-cover object-center">
+                        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent"></div>
+                    </div>
+                    <div
+                        class="hero-content h-full w-full flex flex-col justify-center relative z-10 pointer-events-none">
+                        <div class="max-w-[1528px] mx-auto px-6 lg:px-10 w-full">
+                            <div class="md:w-1/2 space-y-4">
+                                <h2
+                                    class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight uppercase drop-shadow-md">
+                                    SERVINDO ANGOLA<br><span class="text-[#7dd82a]">COM CORAÇÃO</span>
+                                </h2>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endforelse
+            @endforelse
+        </header>
 
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2 z-30">
+        <!-- Indicador por baixo do slide (modo desktop - pill verde + pontos cinzas) -->
+        <div class="flex justify-center items-center space-x-1.5 mt-4" id="desktop-dots-container">
             @foreach ($slides as $index => $slide)
                 <button
-                    class="desktop-slider-dot w-2.5 h-2.5 rounded-full {{ $index === 0 ? 'bg-white' : 'bg-white/30' }} transition-all duration-300"
+                    class="desktop-slider-dot h-2.5 rounded-full {{ $index === 0 ? 'bg-[#45B500] w-6' : 'bg-gray-300 w-2.5' }} transition-all duration-300 cursor-pointer"
                     data-index="{{ $index }}"></button>
             @endforeach
         </div>
-    </header>
+    </div>
 
     <!-- Hero Slider Section - MOBILE CARD CAROUSEL (Dinâmico) -->
-    <section id="hero-slider-mobile" class="block sm:hidden bg-white py-6 w-full overflow-hidden relative border-b border-gray-100">
+    <section id="hero-slider-mobile"
+        class="block sm:hidden bg-white py-6 w-full overflow-hidden relative border-b border-gray-100">
         <div class="w-full overflow-hidden">
             <!-- Slider Track -->
-            <div id="mobile-slider-track" class="flex transition-transform duration-500 ease-out" style="transform: translateX(6.5vw); width: max-content;">
+            <div id="mobile-slider-track" class="flex transition-transform duration-500 ease-out"
+                style="transform: translateX(6.5vw); width: max-content;">
                 @forelse($slides as $index => $slide)
-                    <div class="w-[82vw] mx-[2.5vw] flex-shrink-0 relative overflow-hidden rounded-3xl aspect-[16/10] bg-gray-900 shadow-md">
+                    <div
+                        class="w-[82vw] mx-[2.5vw] flex-shrink-0 relative overflow-hidden rounded-3xl aspect-[16/10] bg-gray-900 shadow-md cursor-pointer">
+                        <a href="{{ $slide->link ?: route('campaigns.index') }}" class="absolute inset-0 z-20"
+                            title="{{ $slide->title ?? 'Banner' }}"></a>
                         <img src="{{ asset(str_starts_with($slide->image, 'uploads/') ? $slide->image : 'storage/' . $slide->image) }}"
                             alt="{{ $slide->title ?? 'Banner' }}" class="w-full h-full object-cover">
                         <!-- Dark Overlay -->
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent"></div>
                         <!-- Content -->
-                        <div class="absolute inset-0 p-6 flex flex-col justify-end text-white space-y-2">
+                        <div
+                            class="absolute inset-0 p-6 flex flex-col justify-end text-white space-y-2 pointer-events-none">
                             @if (trim($slide->title) || trim($slide->subtitle))
                                 <h3 class="text-sm font-extrabold tracking-tight uppercase leading-tight line-clamp-2">
                                     {{ $slide->title }}
                                     @if (trim($slide->subtitle))
-                                        <span class="text-[#7dd82a] block text-[11px] mt-0.5 font-bold">{{ $slide->subtitle }}</span>
+                                        <span
+                                            class="text-[#7dd82a] block text-[11px] mt-0.5 font-bold">{{ $slide->subtitle }}</span>
                                     @endif
                                 </h3>
                             @endif
-                            <div class="flex gap-2 pt-1">
-                                @if ($slide->link)
+                            @if ($slide->link)
+                                <div class="flex gap-2 pt-1 pointer-events-auto">
                                     <a href="{{ $slide->link }}"
                                         class="bg-[#45B500] text-white font-bold py-1.5 px-4 rounded-lg text-center text-[10px] uppercase tracking-wider">
                                         SAIBA MAIS
                                     </a>
-                                @endif
-                                <a href="#lojas"
-                                    class="bg-white/20 text-white font-bold py-1.5 px-4 rounded-lg text-center text-[10px] uppercase tracking-wider">
-                                    LOJAS
-                                </a>
-                            </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @empty
                     <!-- Fallback -->
-                    <div class="w-[82vw] mx-[2.5vw] flex-shrink-0 relative overflow-hidden rounded-3xl aspect-[16/10] bg-gray-900 shadow-md">
+                    <div
+                        class="w-[82vw] mx-[2.5vw] flex-shrink-0 relative overflow-hidden rounded-3xl aspect-[16/10] bg-gray-900 shadow-md cursor-pointer">
+                        <a href="{{ route('campaigns.index') }}" class="absolute inset-0 z-20"></a>
                         <img src="{{ asset('assets/img/hero.png') }}" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent"></div>
-                        <div class="absolute inset-0 p-6 flex flex-col justify-end text-white space-y-2">
+                        <div
+                            class="absolute inset-0 p-6 flex flex-col justify-end text-white space-y-2 pointer-events-none">
                             <h3 class="text-sm font-extrabold tracking-tight uppercase leading-tight">
                                 SERVINDO ANGOLA<br><span class="text-[#7dd82a]">COM CORAÇÃO</span>
                             </h3>
-                            <div class="flex gap-2">
-                                <a href="#lojas" class="bg-[#45B500] text-white font-bold py-1.5 px-4 rounded-lg text-center text-[10px] uppercase tracking-wider">LOJAS</a>
-                            </div>
                         </div>
                     </div>
                 @endforelse
@@ -242,9 +246,10 @@
     </section>
 
     <!-- Receitas Section (Dinâmico) -->
-    <section id="receitas" class="py-24 bg-white w-full border-t border-b border-gray-50">
+    <section id="receitas" class="py-12 bg-white w-full border-t border-b border-gray-50">
         <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
-            <h2 id="receitas" class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-12 animate-on-scroll">Receitas</h2>
+            <h2 id="receitas"
+                class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-12 animate-on-scroll">Receitas</h2>
 
             <div class="overflow-x-auto overflow-y-visible no-scrollbar -mx-4 px-4 md:mx-0 md:px-0 pb-4">
                 <div class="flex flex-nowrap gap-6 pt-3 pb-4 scroll-smooth items-stretch">
@@ -259,50 +264,61 @@
                     @endforelse
                 </div>
             </div>
-            
+
             <div class="mt-8 text-right">
-                <a href="{{ route('recipes.index') }}" class="text-sm font-bold text-[#45B500] hover:underline uppercase tracking-wider">Ver todas as receitas &rarr;</a>
+                <a href="{{ route('recipes.index') }}"
+                    class="text-sm font-bold text-[#45B500] hover:underline uppercase tracking-wider">Ver todas as
+                    receitas &rarr;</a>
             </div>
     </section>
 
     <!-- Serviços (Dinâmico) -->
-    <section id="servicos" class="py-16 max-w-[1528px] mx-auto px-6 lg:px-10">
-        <h2 id="servicos" class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-8 animate-on-scroll">
-            Nossos serviços</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @forelse($services as $service)
-                <x-frontend.card-service :service="$service" />
-            @empty
-                <p class="text-gray-500 col-span-3">Nenhum serviço publicado ainda.</p>
-            @endforelse
+    <section id="servicos" class="py-16 w-full bg-[#f8f9fa] border-t border-gray-100">
+        <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
+            <h2 id="servicos"
+                class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-8 animate-on-scroll">
+                Nossos serviços</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @forelse($services as $service)
+                    <x-frontend.card-service :service="$service" />
+                @empty
+                    <p class="text-gray-500 col-span-3">Nenhum serviço publicado ainda.</p>
+                @endforelse
+            </div>
         </div>
     </section>
 
     <!-- Encontre nas Lojas (Mapa Dinâmico Completo) -->
-    <section id="lojas" class="py-24 bg-white w-full border-t border-gray-50">
+    <section id="lojas" class="py-12 bg-white w-full border-t border-gray-50">
         <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                
+
                 <!-- Left Column (50%): Title & Text -->
                 <div class="space-y-6">
-                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 uppercase tracking-tight leading-tight">
+                    <h2
+                        class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-8 animate-on-scroll visible">
                         Nossas Lojas
                     </h2>
                     <p class="text-gray-600 text-sm md:text-base leading-relaxed">
-                        Encontre a loja Fresmart mais próxima de si, consulte os horários, contactos e serviços disponíveis.
+                        Encontre a loja Fresmart mais próxima de si, consulte os horários, contactos e serviços
+                        disponíveis.
                     </p>
                     <p class="text-gray-500 text-xs md:text-sm leading-relaxed">
-                        Visite-nos numa das nossas localizações espalhadas por Angola. Clique nos marcadores no mapa para saber o endereço, horários, telefone e serviços associados a cada loja (como Talho, Padaria e Café).
+                        Visite-nos numa das nossas localizações espalhadas por Angola. Clique nos marcadores no mapa
+                        para saber o endereço, horários, telefone e serviços associados a cada loja (como Talho, Padaria
+                        e Café).
                     </p>
                     <div class="pt-4">
-                        <a href="{{ route('stores.index') }}" class="inline-block bg-[#45B500] hover:bg-[#3a9900] text-white font-bold py-3 px-8 rounded-2xl transition-all duration-300 shadow-md text-xs sm:text-sm uppercase tracking-wider">
+                        <a href="{{ route('stores.index') }}"
+                            class="inline-block bg-[#45B500] hover:bg-[#3a9900] text-white font-bold py-3 px-8 rounded-2xl transition-all duration-300 shadow-md text-xs sm:text-sm uppercase tracking-wider">
                             Ver todas as lojas
                         </a>
                     </div>
                 </div>
 
                 <!-- Right Column (50%): The Map -->
-                <div class="w-full h-[380px] sm:h-[450px] md:h-[500px] rounded-[32px] overflow-hidden shadow-lg border border-gray-100 z-10 relative">
+                <div
+                    class="w-full h-[380px] sm:h-[450px] md:h-[500px] rounded-[32px] overflow-hidden shadow-lg border border-gray-100 z-10 relative">
                     <div id="home-stores-map" class="w-full h-full"></div>
                 </div>
 
@@ -334,11 +350,11 @@
                     });
                     dots.forEach((dot, i) => {
                         if (i === index) {
-                            dot.classList.remove('bg-white/30');
-                            dot.classList.add('bg-white');
+                            dot.classList.remove('bg-gray-300', 'w-2.5');
+                            dot.classList.add('bg-[#45B500]', 'w-6');
                         } else {
-                            dot.classList.remove('bg-white');
-                            dot.classList.add('bg-white/30');
+                            dot.classList.remove('bg-[#45B500]', 'w-6');
+                            dot.classList.add('bg-gray-300', 'w-2.5');
                         }
                     });
                     currentSlide = index;
@@ -367,17 +383,17 @@
 
                 function showMobileSlide(index) {
                     if (!track) return;
-                    
+
                     // Center calculation: 6.5vw is center offset, 87vw is slide step (82vw card + 5vw total gap)
                     track.style.transform = `translateX(calc(6.5vw - (${index} * 87vw)))`;
-                    
+
                     dots.forEach((dot, i) => {
                         if (i === index) {
-                            dot.classList.remove('bg-gray-300');
-                            dot.classList.add('bg-[#45B500]', 'w-4');
+                            dot.classList.remove('bg-gray-300', 'w-2.5');
+                            dot.classList.add('bg-[#45B500]', 'w-6');
                         } else {
-                            dot.classList.remove('bg-[#45B500]', 'w-4');
-                            dot.classList.add('bg-gray-300');
+                            dot.classList.remove('bg-[#45B500]', 'w-6');
+                            dot.classList.add('bg-gray-300', 'w-2.5');
                         }
                     });
                     currentSlide = index;
@@ -401,7 +417,9 @@
 
                     track.addEventListener('touchstart', (e) => {
                         startX = e.touches[0].clientX;
-                    }, { passive: true });
+                    }, {
+                        passive: true
+                    });
 
                     track.addEventListener('touchend', (e) => {
                         endX = e.changedTouches[0].clientX;
@@ -415,7 +433,9 @@
                                 showMobileSlide((currentSlide - 1 + totalSlides) % totalSlides);
                             }
                         }
-                    }, { passive: true });
+                    }, {
+                        passive: true
+                    });
                 }
             })();
 
@@ -463,10 +483,10 @@
                 storesData.forEach(function(store) {
                     if (store.lat && store.lng) {
                         var marker = L.marker([parseFloat(store.lat), parseFloat(store.lng)], {
-                            icon: customIcon
-                        })
-                        .addTo(map)
-                        .bindPopup(createPopupHtml(store));
+                                icon: customIcon
+                            })
+                            .addTo(map)
+                            .bindPopup(createPopupHtml(store));
 
                         // Sync marker click to select card
                         marker.on('click', function() {
@@ -495,9 +515,11 @@
                 var imgHtml = '';
                 if (store.image) {
                     var imgPath = store.image.startsWith('uploads/') ? store.image : 'storage/' + store.image;
-                    imgHtml = `<img src="${window.location.origin}/${imgPath}" class="w-full h-24 object-cover rounded-lg mb-2 border border-gray-100">`;
+                    imgHtml =
+                        `<img src="${window.location.origin}/${imgPath}" class="w-full h-24 object-cover rounded-lg mb-2 border border-gray-100">`;
                 } else {
-                    imgHtml = `<img src="${window.location.origin}/assets/img/loja.png" class="w-full h-24 object-cover rounded-lg mb-2 border border-gray-100">`;
+                    imgHtml =
+                        `<img src="${window.location.origin}/assets/img/loja.png" class="w-full h-24 object-cover rounded-lg mb-2 border border-gray-100">`;
                 }
 
                 var badgeClass = 'bg-red-100 text-red-700';
@@ -531,7 +553,8 @@
                 // Remove active classes from all cards
                 var cards = document.querySelectorAll('.store-card');
                 cards.forEach(function(card) {
-                    card.classList.remove('border-[#45B500]', 'bg-green-50/20', 'shadow-md', 'ring-2', 'ring-[#45B500]/10');
+                    card.classList.remove('border-[#45B500]', 'bg-green-50/20', 'shadow-md', 'ring-2',
+                        'ring-[#45B500]/10');
                     card.classList.add('border-gray-100', 'shadow-sm');
                 });
 
@@ -539,7 +562,8 @@
                 var selectedCard = document.getElementById(`store-card-${storeId}`);
                 if (selectedCard) {
                     selectedCard.classList.remove('border-gray-100', 'shadow-sm');
-                    selectedCard.classList.add('border-[#45B500]', 'bg-green-50/20', 'shadow-md', 'ring-2', 'ring-[#45B500]/10');
+                    selectedCard.classList.add('border-[#45B500]', 'bg-green-50/20', 'shadow-md', 'ring-2',
+                        'ring-[#45B500]/10');
                     activeCardId = storeId;
                 }
 
@@ -653,7 +677,8 @@
 
                         storesData.forEach(function(store) {
                             if (store.lat && store.lng) {
-                                var dist = calculateHaversine(userLat, userLng, parseFloat(store.lat), parseFloat(store.lng));
+                                var dist = calculateHaversine(userLat, userLng, parseFloat(store.lat),
+                                    parseFloat(store.lng));
                                 store.distance = dist;
 
                                 var distBadge = document.getElementById(`distance-badge-${store.id}`);
@@ -680,8 +705,8 @@
                 var dLat = (lat2 - lat1) * Math.PI / 180;
                 var dLon = (lon2 - lon1) * Math.PI / 180;
                 var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
                 var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
                 return R * c;
             }

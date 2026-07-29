@@ -13,10 +13,12 @@
             <!-- Smooth Gradient Overlay -->
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
             <!-- Title Content Overlay -->
-            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-4 z-20">
+            <div
+                class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-4 z-20">
                 <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-wider drop-shadow-lg uppercase">
                     {{ $service->name }}</h1>
-                <p class="text-xs md:text-sm font-semibold text-white/90 tracking-wide mt-2 drop-shadow-md">Serviços Fresmart</p>
+                <p class="text-xs md:text-sm font-semibold text-white/90 tracking-wide mt-2 drop-shadow-md">Serviços
+                    Fresmart</p>
             </div>
         </div>
     @else
@@ -27,10 +29,9 @@
         </div>
     @endif
 
-    <!-- Content Area inside standard page container -->
-    <section class="py-16 md:py-24 bg-white w-full">
+    <section class="py-6 md:py-12 bg-white w-full">
         <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
-            <div class="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100 space-y-8">
+            <div class="bg-white space-y-8">
                 <!-- Rich formatted description content -->
                 <div class="rich-content text-gray-700 text-sm md:text-base leading-relaxed">
                     {!! $service->description ?? '<p class="text-gray-500">Nenhuma descrição fornecida para este serviço.</p>' !!}
@@ -54,19 +55,13 @@
                             @if (str_starts_with($service->btn_link, 'http') || $isPdf) target="_blank" @endif
                             @if ($isPdf) download @endif
                             class="inline-flex items-center gap-2.5 bg-[#45B500] hover:bg-[#3b9b18] text-white font-extrabold text-sm px-8 py-3.5 rounded-xl transition-all duration-300 shadow hover:shadow-md transform hover:-translate-y-0.5 cursor-pointer">
-                            @if($isPdf)
+                            @if ($isPdf)
                                 <i class="far fa-file-pdf text-base"></i>
                             @endif
                             {{ $service->btn_text }}
                         </a>
                     </div>
                 @endif
-            </div>
-
-            <div class="mt-8 text-center">
-                <a href="{{ route('services.index') }}" class="text-[#45B500] font-bold hover:underline text-sm inline-flex items-center gap-2">
-                    &larr; Voltar para todos os serviços
-                </a>
             </div>
         </div>
     </section>

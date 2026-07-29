@@ -1,6 +1,7 @@
 <x-frontend.layout>
     <x-slot:meta_title>{{ $recipe->title }} - Receitas Fresmart</x-slot>
-    <x-slot:meta_description>Descubra como preparar {{ $recipe->title }} com os melhores ingredientes da Fresmart. Tempo: {{ $recipe->prep_time_minutes }}m. Categoria: {{ $recipe->category }}.</x-slot>
+    <x-slot:meta_description>Descubra como preparar {{ $recipe->title }} com os melhores ingredientes da Fresmart. Tempo:
+        {{ $recipe->prep_time_minutes }}m. Categoria: {{ $recipe->category }}.</x-slot>
     @if ($recipe->image)
         <x-slot:meta_image>{{ str_starts_with($recipe->image, 'uploads/') ? $recipe->image : 'storage/' . $recipe->image }}</x-slot>
     @endif
@@ -10,16 +11,17 @@
             : 'storage/' . $recipe->image)
         : 'assets/img/receita1.jpg'" />
 
-    <section class="py-16 md:py-24 bg-white w-full">
+    <section class="py-6 md:py-12 bg-white w-full">
         <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                
+
                 <!-- Left Column (Images, Meta) -->
                 <div class="lg:col-span-5 space-y-8">
                     <!-- Main Recipe Cover Image -->
-                    <div class="w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-md border border-gray-100 relative bg-gray-50">
-                        <img src="{{ $recipe->image ? asset(str_starts_with($recipe->image, 'uploads/') ? $recipe->image : 'storage/'.$recipe->image) : asset('assets/img/receita1.jpg') }}" 
-                             alt="{{ $recipe->title }}" class="w-full h-full object-cover">
+                    <div
+                        class="w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-md border border-gray-100 relative bg-gray-50">
+                        <img src="{{ $recipe->image ? asset(str_starts_with($recipe->image, 'uploads/') ? $recipe->image : 'storage/' . $recipe->image) : asset('assets/img/receita1.jpg') }}"
+                            alt="{{ $recipe->title }}" class="w-full h-full object-cover">
                     </div>
 
                     <!-- Meta Details Info Card -->
@@ -57,13 +59,15 @@
                         <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
                             <i class="fas fa-blender text-[#45B500]"></i> Modo de Preparação
                         </h3>
-                        <div class="prose max-w-none text-gray-700 whitespace-pre-line text-sm md:text-base leading-relaxed">
+                        <div
+                            class="prose max-w-none text-gray-700 whitespace-pre-line text-sm md:text-base leading-relaxed">
                             {!! $recipe->instructions ?? 'Instruções não especificadas.' !!}
                         </div>
                     </div>
 
                     <div class="pt-4">
-                        <a href="{{ route('recipes.index') }}" class="text-[#45B500] font-bold hover:underline text-sm inline-flex items-center gap-2">
+                        <a href="{{ route('recipes.index') }}"
+                            class="text-[#45B500] font-bold hover:underline text-sm inline-flex items-center gap-2">
                             &larr; Voltar para todas as receitas
                         </a>
                     </div>

@@ -17,6 +17,7 @@ Route::get('/quem-somos', [FrontendController::class, 'about'])->name('about.ind
 Route::get('/sustentabilidade', [FrontendController::class, 'sustainability'])->name('sustainability.index');
 Route::get('/responsabilidade-social', [FrontendController::class, 'socialResponsibility'])->name('social.responsibility.index');
 Route::get('/trabalhe-connosco', [FrontendController::class, 'careers'])->name('careers.index');
+Route::get('/trabalhe-connosco/candidatura', [FrontendController::class, 'candidaturaForm'])->name('candidatura.form');
 
 Route::get('/receitas', [FrontendController::class, 'recipes'])->name('recipes.index');
 Route::get('/receitas/{recipe}', [FrontendController::class, 'recipeShow'])->name('recipes.show');
@@ -67,10 +68,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('slides', \App\Http\Controllers\Admin\SlideController::class);
         Route::resource('services', \App\Http\Controllers\Admin\ServiceController::class);
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
-        Route::resource('contacts', \App\Http\Controllers\Admin\ContactMessageController::class)->only(['index', 'show', 'destroy']);
+        Route::resource('contacts', \App\Http\Controllers\Admin\ContactMessageController::class)->parameters(['contacts' => 'message'])->only(['index', 'show', 'destroy']);
         Route::resource('posts', \App\Http\Controllers\Admin\BlogPostController::class);
         Route::resource('leaflets', \App\Http\Controllers\Admin\LeafletController::class);
         Route::resource('applications', \App\Http\Controllers\Admin\JobApplicationController::class)->only(['index', 'show', 'destroy']);
+        Route::resource('pages', \App\Http\Controllers\Admin\PageController::class)->only(['index', 'edit', 'update']);
 
         // Configurações Globais
         Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'edit'])->name('settings.edit');
