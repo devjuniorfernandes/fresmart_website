@@ -4,6 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Store;
+use App\Models\Page;
+use App\Models\Setting;
+use App\Models\Product;
+use App\Models\Service;
+use App\Models\Slide;
+use App\Models\Campaign;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -13,12 +19,12 @@ class DatabaseSeeder extends Seeder
     use WithoutModelEvents;
 
     /**
-     * Seed the application's database.
+     * Seed the application's database safely without conflicting with online production data.
      */
     public function run(): void
     {
-        // Seeding standard Admin user
-        User::updateOrCreate(
+        // 1. User / Admin Standard Account (firstOrCreate)
+        User::firstOrCreate(
             ['email' => 'admin@fresmart.ao'],
             [
                 'name' => 'Admin',
@@ -26,7 +32,108 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // Seeding Store Locator standard stores
+        // 2. Settings (firstOrCreate)
+        Setting::firstOrCreate(
+            ['id' => 1],
+            [
+                'description' => 'Servindo Angola com coração. Qualidade, frescura e os melhores preços perto de si.',
+                'phone' => '+244 923 000 000',
+                'email' => 'geral@fresmart.ao',
+                'address' => 'Avenida Luanda, Angola',
+                'facebook' => 'https://facebook.com/fresmart',
+                'instagram' => 'https://instagram.com/fresmart',
+                'tiktok' => 'https://tiktok.com/@fresmart',
+                'linkedin' => 'https://linkedin.com/company/fresmart',
+                'youtube' => 'https://youtube.com/@fresmart',
+            ]
+        );
+
+        // 3. Pages CMS Registry (firstOrCreate by slug)
+        $pages = [
+            [
+                'slug' => 'home',
+                'name' => 'Página Inicial (Início)',
+                'title' => 'Fresmart - O seu Supermercado de Confiança',
+                'subtitle' => 'Produtos frescos, preços baixos e ofertas imperdíveis todos os dias em Angola.',
+            ],
+            [
+                'slug' => 'about',
+                'name' => 'Quem Somos',
+                'title' => 'Quem Somos',
+                'subtitle' => 'Saiba mais sobre a nossa história, visão e o compromisso da Fresmart com as famílias angolanas.',
+                'content_title' => 'A Nossa Empresa',
+                'content' => 'Fundada em Angola, a Fresmart é uma rede de supermercados dedicada a oferecer produtos alimentares de elevada qualidade, com especial foco nos produtos frescos e de origem nacional.',
+            ],
+            [
+                'slug' => 'sustainability',
+                'name' => 'Sustentabilidade',
+                'title' => 'Sustentabilidade',
+                'subtitle' => 'Promovemos práticas sustentáveis e apoio direto à agricultura local.',
+                'content_title' => 'O Nosso Compromisso Ambiental',
+                'content' => 'Na Fresmart, acreditamos num futuro mais verde e responsável. Trabalhamos diariamente para reduzir o desperdício alimentar, otimizar embalagens e apoiar a produção local angolana.',
+            ],
+            [
+                'slug' => 'social_responsibility',
+                'name' => 'Responsabilidade Social',
+                'title' => 'Responsabilidade Social',
+                'subtitle' => 'Investimos no bem-estar das comunidades e em causas sociais ativas.',
+                'content_title' => 'Apoio Ativo à Comunidade',
+                'content' => 'Desenvolvemos e apoiamos iniciativas sociais focadas na nutrição infantil, educação e apoio a famílias em situação de vulnerabilidade.',
+            ],
+            [
+                'slug' => 'posts',
+                'name' => 'Notícias',
+                'title' => 'Notícias & Novidades',
+                'subtitle' => 'Fique a par das últimas aberturas de lojas, eventos e notícias institucionais da Fresmart.',
+            ],
+            [
+                'slug' => 'careers',
+                'name' => 'Trabalhe Connosco',
+                'title' => 'Trabalhe Connosco',
+                'subtitle' => 'Junte-se à equipa Fresmart e construa um futuro de sucesso connosco.',
+                'content_title' => 'Construa o seu Futuro na Fresmart',
+                'content' => 'Valorizamos o talento, a dedicação e o espírito de equipa. Oferecemos oportunidades de crescimento profissional num ambiente dinâmico e acolhedor.',
+            ],
+            [
+                'slug' => 'contacts',
+                'name' => 'Contactos',
+                'title' => 'Fale Connosco',
+                'subtitle' => 'Estamos disponíveis para responder a dúvidas, sugestões ou parcerias comerciais.',
+            ],
+            [
+                'slug' => 'products',
+                'name' => 'Produtos',
+                'title' => 'Nossos Produtos',
+                'subtitle' => 'Conheça a frescura e qualidade dos nossos departamentos.',
+            ],
+            [
+                'slug' => 'services',
+                'name' => 'Serviços',
+                'title' => 'Nossos Serviços',
+                'subtitle' => 'Soluções pensadas para facilitar as suas compras diárias.',
+            ],
+            [
+                'slug' => 'campaigns',
+                'name' => 'Ofertas e Folhetos',
+                'title' => 'Ofertas & Campanhas',
+                'subtitle' => 'Consulte os nossos folhetos promocionais e aproveite os melhores descontos.',
+            ],
+            [
+                'slug' => 'stores',
+                'name' => 'Nossas Lojas',
+                'title' => 'Encontre as Nossas Lojas',
+                'subtitle' => 'Consulte os endereços, horários de funcionamento e serviços em cada loja Fresmart.',
+            ],
+        ];
+
+        foreach ($pages as $pageData) {
+            Page::firstOrCreate(
+                ['slug' => $pageData['slug']],
+                $pageData
+            );
+        }
+
+        // 4. Default Stores (firstOrCreate by slug)
         $stores = [
             [
                 'name' => 'Fresmart Talatona',
@@ -101,29 +208,13 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($stores as $storeData) {
-            Store::updateOrCreate(
+            Store::firstOrCreate(
                 ['slug' => $storeData['slug']],
                 $storeData
             );
         }
 
-        // Seeding standard Settings
-        \App\Models\Setting::updateOrCreate(
-            ['id' => 1],
-            [
-                'logo' => null,
-                'description' => 'Servindo Angola com coração. Qualidade, frescura e os melhores preços perto de si.',
-                'facebook' => 'https://facebook.com/fresmart',
-                'instagram' => 'https://instagram.com/fresmart',
-                'tiktok' => 'https://tiktok.com/@fresmart',
-                'linkedin' => 'https://linkedin.com/company/fresmart',
-                'youtube' => 'https://youtube.com/@fresmart',
-                'app_store' => 'https://apps.apple.com',
-                'google_play' => 'https://play.google.com',
-            ]
-        );
-
-        // Seeding standard Product categories/departments
+        // 5. Default Product Categories (firstOrCreate by slug)
         $defaultProducts = [
             [
                 'name' => 'Frutas e Legumes',
@@ -152,11 +243,39 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($defaultProducts as $productData) {
-            \App\Models\Product::updateOrCreate(
+            Product::firstOrCreate(
                 ['slug' => $productData['slug']],
                 $productData
             );
         }
+
+        // 6. Default Services (firstOrCreate by slug)
+        $defaultServices = [
+            [
+                'name' => 'Talho Atendido',
+                'slug' => 'talho-atendido',
+                'description' => 'Atendimento personalizado com corte de carne feito à sua medida pelos nossos especialistas.',
+                'show_title' => true,
+            ],
+            [
+                'name' => 'Padaria & Pastaria',
+                'slug' => 'padaria-pastaria',
+                'description' => 'Pão quente cozido várias vezes ao dia e pastelaria deliciosa para todos os momentos.',
+                'show_title' => true,
+            ],
+            [
+                'name' => 'Cafetaria Fresmart',
+                'slug' => 'cafetaria-fresmart',
+                'description' => 'Espaço aconchegante para tomar o seu café expresso, refeições rápidas e lanches saborosos.',
+                'show_title' => true,
+            ],
+        ];
+
+        foreach ($defaultServices as $serviceData) {
+            Service::firstOrCreate(
+                ['slug' => $serviceData['slug']],
+                $serviceData
+            );
+        }
     }
 }
-
