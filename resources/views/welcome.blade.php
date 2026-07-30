@@ -170,250 +170,41 @@
         </header>
     </div>
 
-    <!-- Campanhas (Banners Promocionais em Grid de 12 Colunas) -->
+    <!-- Campanhas (Grid de 3 Cards) -->
     <section id="ofertas" class="py-16 bg-[#f8f9fa] w-full border-t border-gray-100">
         <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <h2 class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-10">Campanhas em Destaque</h2>
 
             @if ($campaigns->count() > 0)
-                @php $cList = $campaigns->values(); @endphp
-                @if ($cList->count() >= 5)
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 md:auto-rows-[240px]">
-                        <!-- Item 0: col-span-5 row-span-2 -->
-                        <a href="{{ $cList[0]->link ?: route('campaigns.show', $cList[0]) }}"
-                            class="md:col-start-1 md:col-span-5 md:row-start-1 md:row-span-2 rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 min-h-[300px] md:min-h-0">
-                            <img src="{{ $cList[0]->image ? asset(str_starts_with($cList[0]->image, 'uploads/') ? $cList[0]->image : 'storage/' . $cList[0]->image) : asset('assets/img/hero.png') }}"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                alt="{{ $cList[0]->title }}">
-
-                            @if (($cList[0]->show_title ?? true) || ($cList[0]->show_button ?? true))
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity">
-                                </div>
-
-                                <div class="absolute bottom-6 left-6 right-6">
-                                    @if ($cList[0]->show_title ?? true)
-                                        <h3
-                                            class="text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
-                                            {{ $cList[0]->title }}
-                                        </h3>
-                                    @endif
-
-                                    @if ($cList[0]->show_button ?? true)
-                                        <div class="mt-3 overflow-hidden">
-                                            <span
-                                                class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
-                                                Ver Oferta
-                                            </span>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endif
-                        </a>
-
-                        <!-- Item 1: col-span-4 row-span-1 -->
-                        <a href="{{ $cList[1]->link ?: route('campaigns.show', $cList[1]) }}"
-                            class="md:col-start-6 md:col-span-4 md:row-start-1 md:row-span-1 rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 min-h-[220px] md:min-h-0">
-                            <img src="{{ $cList[1]->image ? asset(str_starts_with($cList[1]->image, 'uploads/') ? $cList[1]->image : 'storage/' . $cList[1]->image) : asset('assets/img/hero.png') }}"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                alt="{{ $cList[1]->title }}">
-
-                            @if (($cList[1]->show_title ?? true) || ($cList[1]->show_button ?? true))
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity">
-                                </div>
-
-                                <div class="absolute bottom-6 left-6 right-6">
-                                    @if ($cList[1]->show_title ?? true)
-                                        <h3
-                                            class="text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
-                                            {{ $cList[1]->title }}
-                                        </h3>
-                                    @endif
-
-                                    @if ($cList[1]->show_button ?? true)
-                                        <div class="mt-3 overflow-hidden">
-                                            <span
-                                                class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
-                                                Ver Oferta
-                                            </span>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endif
-                        </a>
-
-                        <!-- Item 2: col-span-2 row-span-1 -->
-                        <a href="{{ $cList[2]->link ?: route('campaigns.show', $cList[2]) }}"
-                            class="md:col-start-6 md:col-span-2 md:row-start-2 md:row-span-1 rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 min-h-[220px] md:min-h-0">
-                            <img src="{{ $cList[2]->image ? asset(str_starts_with($cList[2]->image, 'uploads/') ? $cList[2]->image : 'storage/' . $cList[2]->image) : asset('assets/img/hero.png') }}"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                alt="{{ $cList[2]->title }}">
-
-                            @if (($cList[2]->show_title ?? true) || ($cList[2]->show_button ?? true))
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity">
-                                </div>
-
-                                <div class="absolute bottom-6 left-6 right-6">
-                                    @if ($cList[2]->show_title ?? true)
-                                        <h3
-                                            class="text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
-                                            {{ $cList[2]->title }}
-                                        </h3>
-                                    @endif
-
-                                    @if ($cList[2]->show_button ?? true)
-                                        <div class="mt-3 overflow-hidden">
-                                            <span
-                                                class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
-                                                Ver Oferta
-                                            </span>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endif
-                        </a>
-
-                        <!-- Item 3: col-span-2 row-span-1 -->
-                        <a href="{{ $cList[3]->link ?: route('campaigns.show', $cList[3]) }}"
-                            class="md:col-start-8 md:col-span-2 md:row-start-2 md:row-span-1 rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 min-h-[220px] md:min-h-0">
-                            <img src="{{ $cList[3]->image ? asset(str_starts_with($cList[3]->image, 'uploads/') ? $cList[3]->image : 'storage/' . $cList[3]->image) : asset('assets/img/hero.png') }}"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                alt="{{ $cList[3]->title }}">
-
-                            @if (($cList[3]->show_title ?? true) || ($cList[3]->show_button ?? true))
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity">
-                                </div>
-
-                                <div class="absolute bottom-6 left-6 right-6">
-                                    @if ($cList[3]->show_title ?? true)
-                                        <h3
-                                            class="text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
-                                            {{ $cList[3]->title }}
-                                        </h3>
-                                    @endif
-
-                                    @if ($cList[3]->show_button ?? true)
-                                        <div class="mt-3 overflow-hidden">
-                                            <span
-                                                class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
-                                                Ver Oferta
-                                            </span>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endif
-                        </a>
-
-                        <!-- Item 4: col-span-3 row-span-2 -->
-                        <a href="{{ $cList[4]->link ?: route('campaigns.show', $cList[4]) }}"
-                            class="md:col-start-10 md:col-span-3 md:row-start-1 md:row-span-2 rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 min-h-[300px] md:min-h-0">
-                            <img src="{{ $cList[4]->image ? asset(str_starts_with($cList[4]->image, 'uploads/') ? $cList[4]->image : 'storage/' . $cList[4]->image) : asset('assets/img/hero.png') }}"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                alt="{{ $cList[4]->title }}">
-
-                            @if (($cList[4]->show_title ?? true) || ($cList[4]->show_button ?? true))
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity">
-                                </div>
-
-                                <div class="absolute bottom-6 left-6 right-6">
-                                    @if ($cList[4]->show_title ?? true)
-                                        <h3
-                                            class="text-xl md:text-2xl font-bold text-white drop-shadow-md leading-tight">
-                                            {{ $cList[4]->title }}
-                                        </h3>
-                                    @endif
-
-                                    @if ($cList[4]->show_button ?? true)
-                                        <div class="mt-3 overflow-hidden">
-                                            <span
-                                                class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
-                                                Ver Oferta
-                                            </span>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endif
-                        </a>
-                    </div>
-
-                    <!-- Se houver mais de 5 campanhas, exibe as restantes num grid de 3 colunas abaixo -->
-                    @if ($cList->count() > 5)
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
-                            @foreach ($cList->slice(5) as $extraCampaign)
-                                <a href="{{ $extraCampaign->link ?: route('campaigns.show', $extraCampaign) }}"
-                                    class="rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 h-[240px]">
-                                    <img src="{{ $extraCampaign->image ? asset(str_starts_with($extraCampaign->image, 'uploads/') ? $extraCampaign->image : 'storage/' . $extraCampaign->image) : asset('assets/img/hero.png') }}"
-                                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                        alt="{{ $extraCampaign->title }}">
-                                    @if (($extraCampaign->show_title ?? true) || ($extraCampaign->show_button ?? true))
-                                        <div
-                                            class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity">
-                                        </div>
-                                        <div class="absolute bottom-6 left-6 right-6">
-                                            @if ($extraCampaign->show_title ?? true)
-                                                <h3 class="text-xl font-bold text-white drop-shadow-md leading-tight">
-                                                    {{ $extraCampaign->title }}
-                                                </h3>
-                                            @endif
-                                            @if ($extraCampaign->show_button ?? true)
-                                                <div class="mt-3 overflow-hidden">
-                                                    <span
-                                                        class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
-                                                        Ver Oferta
-                                                    </span>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    @endif
-                                </a>
-                            @endforeach
-                        </div>
-                    @endif
-                @else
-                    <!-- Fallback para menos de 5 campanhas -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        @foreach ($cList as $campaign)
-                            <a href="{{ $campaign->link ?: route('campaigns.show', $campaign) }}"
-                                class="rounded-[20px] overflow-hidden relative group bg-white shadow-sm hover:shadow-xl transition-all duration-300 h-[260px]">
-                                <img src="{{ $campaign->image ? asset(str_starts_with($campaign->image, 'uploads/') ? $campaign->image : 'storage/' . $campaign->image) : asset('assets/img/hero.png') }}"
-                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    alt="{{ $campaign->title }}">
-                                @if (($campaign->show_title ?? true) || ($campaign->show_button ?? true))
-                                    <div
-                                        class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity">
-                                    </div>
-                                    <div class="absolute bottom-6 left-6 right-6">
-                                        @if ($campaign->show_title ?? true)
-                                            <h3 class="text-xl font-bold text-white drop-shadow-md leading-tight">
-                                                {{ $campaign->title }}
-                                            </h3>
-                                        @endif
-                                        @if ($campaign->show_button ?? true)
-                                            <div class="mt-3 overflow-hidden">
-                                                <span
-                                                    class="inline-block bg-white text-gray-900 text-[13px] font-bold px-5 py-2.5 rounded-full shadow-sm transform translate-y-0 opacity-100 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#45B500] group-hover:text-white">
-                                                    Ver Oferta
-                                                </span>
-                                            </div>
-                                        @endif
-                                    </div>
-                                @endif
-                            </a>
-                        @endforeach
-                    </div>
-                @endif
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach ($campaigns->take(3) as $campaign)
+                        <x-frontend.card-campaign :campaign="$campaign" />
+                    @endforeach
+                </div>
             @else
                 <p class="text-gray-500">Nenhuma campanha ativa de momento.</p>
             @endif
         </div>
     </section>
 
+    <!-- Serviços (Dinâmico) -->
+    <section id="servicos" class="py-16 w-full  bg-white border-t border-gray-100">
+        <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
+            <h2 id="servicos"
+                class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-8 animate-on-scroll">
+                Nossos serviços</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @forelse($services as $service)
+                    <x-frontend.card-service :service="$service" />
+                @empty
+                    <p class="text-gray-500 col-span-3">Nenhum serviço publicado ainda.</p>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
     <!-- Receitas (Dinâmico com Animação) -->
-    <section class="py-16 bg-white w-full border-t border-gray-50">
+    <section class="py-16 w-full bg-[#f8f9fa] border-t border-gray-50">
         <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
             <h2 id="receitas"
                 class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-12 animate-on-scroll">Receitas</h2>
@@ -437,22 +228,6 @@
                     class="text-sm font-bold text-[#45B500] hover:underline uppercase tracking-wider">Ver todas as
                     receitas &rarr;</a>
             </div>
-    </section>
-
-    <!-- Serviços (Dinâmico) -->
-    <section id="servicos" class="py-16 w-full bg-[#f8f9fa] border-t border-gray-100">
-        <div class="max-w-[1528px] mx-auto px-6 lg:px-10">
-            <h2 id="servicos"
-                class="text-3xl font-bold text-gray-900 uppercase tracking-tight mb-8 animate-on-scroll">
-                Nossos serviços</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @forelse($services as $service)
-                    <x-frontend.card-service :service="$service" />
-                @empty
-                    <p class="text-gray-500 col-span-3">Nenhum serviço publicado ainda.</p>
-                @endforelse
-            </div>
-        </div>
     </section>
 
     <!-- Encontre nas Lojas (Mapa Dinâmico Completo) -->

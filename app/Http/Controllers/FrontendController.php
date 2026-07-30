@@ -18,7 +18,7 @@ class FrontendController extends Controller
         $slides = Slide::where('is_active', true)->orderBy('id', 'asc')->get();
         $stores = Store::all();
         $recipes = Recipe::orderByRaw('is_featured DESC, created_at DESC')->take(6)->get();
-        $campaigns = Campaign::where('is_active', true)->latest()->get();
+        $campaigns = Campaign::where('is_active', true)->latest()->take(3)->get();
         $services = Service::latest()->take(3)->get();
 
         return view('welcome', compact('stores', 'recipes', 'campaigns', 'services', 'slides', 'page'));
