@@ -48,7 +48,7 @@
     <!-- Hero Slider Section - DESKTOP (Dinâmico com Aspect Ratio Responsivo) -->
     <div class="hidden sm:block w-full bg-white border-b border-gray-100">
         <header id="hero-slider-desktop"
-            class="relative w-full aspect-[1920/540] overflow-hidden transition-all duration-300">
+            class="relative w-full aspect-[1920/460] overflow-hidden transition-all duration-300">
             @forelse($slides as $index => $slide)
                 @php
                     $imgPath = $slide->image ?: $slide->image_path;
@@ -61,7 +61,7 @@
                         <a href="{{ $slideLink }}" class="block w-full h-full">
                     @endif
                     <img src="{{ $slideSrc }}"
-                        alt="{{ $slide->title ?: 'Fresmart Banner' }}" class="w-full h-full object-cover">
+                        alt="{{ $slide->title ?: 'Fresmart Banner' }}" class="w-full h-full object-contain sm:object-cover">
                     @if ($slide->title || $slide->subtitle)
                         <div class="absolute inset-0 bg-black/20 flex flex-col justify-end p-8 md:p-12 text-white">
                             @if ($slide->title)
@@ -86,9 +86,9 @@
             @endforelse
         </header>
 
-        <!-- Indicators/Dots (Por Baixo do Banner Principal) -->
+        <!-- Indicators/Dots (Por Baixo do Banner Principal com Maior Afastamento) -->
         @if ($slides->count() > 1)
-            <div class="flex justify-center gap-2 py-3 bg-white">
+            <div class="flex justify-center gap-2.5 py-4 bg-white border-t border-gray-50">
                 @foreach ($slides as $index => $slide)
                     <button
                         class="desktop-slider-dot h-2.5 rounded-full transition-all duration-300 cursor-pointer {{ $index === 0 ? 'bg-[#45B500] w-6' : 'bg-gray-300 w-2.5' }}"
