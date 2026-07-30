@@ -45,10 +45,10 @@
         </style>
     </x-slot>
 
-    <!-- Hero Slider Section - DESKTOP (Dinâmico) -->
+    <!-- Hero Slider Section - DESKTOP (Dinâmico com Aspect Ratio Responsivo) -->
     <div class="hidden sm:block w-full bg-white border-b border-gray-100">
         <header id="hero-slider-desktop"
-            class="relative w-full min-h-[380px] lg:min-h-[460px] flex items-center justify-center overflow-hidden transition-all duration-300">
+            class="relative w-full aspect-[1920/540] overflow-hidden transition-all duration-300">
             @forelse($slides as $index => $slide)
                 @php
                     $imgPath = $slide->image ?: $slide->image_path;
@@ -111,7 +111,7 @@
                     @endphp
                     <div class="mobile-slide flex-shrink-0 w-[82vw] mr-[5vw] last:mr-0">
                         <div
-                            class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm aspect-[16/10] relative">
+                            class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm aspect-[1920/540] relative">
                             @if ($slideLink)
                                 <a href="{{ $slideLink }}" class="block w-full h-full">
                             @endif
@@ -138,7 +138,7 @@
                 @empty
                     <div class="mobile-slide flex-shrink-0 w-[82vw]">
                         <div
-                            class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm aspect-[16/10]">
+                            class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm aspect-[1920/540]">
                             <img src="{{ asset('assets/img/slider1.png') }}" class="w-full h-full object-cover">
                         </div>
                     </div>
